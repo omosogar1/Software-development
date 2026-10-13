@@ -1,1 +1,10 @@
-{"2020": {"name": "Kelly", "balance": 6000}, "1234": {"name": "David", "balance": 50000}}
+{
+  "2020": {
+    "name": "Kelly",
+    "balance": 5500
+  },
+  "1234": {
+    "name": "David",
+    "balance": 50500
+  }
+}
