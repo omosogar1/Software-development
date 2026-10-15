@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelly Bank App</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<meta name="theme-color" content="#0A3D8F">
+<style>
+body{font-family:Arial;background:#eef2ff;margin:0;padding:20px}
+.card{background:white;padding:25px;border-radius:16px;max-width:380px;margin:30px auto;box-shadow:0 6px 20px rgba(0,0,0,.15);text-align:center}
+h1{color:#0A3D8F;margin:0}
+.balance{font-size:28px;color:#0A3D8F;font-weight:bold;margin:15px 0}
+button{background:#0A3D8F;color:white;border:none;padding:12px;border-radius:10px;width:100%;margin:8px 0;font-size:16px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>K Kelly Bank</h1>
+<p>Secure Mobile Banking</p>
+<div class="balance">₦125,000.00</div>
+<button>Transfer</button>
+<button>Buy Airtime</button>
+<button>Transaction History</button>
+</div>
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}
+</script>
+</body>
+</html>
