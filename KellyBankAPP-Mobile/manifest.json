@@ -1,10 +1,11 @@
 {
   "name": "Kelly Bank App",
-  "short_name": "KellyBank",
+  "short_name": "Kelly Bank",
+  "description": "Secure Mobile Banking",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0A3D8F",
-  "theme_color": "#0A3D8F",
+  "background_color": "#0a4da1",
+  "theme_color": "#0a4da1",
   "icons": [
     {
       "src": "icon-192.png",
