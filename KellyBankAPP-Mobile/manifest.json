@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#0a4da1",
   "theme_color": "#0a4da1",
-  "description": "Secure Mobile Banking - Transfer, Airtime, History",
+  "description": "Secure Mobile Banking",
   "orientation": "portrait",
   "icons": [
     {
