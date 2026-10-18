@@ -1,4 +1,4 @@
-const CACHE_NAME = "kelly-bank-v3";
+const CACHE_NAME = "kelly-bank-v4";
 self.addEventListener('install', e => {
   self.skipWaiting();
   e.waitUntil(
