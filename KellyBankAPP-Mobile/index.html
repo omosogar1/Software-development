@@ -7,59 +7,102 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0A3D9A">
 <style>
-body{margin:0;font-family:Arial;background:#eef3ff;display:flex;justify-content:center;padding:20px}
-.card{background:white;border-radius:25px;padding:30px;width:100%;max-width:350px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.1);margin-top:40px}
-h1{color:#0A3D9A;margin:0}
-p{color:#555}
-.balance{font-size:32px;color:#0A3D9A;font-weight:bold;margin:20px 0}
-button{width:100%;background:#0A3D9A;color:white;border:none;padding:16px;border-radius:12px;font-size:16px;margin:10px 0;cursor:pointer}
-button:active{background:#082f7a}
+body{margin:0;font-family:Arial;background:#0A3D9A;display:flex;justify-content:center;min-height:100vh;align-items:center;padding:15px}
+.card{background:white;border-radius:25px;padding:30px;width:100%;max-width:360px;box-shadow:0 20px 50px rgba(0,0,0,0.3);text-align:center}
+h1{color:#0A3D9A;margin:5px 0}
+.balance{font-size:30px;color:#0A3D9A;font-weight:bold;margin:20px 0}
+button{width:100%;background:#0A3D9A;color:white;border:none;padding:16px;border-radius:12px;font-size:16px;margin:8px 0;cursor:pointer;font-weight:bold}
+button:active{transform:scale(0.98)}
+.back{background:#eef2ff;color:#0A3D9A}
 .page{display:none;text-align:left}
-input{width:100%;padding:14px;margin:8px 0;border:1px solid #ccc;border-radius:10px;box-sizing:border-box}
-.back{background:#eee;color:#333}
+#home, #login{display:block}
+input{width:100%;padding:15px;margin:8px 0;border:1.5px solid #d0d7e8;border-radius:12px;box-sizing:border-box;font-size:15px}
+input:focus{border-color:#0A3D9A;outline:none}
+.logo{width:60px;height:60px;background:#0A3D9A;border-radius:15px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;color:white;font-size:28px;font-weight:bold}
+.small{font-size:13px;color:#888;margin-top:15px}
+.logout{font-size:13px;color:#ff3b30;background:none;border:none;padding:5px;cursor:pointer;width:auto;float:right}
 </style>
 </head>
 <body>
 <div class="card">
+ <!-- LOGIN PAGE -->
+ <div id="login">
+  <div class="logo">K</div>
+  <h1>Kelly Bank</h1>
+  <p style="color:#666;margin-bottom:25px">Welcome back, secure banking</p>
+  <input id="user" placeholder="Username (try: kelly)">
+  <input id="pass" type="password" placeholder="Password (try: 1234)">
+  <p id="error" style="color:red;font-size:13px;display:none">Wrong username or password</p>
+  <button onclick="doLogin()">Login</button>
+  <p class="small">Demo: username <b>kelly</b> / password <b>1234</b></p>
+ </div>
  <!-- HOME PAGE -->
- <div id="home">
-  <h1>K Kelly Bank</h1>
-  <p>Secure Mobile Banking</p>
-  <div class="balance">₦125,000.00</div>
-  <button onclick="showPage('transfer')">Transfer</button>
+ <div id="home" class="page">
+  <button class="logout" onclick="doLogout()">Logout</button>
+  <h1 style="text-align:center">K Kelly Bank</h1>
+  <p style="text-align:center;color:#666">Secure Mobile Banking</p>
+  <div class="balance" style="text-align:center">₦125,000.00</div>
+  <button onclick="showPage('transfer')">Transfer Money</button>
   <button onclick="showPage('airtime')">Buy Airtime</button>
   <button onclick="showPage('history')">Transaction History</button>
  </div>
- <!-- TRANSFER PAGE -->
+ <!-- TRANSFER -->
  <div id="transfer" class="page">
   <h1>Transfer</h1>
   <input id="acct" placeholder="Account Number">
-  <input id="amt" placeholder="Amount" type="number">
+  <input id="amt" type="number" placeholder="Amount">
   <button onclick="doTransfer()">Send Money</button>
   <button class="back" onclick="showPage('home')">Back</button>
  </div>
- <!-- AIRTIME PAGE -->
+ <!-- AIRTIME -->
  <div id="airtime" class="page">
   <h1>Buy Airtime</h1>
   <input placeholder="Phone Number">
-  <input placeholder="Amount" type="number">
-  <select style="width:100%;padding:14px;border-radius:10px;margin:8px 0">
+  <input type="number" placeholder="Amount">
+  <select style="width:100%;padding:15px;border-radius:12px;margin:8px 0;border:1.5px solid #d0d7e8">
    <option>MTN</option><option>Glo</option><option>Airtel</option><option>9mobile</option>
   </select>
-  <button onclick="alert('Airtime Purchased Successfully!')">Buy Now</button>
+  <button onclick="alert('Airtime Sent!');showPage('home')">Buy Now</button>
   <button class="back" onclick="showPage('home')">Back</button>
  </div>
- <!-- HISTORY PAGE -->
+ <!-- HISTORY -->
  <div id="history" class="page">
   <h1>History</h1>
   <p> Received ₦50,000 - 18 Oct</p>
-  <p>➖ Transfer ₦5,000 - 17 Oct</p>
+  <p> Transfer ₦5,000 - 17 Oct</p>
   <p> Airtime ₦1,000 - 16 Oct</p>
   <p> Received ₦25,000 - 15 Oct</p>
   <button class="back" onclick="showPage('home')">Back</button>
  </div>
 </div>
 <script>
+function checkLogin(){
+ if(localStorage.getItem('kellyLogged')==='yes'){
+  document.getElementById('login').style.display='none';
+  document.getElementById('home').style.display='block';
+ } else {
+  document.getElementById('login').style.display='block';
+  document.getElementById('home').style.display='none';
+ }
+}
+function doLogin(){
+ let u = document.getElementById('user').value.toLowerCase().trim();
+ let p = document.getElementById('pass').value.trim();
+ if((u==='kelly' && p==='1234') || (u==='admin' && p==='admin')){
+  localStorage.setItem('kellyLogged','yes');
+  document.getElementById('login').style.display='none';
+  showPage('home');
+ } else {
+  document.getElementById('error').style.display='block';
+ }
+}
+function doLogout(){
+ localStorage.removeItem('kellyLogged');
+ document.getElementById('login').style.display='block';
+ document.querySelectorAll('.page').forEach(d=>d.style.display='none');
+ document.getElementById('user').value='';
+ document.getElementById('pass').value='';
+}
 function showPage(id){
  document.querySelectorAll('.card > div').forEach(d=>d.style.display='none');
  document.getElementById(id).style.display='block';
@@ -67,10 +110,11 @@ function showPage(id){
 function doTransfer(){
  let amt = document.getElementById('amt').value;
  let acct = document.getElementById('acct').value;
- if(!acct || !amt){alert('Fill account and amount');return;}
+ if(!acct || !amt){alert('Fill all fields');return;}
  alert('Transferred ₦'+amt+' to '+acct+' Successfully!');
  showPage('home');
 }
+checkLogin();
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}
 </script>
 </body>
