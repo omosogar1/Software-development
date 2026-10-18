@@ -3,119 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>K Kelly Bank</title>
+<title>Kelly Bank</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0A3D9A">
+<meta name="theme-color" content="#0A2A7A">
 <style>
-body{margin:0;font-family:Arial;background:#0A3D9A;display:flex;justify-content:center;min-height:100vh;align-items:center;padding:15px}
-.card{background:white;border-radius:25px;padding:30px;width:100%;max-width:360px;box-shadow:0 20px 50px rgba(0,0,0,0.3);text-align:center}
-h1{color:#0A3D9A;margin:5px 0}
-.balance{font-size:30px;color:#0A3D9A;font-weight:bold;margin:20px 0}
-button{width:100%;background:#0A3D9A;color:white;border:none;padding:16px;border-radius:12px;font-size:16px;margin:8px 0;cursor:pointer;font-weight:bold}
-button:active{transform:scale(0.98)}
-.back{background:#eef2ff;color:#0A3D9A}
-.page{display:none;text-align:left}
-#home, #login{display:block}
-input{width:100%;padding:15px;margin:8px 0;border:1.5px solid #d0d7e8;border-radius:12px;box-sizing:border-box;font-size:15px}
-input:focus{border-color:#0A3D9A;outline:none}
-.logo{width:60px;height:60px;background:#0A3D9A;border-radius:15px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;color:white;font-size:28px;font-weight:bold}
-.small{font-size:13px;color:#888;margin-top:15px}
-.logout{font-size:13px;color:#ff3b30;background:none;border:none;padding:5px;cursor:pointer;width:auto;float:right}
+*{box-sizing:border-box;font-family:'Segoe UI',system-ui}
+body{margin:0;background:#f5f7ff;display:flex;justify-content:center;min-height:100vh}
+.app{width:100%;max-width:420px;background:white;min-height:100vh;position:relative;padding-bottom:80px}
+.top{background:linear-gradient(135deg,#0A2A7A,#1E4ED8);color:white;padding:20px;border-radius:0 0 30px 30px}
+.card-balance{background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border-radius:20px;padding:18px;margin-top:15px;border:1px solid rgba(255,255,255,0.2)}
+.balance{font-size:32px;font-weight:800;margin:8px 0}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:20px}
+.q{ text-align:center;cursor:pointer }
+.q-icon{width:56px;height:56px;background:#eef2ff;border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:24px;color:#0A2A7A}
+.trans{padding:0 20px}
+.t-item{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #f0f0f0}
+.t-left{display:flex;align-items:center;gap:12px}
+.t-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.bottom{position:fixed;bottom:0;max-width:420px;width:100%;background:white;border-top:1px solid #eee;display:flex;justify-content:space-around;padding:10px 0}
+.b-item{text-align:center;font-size:11px;color:#999;cursor:pointer}
+.b-item.active{color:#0A2A7A;font-weight:bold}
+button.primary{width:100%;background:#0A2A7A;color:white;border:none;padding:16px;border-radius:14px;font-weight:700;font-size:16px}
+input{width:100%;padding:15px;border:1.5px solid #e5e7eb;border-radius:14px;margin:8px 0;font-size:15px}
+.page{display:none;padding:20px}
+#login{display:block;background:linear-gradient(135deg,#0A2A7A,#1E4ED8);min-height:100vh;padding:30px}
+.login-card{background:white;border-radius:24px;padding:28px;margin-top:60px}
+.logo{width:56px;height:56px;background:#0A2A7A;border-radius:16px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:26px;margin:0 auto 12px}
 </style>
 </head>
 <body>
-<div class="card">
- <!-- LOGIN PAGE -->
- <div id="login">
+<div class="app">
+<!-- LOGIN -->
+<div id="login">
+ <div class="login-card">
   <div class="logo">K</div>
-  <h1>Kelly Bank</h1>
-  <p style="color:#666;margin-bottom:25px">Welcome back, secure banking</p>
-  <input id="user" placeholder="Username (try: kelly)">
-  <input id="pass" type="password" placeholder="Password (try: 1234)">
-  <p id="error" style="color:red;font-size:13px;display:none">Wrong username or password</p>
-  <button onclick="doLogin()">Login</button>
-  <p class="small">Demo: username <b>kelly</b> / password <b>1234</b></p>
- </div>
- <!-- HOME PAGE -->
- <div id="home" class="page">
-  <button class="logout" onclick="doLogout()">Logout</button>
-  <h1 style="text-align:center">K Kelly Bank</h1>
-  <p style="text-align:center;color:#666">Secure Mobile Banking</p>
-  <div class="balance" style="text-align:center">₦125,000.00</div>
-  <button onclick="showPage('transfer')">Transfer Money</button>
-  <button onclick="showPage('airtime')">Buy Airtime</button>
-  <button onclick="showPage('history')">Transaction History</button>
- </div>
- <!-- TRANSFER -->
- <div id="transfer" class="page">
-  <h1>Transfer</h1>
-  <input id="acct" placeholder="Account Number">
-  <input id="amt" type="number" placeholder="Amount">
-  <button onclick="doTransfer()">Send Money</button>
-  <button class="back" onclick="showPage('home')">Back</button>
- </div>
- <!-- AIRTIME -->
- <div id="airtime" class="page">
-  <h1>Buy Airtime</h1>
-  <input placeholder="Phone Number">
-  <input type="number" placeholder="Amount">
-  <select style="width:100%;padding:15px;border-radius:12px;margin:8px 0;border:1.5px solid #d0d7e8">
-   <option>MTN</option><option>Glo</option><option>Airtel</option><option>9mobile</option>
-  </select>
-  <button onclick="alert('Airtime Sent!');showPage('home')">Buy Now</button>
-  <button class="back" onclick="showPage('home')">Back</button>
- </div>
- <!-- HISTORY -->
- <div id="history" class="page">
-  <h1>History</h1>
-  <p> Received ₦50,000 - 18 Oct</p>
-  <p> Transfer ₦5,000 - 17 Oct</p>
-  <p> Airtime ₦1,000 - 16 Oct</p>
-  <p> Received ₦25,000 - 15 Oct</p>
-  <button class="back" onclick="showPage('home')">Back</button>
+  <h2 style="text-align:center;margin:0;color:#0A2A7A">Kelly Bank</h2>
+  <p style="text-align:center;color:#666;font-size:13px">The bank of the free</p>
+  <input id="user" placeholder="Username">
+  <input id="pass" type="password" placeholder="Password">
+  <p id="err" style="color:red;font-size:12px;display:none">Invalid login</p>
+  <button class="primary" onclick="doLogin()" style="margin-top:12px">Login to Kelly Bank</button>
+  <p style="text-align:center;font-size:12px;color:#888;margin-top:12px">Demo: kelly / 1234</p>
  </div>
 </div>
+<!-- HOME -->
+<div id="home" class="page">
+ <div class="top">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+   <div><b>KA</b> Kelly Amos</div>
+   <div style="display:flex;gap:15px"><span>🔔</span><span onclick="doLogout()" style="cursor:pointer">Logout</span></div>
+  </div>
+  <div class="card-balance">
+   <div style="opacity:0.8;font-size:13px">Total Balance <span onclick="toggleBal()" style="float:right;cursor:pointer">👁️</span></div>
+   <div class="balance" id="bal">₦125,000.00</div>
+   <div style="font-size:12px;opacity:0.8">Account •••• 4021 | Kelly Bank</div>
+  </div>
+ </div>
+ <div class="quick">
+  <div class="q" onclick="showPage('transfer')"><div class="q-icon">✈️</div><div style="font-size:12px">Transfer</div></div>
+  <div class="q" onclick="showPage('airtime')"><div class="q-icon">📞</div><div style="font-size:12px">Airtime</div></div>
+  <div class="q" onclick="showPage('bills')"><div class="q-icon">🧾</div><div style="font-size:12px">Bills</div></div>
+  <div class="q" onclick="showPage('history')"><div class="q-icon">🕒</div><div style="font-size:12px">History</div></div>
+ </div>
+ <div class="trans">
+  <div style="display:flex;justify-content:space-between"><b>Recent Transactions</b><span style="color:#0A2A7A;font-size:13px">See all</span></div>
+  <div class="t-item"><div class="t-left"><div class="t-icon" style="background:#ffeee0">🚗</div><div><b>Uber</b><div style="font-size:11px;color:#888">Transport • Today</div></div></div><div style="color:#c00">-₦4,500</div></div>
+  <div class="t-item"><div class="t-left"><div class="t-icon" style="background:#f3e8ff">🎵</div><div><b>Spotify</b><div style="font-size:11px;color:#888">Today • 09:15am</div></div></div><div style="color:#c00">-₦1,200</div></div>
+  <div class="t-item"><div class="t-left"><div class="t-icon" style="background:#e0ffe0">💰</div><div><b>Salary</b><div style="font-size:11px;color:#888">Income • Yesterday</div></div></div><div style="color:green">+₦180,000</div></div>
+ </div>
+ <div class="bottom">
+  <div class="b-item active">🏠<br>Home</div>
+  <div class="b-item">💳<br>Cards</div>
+  <div class="b-item">📊<br>Payments</div>
+  <div class="b-item">🐷<br>Savings</div>
+  <div class="b-item">👤<br>Profile</div>
+ </div>
+</div>
+<!-- TRANSFER PAGE -->
+<div id="transfer" class="page">
+ <h2>Transfer</h2>
+ <input id="acct" placeholder="Account Number (10 digits)">
+ <input id="amt" type="number" placeholder="Amount">
+ <input placeholder="Remark (optional)">
+ <button class="primary" onclick="doTransfer()">Continue</button>
+ <button onclick="showPage('home')" style="width:100%;margin-top:10px;padding:14px;border-radius:14px;border:1px solid #ddd;background:white">Back</button>
+</div>
+<div id="airtime" class="page">
+ <h2>Buy Airtime</h2>
+ <input placeholder="Phone Number">
+ <input type="number" placeholder="Amount">
+ <select style="width:100%;padding:15px;border-radius:14px;border:1.5px solid #e5e7eb;margin:8px 0"><option>MTN</option><option>Glo</option><option>Airtel</option><option>9mobile</option></select>
+ <button class="primary" onclick="alert('Airtime Sent!');showPage('home')">Buy Now</button>
+ <button onclick="showPage('home')" style="width:100%;margin-top:10px;padding:14px;border-radius:14px;border:1px solid #ddd;background:white">Back</button>
+</div>
+<div id="history" class="page">
+ <h2>Transaction History</h2>
+ <div class="t-item"><div>Received from John</div><div style="color:green">+₦50,000</div></div>
+ <div class="t-item"><div>Transfer to Mary</div><div style="color:#c00">-₦5,000</div></div>
+ <div class="t-item"><div>Airtime MTN</div><div style="color:#c00">-₦1,000</div></div>
+ <button onclick="showPage('home')" style="width:100%;margin-top:20px;padding:14px;border-radius:14px;border:1px solid #ddd;background:white">Back to Home</button>
+</div>
+<div id="bills" class="page">
+ <h2>Pay Bills</h2>
+ <p>Electricity, DSTV, GOTV coming soon!</p>
+ <button onclick="showPage('home')" style="width:100%;margin-top:10px;padding:14px;border-radius:14px;border:1px solid #ddd;background:white">Back</button>
+</div>
+</div>
 <script>
+let hidden=false;
+function toggleBal(){
+ hidden=!hidden;
+ document.getElementById('bal').innerText = hidden ? '••••••••' : '₦125,000.00';
+}
 function checkLogin(){
  if(localStorage.getItem('kellyLogged')==='yes'){
   document.getElementById('login').style.display='none';
-  document.getElementById('home').style.display='block';
- } else {
-  document.getElementById('login').style.display='block';
-  document.getElementById('home').style.display='none';
+  showPage('home');
  }
 }
 function doLogin(){
- let u = document.getElementById('user').value.toLowerCase().trim();
- let p = document.getElementById('pass').value.trim();
- if((u==='kelly' && p==='1234') || (u==='admin' && p==='admin')){
+ let u=document.getElementById('user').value.toLowerCase().trim();
+ let p=document.getElementById('pass').value.trim();
+ if((u==='kelly'&&p==='1234')||u==='admin'){
   localStorage.setItem('kellyLogged','yes');
   document.getElementById('login').style.display='none';
   showPage('home');
- } else {
-  document.getElementById('error').style.display='block';
- }
+ }else{document.getElementById('err').style.display='block'}
 }
 function doLogout(){
  localStorage.removeItem('kellyLogged');
- document.getElementById('login').style.display='block';
- document.querySelectorAll('.page').forEach(d=>d.style.display='none');
- document.getElementById('user').value='';
- document.getElementById('pass').value='';
+ location.reload();
 }
 function showPage(id){
- document.querySelectorAll('.card > div').forEach(d=>d.style.display='none');
+ document.querySelectorAll('.page').forEach(d=>d.style.display='none');
+ document.getElementById('login').style.display='none';
  document.getElementById(id).style.display='block';
+ if(id==='home') document.getElementById('home').style.padding='0';
 }
 function doTransfer(){
- let amt = document.getElementById('amt').value;
- let acct = document.getElementById('acct').value;
- if(!acct || !amt){alert('Fill all fields');return;}
- alert('Transferred ₦'+amt+' to '+acct+' Successfully!');
+ let a=document.getElementById('acct').value;
+ let m=document.getElementById('amt').value;
+ if(!a||!m){alert('Fill all fields');return}
+ alert('Success! Sent ₦'+m+' to '+a);
  showPage('home');
 }
 checkLogin();
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}
 </script>
 </body>
 </html>
