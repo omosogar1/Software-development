@@ -1,34 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0a4da1">
-<link rel="apple-touch-icon" href="icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly Bank App</title>
+<title>K Kelly Bank</title>
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon-192.png">
-<meta name="theme-color" content="#0A3D8F">
+<meta name="theme-color" content="#0A3D9A">
 <style>
-body{font-family:Arial;background:#eef2ff;margin:0;padding:20px}
-.card{background:white;padding:25px;border-radius:16px;max-width:380px;margin:30px auto;box-shadow:0 6px 20px rgba(0,0,0,.15);text-align:center}
-h1{color:#0A3D8F;margin:0}
-.balance{font-size:28px;color:#0A3D8F;font-weight:bold;margin:15px 0}
-button{background:#0A3D8F;color:white;border:none;padding:12px;border-radius:10px;width:100%;margin:8px 0;font-size:16px}
+body{margin:0;font-family:Arial;background:#eef3ff;display:flex;justify-content:center;padding:20px}
+.card{background:white;border-radius:25px;padding:30px;width:100%;max-width:350px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.1);margin-top:40px}
+h1{color:#0A3D9A;margin:0}
+p{color:#555}
+.balance{font-size:32px;color:#0A3D9A;font-weight:bold;margin:20px 0}
+button{width:100%;background:#0A3D9A;color:white;border:none;padding:16px;border-radius:12px;font-size:16px;margin:10px 0;cursor:pointer}
+button:active{background:#082f7a}
+.page{display:none;text-align:left}
+input{width:100%;padding:14px;margin:8px 0;border:1px solid #ccc;border-radius:10px;box-sizing:border-box}
+.back{background:#eee;color:#333}
 </style>
 </head>
 <body>
 <div class="card">
-<h1>K Kelly Bank</h1>
-<p>Secure Mobile Banking</p>
-<div class="balance">₦125,000.00</div>
-<button>Transfer</button>
-<button>Buy Airtime</button>
-<button>Transaction History</button>
+ <!-- HOME PAGE -->
+ <div id="home">
+  <h1>K Kelly Bank</h1>
+  <p>Secure Mobile Banking</p>
+  <div class="balance">₦125,000.00</div>
+  <button onclick="showPage('transfer')">Transfer</button>
+  <button onclick="showPage('airtime')">Buy Airtime</button>
+  <button onclick="showPage('history')">Transaction History</button>
+ </div>
+ <!-- TRANSFER PAGE -->
+ <div id="transfer" class="page">
+  <h1>Transfer</h1>
+  <input id="acct" placeholder="Account Number">
+  <input id="amt" placeholder="Amount" type="number">
+  <button onclick="doTransfer()">Send Money</button>
+  <button class="back" onclick="showPage('home')">Back</button>
+ </div>
+ <!-- AIRTIME PAGE -->
+ <div id="airtime" class="page">
+  <h1>Buy Airtime</h1>
+  <input placeholder="Phone Number">
+  <input placeholder="Amount" type="number">
+  <select style="width:100%;padding:14px;border-radius:10px;margin:8px 0">
+   <option>MTN</option><option>Glo</option><option>Airtel</option><option>9mobile</option>
+  </select>
+  <button onclick="alert('Airtime Purchased Successfully!')">Buy Now</button>
+  <button class="back" onclick="showPage('home')">Back</button>
+ </div>
+ <!-- HISTORY PAGE -->
+ <div id="history" class="page">
+  <h1>History</h1>
+  <p> Received ₦50,000 - 18 Oct</p>
+  <p>➖ Transfer ₦5,000 - 17 Oct</p>
+  <p> Airtime ₦1,000 - 16 Oct</p>
+  <p> Received ₦25,000 - 15 Oct</p>
+  <button class="back" onclick="showPage('home')">Back</button>
+ </div>
 </div>
 <script>
+function showPage(id){
+ document.querySelectorAll('.card > div').forEach(d=>d.style.display='none');
+ document.getElementById(id).style.display='block';
+}
+function doTransfer(){
+ let amt = document.getElementById('amt').value;
+ let acct = document.getElementById('acct').value;
+ if(!acct || !amt){alert('Fill account and amount');return;}
+ alert('Transferred ₦'+amt+' to '+acct+' Successfully!');
+ showPage('home');
+}
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}
 </script>
 </body>
