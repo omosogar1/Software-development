@@ -2,12 +2,25 @@
   "name": "Kelly Bank",
   "short_name": "Kelly Bank",
   "description": "Kelly Bank - The bank of the free",
-  "start_url": "https://omosogar1.github.io/kelly-bank/",
+  "id": "/Software-development/KellyBankAPP-Mobile/",
+  "start_url": "/Software-development/KellyBankAPP-Mobile/",
+  "scope": "/Software-development/KellyBankAPP-Mobile/",
   "display": "standalone",
   "background_color": "#0A2A7A",
   "theme_color": "#0A2A7A",
+  "orientation": "portrait",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "/Software-development/KellyBankAPP-Mobile/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/Software-development/KellyBankAPP-Mobile/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }
