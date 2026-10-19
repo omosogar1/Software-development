@@ -1,150 +1,167 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Kelly Bank - Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelly Bank - The bank of the free</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0A2A7A">
 <style>
-*{box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif;margin:0;padding:0}
-body{background:#f3f5ff;display:flex;justify-content:center}
-.app{width:100%;max-width:430px;background:#f3f5ff;min-height:100vh;padding-bottom:110px;position:relative}
-.top{background:linear-gradient(135deg,#081a4a 0%,#0A2A7A 40%,#1E4ED8 100%);color:white;padding:24px 20px 32px;border-radius:0 0 36px 36px;box-shadow:0 10px 30px rgba(10,42,122,0.3)}
-.card-balance{background:rgba(255,255,255,0.14);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.22);border-radius:24px;padding:20px;margin-top:16px}
-.balance{font-size:36px;font-weight:900;letter-spacing:-1px;margin:8px 0}
-.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:20px 14px}
-.q{background:white;border-radius:20px;padding:16px 4px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,0.06);transition:0.2s;cursor:pointer}
-.q:active{transform:scale(0.92)}
-.q-icon{width:56px;height:56px;background:linear-gradient(135deg,#eef2ff,#dbeafe);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:26px}
-.trans{background:white;margin:0 14px;border-radius:22px;padding:18px 20px;box-shadow:0 8px 24px rgba(0,0,0,0.06)}
-.t-item{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #f5f6fb}
-.page{display:none;padding:20px;min-height:80vh;animation:fade 0.25s ease}
-@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-#home{display:block;padding:0;animation:none}
-#login{position:fixed;inset:0;background:linear-gradient(135deg,#081a4a,#1E4ED8);display:flex;align-items:center;justify-content:center;z-index:100;padding:22px}
-.login-box{background:white;border-radius:26px;padding:32px;width:100%;max-width:380px;box-shadow:0 24px 60px rgba(0,0,0,0.3)}
-.logo{width:64px;height:64px;background:linear-gradient(135deg,#0A2A7A,#3b82f6);border-radius:18px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:30px;margin:0 auto 12px}
-.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);display:flex;justify-content:space-around;padding:12px 0 22px;border-top:1px solid #eef0f5;z-index:999;border-radius:28px 28px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,0.08)}
-.b{flex:1;text-align:center;font-size:11px;color:#98a2b3;cursor:pointer;font-weight:600}
-.b.active{color:#0A2A7A;font-weight:800}
-.b span{display:block;font-size:22px;margin-bottom:2px}
-button.primary{width:100%;background:linear-gradient(135deg,#0A2A7A,#1E4ED8);color:white;border:none;padding:16px;border-radius:14px;font-weight:700;font-size:16px;box-shadow:0 8px 20px rgba(10,42,122,0.35);cursor:pointer}
-input,select{width:100%;padding:15px;border:1.5px solid #e5e7eb;border-radius:14px;margin:8px 0;font-size:15px;outline:none;background:white}
-input:focus{border-color:#0A2A7A}
-.card{height:200px;background:linear-gradient(135deg,#081a4a,#1E4ED8,#3b82f6);border-radius:22px;padding:22px;color:white;position:relative;margin:18px 0;box-shadow:0 14px 34px rgba(10,42,122,0.4)}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
-.receipt{background:white;border-radius:22px;padding:28px;width:100%;max-width:360px;text-align:center;animation:pop 0.35s ease}
-@keyframes pop{0%{transform:scale(0.85)}100%{transform:scale(1)}}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#F5F7FB;color:#111}
+#loginScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:linear-gradient(180deg,#0A2A7A 0%,#1E4ED8 100%);color:white;padding:20px}
+.login-card{background:white;color:#111;width:100%;max-width:380px;padding:28px;border-radius:20px;box-shadow:0 20px 40px rgba(0,0,0,.2)}
+.login-card h1{color:#0A2A7A;text-align:center;margin-bottom:6px}
+.login-card p{text-align:center;color:#666;margin-bottom:20px;font-size:14px}
+.login-card input{width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin-bottom:12px;font-size:15px}
+.login-card button{width:100%;padding:14px;background:#0A2A7A;color:white;border:none;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer}
+#mainApp{display:none;flex-direction:column;min-height:100vh;padding-bottom:80px}
+.header{background:#0A2A7A;color:white;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
+.balance-card{margin:16px;background:linear-gradient(135deg,#0A2A7A,#3A6DFF);color:white;padding:20px;border-radius:20px}
+.balance-card h3{font-size:14px;opacity:.8}
+.balance-card h1{font-size:32px;margin:8px 0}
+.quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 16px;margin-top:16px}
+.action{background:white;padding:14px 6px;border-radius:16px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.05);cursor:pointer}
+.action span{font-size:22px;display:block}
+.action p{font-size:12px;margin-top:6px;font-weight:600}
+.tab{display:none;padding:16px}
+.tab.active{display:block}
+.card-view{background:#101828;color:white;border-radius:20px;padding:20px;margin-bottom:16px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #eee;z-index:100}
+.nav-item{text-align:center;font-size:12px;color:#888;cursor:pointer;background:none;border:none}
+.nav-item.active{color:#0A2A7A;font-weight:bold}
+.nav-item span{display:block;font-size:22px}
+.btn{padding:14px;border:none;border-radius:12px;font-weight:bold;width:100%;cursor:pointer}
+.btn-primary{background:#0A2A7A;color:white}
+.btn-danger{background:#FF3B30;color:white;margin-top:20px}
+.list-item{background:white;padding:14px;border-radius:12px;margin-bottom:10px;display:flex;justify-content:space-between;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 </style>
 </head>
 <body>
-<div class="app">
-
-<div id="login">
-<div class="login-box">
-<div class="logo">K</div>
-<h2 style="text-align:center;color:#0A2A7A">Kelly Bank</h2>
-<p style="text-align:center;font-size:12px;color:#6b7280;margin:8px 0 20px">Premium • Secure • Fast • v9 Final</p>
-<input id="user" placeholder="Username (kelly)">
-<input id="pass" type="password" placeholder="PIN (1234)">
-<p id="err" style="color:red;font-size:12px;display:none;margin-top:6px">Wrong! Use kelly / 1234</p>
-<button class="primary" onclick="login()" style="margin-top:14px">Unlock App</button>
-<p style="text-align:center;font-size:11px;color:#999;margin-top:14px">By KELLY AMOS • Port Harcourt</p>
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div style="font-size:48px;background:white;color:#0A2A7A;width:80px;height:80px;display:flex;align-items:center;justify-content:center;border-radius:20px;font-weight:bold;margin-bottom:20px;">K</div>
+  <div class="login-card">
+    <h1>Kelly Bank</h1>
+    <p>The bank of the free</p>
+    <input id="username" placeholder="Username - kelly" value="kelly">
+    <input id="password" type="password" placeholder="Password - 1234" value="1234">
+    <button onclick="login()">Login</button>
+    <p style="margin-top:12px;font-size:12px;">Use kelly / 1234 to test</p>
+  </div>
 </div>
-</div>
-
-<div id="home" class="page">
-<div class="top">
-<div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:8px"><div style="width:34px;height:34px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#0A2A7A;font-weight:800">K</div><span><b>Kelly Amos</b> • Verified ✓</span></div><span onclick="logout()" style="background:rgba(255,255,255,0.18);padding:6px 14px;border-radius:20px;font-size:11px;cursor:pointer">Logout</span></div>
-<div class="card-balance">
-<div style="font-size:12px;opacity:0.85;display:flex;justify-content:space-between">Total Balance <span onclick="toggleBal()" id="eye" style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:12px;cursor:pointer">👁️ Hide</span></div>
-<div class="balance" id="bal">₦125,000.00</div>
-<div style="font-size:11px;opacity:0.8">Account •••• 4021 | Kelly Bank Savings | Tier 3</div>
-<div style="display:flex;gap:10px;margin-top:16px">
-<div onclick="ok('Add Money','+₦50,000')" style="flex:1;background:white;color:#0A2A7A;text-align:center;padding:11px;border-radius:12px;font-weight:800;font-size:13px;cursor:pointer">+ Add Money</div>
-<div onclick="go('transfer')" style="flex:1;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.2);text-align:center;padding:11px;border-radius:12px;font-weight:700;font-size:13px;cursor:pointer">Transfer</div>
-</div>
-</div>
-</div>
-<div class="quick">
-<div class="q" onclick="go('transfer')"><div class="q-icon">✈️</div><div style="font-size:12px;font-weight:700">Transfer</div></div>
-<div class="q" onclick="go('airtime')"><div class="q-icon">📞</div><div style="font-size:12px;font-weight:700">Airtime</div></div>
-<div class="q" onclick="go('bills')"><div class="q-icon">💡</div><div style="font-size:12px;font-weight:700">Bills</div></div>
-<div class="q" onclick="go('history')"><div class="q-icon">🕒</div><div style="font-size:12px;font-weight:700">History</div></div>
-</div>
-<div class="trans">
-<div style="display:flex;justify-content:space-between;margin-bottom:6px"><b style="color:#0A2A7A">Recent Transactions</b><span style="color:#0A2A7A;font-size:12px;font-weight:700" onclick="go('history')">See all →</span></div>
-<div class="t-item"><div style="display:flex;gap:12px;align-items:center"><div style="width:44px;height:44px;background:#ffeee0;border-radius:12px;display:flex;align-items:center;justify-content:center">🚗</div><div><b style="font-size:13px">Uber Trip</b><div style="font-size:11px;color:#888">Today • 10:42am</div></div></div><div style="font-weight:800;color:#c00">-₦4,500</div></div>
-<div class="t-item"><div style="display:flex;gap:12px;align-items:center"><div style="width:44px;height:44px;background:#f3e8ff;border-radius:12px;display:flex;align-items:center;justify-content:center">🎵</div><div><b style="font-size:13px">Spotify</b><div style="font-size:11px;color:#888">Today • 09:15am</div></div></div><div style="font-weight:800;color:#c00">-₦1,200</div></div>
-<div class="t-item"><div style="display:flex;gap:12px;align-items:center"><div style="width:44px;height:44px;background:#dcfce7;border-radius:12px;display:flex;align-items:center;justify-content:center">💰</div><div><b style="font-size:13px">Salary - ABC Ltd</b><div style="font-size:11px;color:#888">Yesterday</div></div></div><div style="font-weight:800;color:#16a34a">+₦180,000</div></div>
-</div>
-</div>
-
-<div id="cards" class="page"><h2 style="color:#0A2A7A">Your Cards</h2><div class="card"><div style="font-size:10px;letter-spacing:3px;opacity:0.8">KELLY BANK • VIRTUAL • VISA</div><div style="margin-top:55px;font-size:20px;letter-spacing:3px">4242 •••• •••• 4021</div><div style="display:flex;justify-content:space-between;margin-top:18px"><div><div style="font-size:10px;opacity:0.6">CARD HOLDER</div><b>KELLY AMOS</b></div><div><div style="font-size:10px;opacity:0.6">EXPIRES</div><b>12/28</b></div><div><div style="font-size:10px;opacity:0.6">CVV</div><b>•••</b></div></div></div><div style="background:white;padding:16px;border-radius:16px;display:flex;justify-content:space-around;box-shadow:0 4px 16px rgba(0,0,0,0.05)"><div style="text-align:center"><div style="font-size:22px">🔒</div><div style="font-size:11px;margin-top:4px">Freeze</div></div><div style="text-align:center"><div style="font-size:22px">👁️</div><div style="font-size:11px;margin-top:4px">Details</div></div><div style="text-align:center"><div style="font-size:22px">⚙️</div><div style="font-size:11px;margin-top:4px">Settings</div></div></div></div>
-
-<div id="transfer" class="page"><h2 style="color:#0A2A7A">Transfer Money</h2><p style="font-size:12px;color:#666;margin:8px 0">Send to any bank instantly</p><input id="acct" placeholder="Account Number (10 digits)" maxlength="10"><input id="amt" type="number" placeholder="Amount ₦"><input placeholder="Remark (optional)"><button class="primary" onclick="send()" style="margin-top:12px">Send Now</button></div>
-
-<div id="savings" class="page"><h2 style="color:#0A2A7A">Savings</h2><div style="background:linear-gradient(135deg,#16a34a,#22c55e);border-radius:20px;padding:22px;color:white;margin-top:12px"><div style="font-size:13px;opacity:0.9">Total Savings • 12% p.a</div><div style="font-size:30px;font-weight:900;margin:8px 0">₦340,000.00</div><div style="font-size:12px;background:rgba(255,255,255,0.2);display:inline-block;padding:4px 10px;border-radius:20px">Locked till Dec 2026</div></div><div style="background:white;border-radius:16px;padding:16px;margin-top:16px"><b>🎯 Kelly Target</b><div style="font-size:12px;color:#666;margin:6px 0">New iPhone 16 - 75% completed • ₦850k / ₦1.2m</div><div style="height:8px;background:#eef2ff;border-radius:10px"><div style="width:75%;height:100%;background:#0A2A7A;border-radius:10px"></div></div></div></div>
-
-<div id="profile" class="page"><h2 style="color:#0A2A7A">Profile</h2><div style="background:white;border-radius:20px;padding:24px;text-align:center;margin-top:12px"><div style="width:72px;height:72px;background:linear-gradient(135deg,#0A2A7A,#3b82f6);border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:white;font-size:32px;font-weight:800">K</div><b style="font-size:18px">Kelly Amos</b><div style="font-size:12px;color:#666;margin-top:4px">kelly@kellybank.com • Port Harcourt • Verified Tier 3</div><div style="margin-top:20px;text-align:left;font-size:14px;line-height:32px;background:#f9fafb;padding:16px;border-radius:12px">📧 Support<br>🔐 Change PIN<br>📄 Terms & Privacy<br>⭐ Rate Kelly Bank<br>📤 Invite Friends</div></div><button onclick="logout()" style="width:100%;margin-top:16px;padding:14px;border-radius:12px;border:none;background:#fee2e2;color:#b91c1c;font-weight:700">Logout</button></div>
-
-<div id="airtime" class="page"><h2>Buy Airtime</h2><input placeholder="Phone Number"><input type="number" placeholder="Amount"><select><option>MTN</option><option>Glo</option><option>Airtel</option><option>9mobile</option></select><button class="primary" onclick="ok('Airtime MTN','-₦1,000')" style="margin-top:12px">Buy Airtime</button></div>
-<div id="history" class="page"><h2>Transaction History</h2><div style="background:white;border-radius:16px;padding:16px;margin-top:12px"><div class="t-item"><div><b>Received from John</b><div style="font-size:11px;color:#888">Today</div></div><div style="color:#16a34a;font-weight:700">+₦50,000</div></div><div class="t-item"><div><b>Transfer to Mary</b><div style="font-size:11px;color:#888">Yesterday</div></div><div style="color:#c00;font-weight:700">-₦5,000</div></div><div class="t-item"><div><b>Airtime MTN</b><div style="font-size:11px;color:#888">12 Oct</div></div><div style="color:#c00;font-weight:700">-₦1,000</div></div></div></div>
-<div id="bills" class="page"><h2>Pay Bills</h2><div style="background:white;padding:32px;border-radius:16px;text-align:center;color:#888;margin-top:12px"><div style="font-size:40px">💡</div><div style="margin-top:10px">Electricity, DSTV, GOTV<br>Coming in next update!</div></div></div>
-
-<div class="bottom">
-<div class="b active" id="b-home" onclick="go('home')"><span>🏠</span>Home</div>
-<div class="b" id="b-cards" onclick="go('cards')"><span>💳</span>Cards</div>
-<div class="b" id="b-transfer" onclick="go('transfer')"><span>📊</span>Payments</div>
-<div class="b" id="b-savings" onclick="go('savings')"><span>🐷</span>Savings</div>
-<div class="b" id="b-profile" onclick="go('profile')"><span>👤</span>Profile</div>
-</div>
-
-<div class="overlay" id="overlay"><div class="receipt"><div style="font-size:56px">✅</div><h3 id="rt" style="color:#0A2A7A;margin:12px 0">Success!</h3><p id="ra" style="font-size:26px;font-weight:900">₦5,000</p><p style="font-size:11px;color:#666;margin:10px 0">Transaction ID: KB-2026-<span id="tid"></span><br>Kelly Bank • Completed • 12:34pm</p><button class="primary" onclick="closeOk()">Done</button><button onclick="closeOk()" style="width:100%;margin-top:10px;padding:12px;border-radius:12px;border:1px solid #ddd;background:white;font-weight:600">Share Receipt</button></div></div>
-
+<!-- MAIN APP -->
+<div id="mainApp">
+  <div class="header">
+    <div><strong>Kelly Bank</strong><br><small id="userGreeting">Hello, Kelly</small></div>
+    <div style="font-size:22px">🔔</div>
+  </div>
+  <!-- HOME TAB -->
+  <div id="homeTab" class="tab active">
+    <div class="balance-card">
+      <h3>Total Balance <span onclick="toggleBalance()" style="cursor:pointer">👁️</span></h3>
+      <h1 id="balanceText">₦125,000.00</h1>
+      <small>Account: 816543... • Kelly Amos</small>
+    </div>
+    <div class="quick-actions">
+      <div class="action" onclick="showTab('paymentsTab')"><span>💸</span><p>Transfer</p></div>
+      <div class="action" onclick="alert('Airtime coming')"><span>📱</span><p>Airtime</p></div>
+      <div class="action" onclick="alert('Bills coming')"><span>💡</span><p>Bills</p></div>
+      <div class="action" onclick="showTab('savingsTab')"><span>🐷</span><p>Savings</p></div>
+    </div>
+    <h4 style="padding:16px 16px 8px">Recent Transactions</h4>
+    <div id="transactionsList" style="padding:0 16px">
+      <div class="list-item"><span>MTN Airtime</span><span>-₦1,000</span></div>
+      <div class="list-item"><span>From Chinedu</span><span style="color:green">+₦20,000</span></div>
+      <div class="list-item"><span>Netflix</span><span>-₦5,500</span></div>
+    </div>
+  </div>
+  <!-- CARDS TAB -->
+  <div id="cardsTab" class="tab">
+    <div class="card-view">
+      <small>VISA • Virtual</small>
+      <h2 style="margin:20px 0;letter-spacing:2px">4242  1212  4021  8890</h2>
+      <div style="display:flex;justify-content:space-between"><span>KELLY AMOS</span><span>12/28</span></div>
+    </div>
+    <button class="btn btn-primary">Freeze Card</button>
+  </div>
+  <!-- PAYMENTS TAB -->
+  <div id="paymentsTab" class="tab">
+    <h3>Send Money</h3><br>
+    <input id="payTo" placeholder="Account number" style="width:100%;padding:14px;border-radius:12px;border:1px solid #ddd;margin-bottom:10px">
+    <input id="payAmount" type="number" placeholder="Amount" style="width:100%;padding:14px;border-radius:12px;border:1px solid #ddd;margin-bottom:10px">
+    <button class="btn btn-primary" onclick="sendMoney()">Send Now</button>
+  </div>
+  <!-- SAVINGS TAB -->
+  <div id="savingsTab" class="tab">
+    <h3>My Savings</h3><br>
+    <div class="list-item"><div><strong>iPhone 16</strong><br><small>75% • ₦750k/₦1M</small></div><span>🐷</span></div>
+    <button class="btn btn-primary">+ New Target</button>
+  </div>
+  <!-- PROFILE TAB -->
+  <div id="profileTab" class="tab">
+    <h3>Profile</h3><br>
+    <div class="list-item"><span>Name</span><strong>Kelly Amos</strong></div>
+    <div class="list-item"><span>Email</span><strong>kelly@bank.com</strong></div>
+    <div class="list-item"><span>Phone</span><strong>0816...4321</strong></div>
+    <div class="list-item"><span>Version</span><strong>v10 Premium</strong></div>
+    <!-- THIS IS THE WORKING LOGOUT BUTTON -->
+    <button class="btn btn-danger" onclick="kellyLogout()">Log Out</button>
+  </div>
+  <div class="bottom-nav">
+    <button class="nav-item active" onclick="showTab('homeTab',this)"><span>🏠</span>Home</button>
+    <button class="nav-item" onclick="showTab('cardsTab',this)"><span>💳</span>Cards</button>
+    <button class="nav-item" onclick="showTab('paymentsTab',this)"><span>💸</span>Payments</button>
+    <button class="nav-item" onclick="showTab('savingsTab',this)"><span>🐷</span>Savings</button>
+    <button class="nav-item" onclick="showTab('profileTab',this)"><span>👤</span>Profile</button>
+  </div>
 </div>
 <script>
-let hidden=false;
-window.toggleBal=function(){hidden=!hidden;document.getElementById('bal').innerText=hidden?'₦ ••••••••':'₦125,000.00';document.getElementById('eye').innerText=hidden?'👁️ Show':'👁️ Hide';}
-window.go=function(id){
- var pages=document.querySelectorAll('.page');
- for(var i=0;i<pages.length;i++){pages[i].style.display='none';}
- document.getElementById('login').style.display='none';
- var t=document.getElementById(id);
- if(!t){alert(id);return;}
- t.style.display='block';
- t.style.paddingBottom='110px';
- if(id==='home'){t.style.padding='0';t.style.paddingBottom='110px';}
- var navs=document.querySelectorAll('.b');
- for(var j=0;j<navs.length;j++){navs[j].classList.remove('active');}
- var nav=document.getElementById('b-'+id);
- if(nav) nav.classList.add('active');
- if(id==='airtime'||id==='history'||id==='bills'){document.getElementById('b-home').classList.add('active');}
+let balance = 125000;
+let isHidden = false;
+function login(){
+  const u = document.getElementById('username').value;
+  const p = document.getElementById('password').value;
+  if(u==='kelly' && p==='1234'){
+    localStorage.setItem('kelly_isLoggedIn','true');
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('mainApp').style.display='flex';
+  } else { alert('Use kelly / 1234'); }
 }
-window.login=function(){
- var u=document.getElementById('user').value.toLowerCase().trim();
- var p=document.getElementById('pass').value.trim();
- if(u==='kelly'&&p==='1234'){localStorage.setItem('k','1');document.getElementById('login').style.display='none';go('home');}
- else{document.getElementById('err').style.display='block';}
+function showTab(tabId, el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el) el.classList.add('active');
 }
-window.logout=function(){localStorage.removeItem('k');location.reload();}
-window.send=function(){
- var a=document.getElementById('acct').value;
- var m=document.getElementById('amt').value;
- if(a.length<10){alert('Enter 10-digit account');return;}
- if(!m){alert('Enter amount');return;}
- ok('Transfer to '+a,'-₦'+Number(m).toLocaleString());
+function toggleBalance(){
+  isHidden=!isHidden;
+  document.getElementById('balanceText').innerText = isHidden ? '₦****.**' : '₦'+balance.toLocaleString()+'.00';
 }
-window.ok=function(t,amt){
- document.getElementById('rt').innerText=t;
- document.getElementById('ra').innerText=amt;
- document.getElementById('tid').innerText=Math.floor(Math.random()*900000+100000);
- document.getElementById('overlay').style.display='flex';
+function sendMoney(){
+  const amt = document.getElementById('payAmount').value;
+  if(!amt) return alert('Enter amount');
+  balance += 0; // demo
+  alert('Sent ₦'+amt+' successfully ✅');
+  document.getElementById('payAmount').value='';
 }
-window.closeOk=function(){document.getElementById('overlay').style.display='none';go('home');}
-if(localStorage.getItem('k')==='1'){document.getElementById('login').style.display='none';go('home');}
-if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(r=>{for(let x of r)x.unregister();});}
+// === WORKING LOGOUT - v10 FIX ===
+function kellyLogout(){
+  if(confirm('Are you sure you want to log out of Kelly Bank?')){
+    localStorage.clear();
+    sessionStorage.clear();
+    alert('Logged out successfully 👋');
+    document.getElementById('mainApp').style.display='none';
+    document.getElementById('loginScreen').style.display='flex';
+    document.getElementById('password').value='1234';
+  }
+}
+// Auto login if already logged in
+if(localStorage.getItem('kelly_isLoggedIn')==='true'){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('mainApp').style.display='flex';
+}
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
 </html>
