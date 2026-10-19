@@ -1,107 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>Kelly Bank v17 - Black Diamond</title>
-<link rel="manifest" href="manifest.json?v=17">
-<link rel="icon" href="icon.png">
-<meta name="theme-color" content="#0A2A7A">
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-<style>body{font-family:'Space Grotesk',sans-serif;background:#000} .gold{background:linear-gradient(135deg,#D4AF37,#FFD700,#B8860B)} .nav-active{color:#FFD700 !important}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelly Bank v17 - Fixed</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0a0a0a;color:#fff;padding-bottom:80px}
+.header{padding:15px;display:flex;justify-content:space-between;align-items:center;background:#111}
+.logo-k{width:38px;height:38px;background:gold;color:#000;display:flex;align-items:center;justify-content:center;border-radius:8px;font-weight:900;font-size:22px}
+.balance{margin:15px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#000;border-radius:20px;padding:22px}
+.balance h1{font-size:30px;margin-top:6px}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:15px}
+.btn{ background:#1c1c1c;border:1px solid #2a2a2a;border-radius:12px;padding:14px;text-align:center;cursor:pointer }
+.btn.active{border-color:gold}
+.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:#000000ee;display:none;z-index:9999;padding:20px}
+.box{max-width:380px;margin:20px auto;background:#151515;border:1px solid gold;border-radius:16px;padding:20px}
+.box input, .box select{width:100%;padding:13px;margin-top:8px;background:#222;color:#fff;border:1px solid gold;border-radius:10px}
+.box label{font-size:12px;color:gold;margin-top:12px;display:block}
+.gold-btn{width:100%;padding:15px;margin-top:15px;background:gold;color:#000;border:none;border-radius:12px;font-weight:900;cursor:pointer}
+.close-btn{width:100%;padding:12px;margin-top:10px;background:#222;color:#fff;border:1px solid #444;border-radius:10px;cursor:pointer}
+</style>
 </head>
-<body class="text-white">
+<body>
 
-<!-- LOGIN -->
-<div id="loginScreen" class="min-h-screen flex items-center justify-center p-6 bg-black">
-<div class="w-full max-w-sm text-center"><div class="w-24 h-24 mx-auto gold rounded-2xl flex items-center justify-center text-black text-4xl font-bold">K</div><h1 class="text-3xl font-bold mt-4 bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">Kelly Bank</h1><p class="text-gray-500 text-xs">Black Diamond v17</p>
-<div class="bg-white/5 border border-white/10 rounded-3xl p-6 mt-6 text-left"><input id="u" placeholder="Username: kelly" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 mb-3"><input id="p" type="password" placeholder="Password: 1234" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 mb-6"><button onclick="L()" class="w-full gold text-black font-bold py-4 rounded-xl">Secure Login →</button><p id="loginErr" class="text-red-400 text-xs mt-3 hidden"></p></div></div></div>
-
-<!-- APP -->
-<div id="appScreen" class="hidden min-h-screen pb-28">
-
-<!-- TOP -->
-<div class="p-6 flex justify-between items-center"><div class="flex gap-3 items-center"><img src="icon.png" class="w-10 h-10 rounded-xl"><div><p class="font-bold text-sm">Kelly Osogar</p><p class="text-[11px] text-gray-400">Black Diamond Member</p></div></div><button onclick="copyAcct()" class="text-[11px] bg-white/10 px-3 py-1.5 rounded-full">2384 5621 • Copy</button></div>
-
-<!-- BALANCE -->
-<div class="mx-6 gold rounded-[28px] p-6 text-black"><p class="text-[11px] font-bold opacity-70">TOTAL BALANCE</p><h1 id="bal" class="text-3xl font-bold mt-1">₦0.00</h1><p class="text-xs mt-2">•••• 3456 • <span id="freezeTxt">ACTIVE</span></p><div class="flex gap-2 mt-4"><button onclick="toggleFreeze()" id="fzBtn" class="bg-black text-white text-[11px] px-4 py-2 rounded-full">Freeze</button><button onclick="addMoney()" class="bg-black text-white text-[11px] px-4 py-2 rounded-full">+ Add Money</button></div></div>
-
-<!-- HOME CONTENT -->
-<div id="page-home" class="px-6 mt-6 space-y-4">
-<div class="grid grid-cols-4 gap-3">
-<button onclick="openHomeAction('transfer')" class="bg-white/10 rounded-2xl py-4 border border-white/5"><div class="text-xl">💸</div><span class="text-[10px] font-bold block mt-1">Transfer</span></button>
-<button onclick="openHomeAction('airtime')" class="bg-white/10 rounded-2xl py-4 border border-white/5"><div class="text-xl">📱</div><span class="text-[10px] font-bold block mt-1">Airtime</span></button>
-<button onclick="openHomeAction('bills')" class="bg-white/10 rounded-2xl py-4 border border-white/5"><div class="text-xl">💡</div><span class="text-[10px] font-bold block mt-1">Bills</span></button>
-<button onclick="openHomeAction('history')" class="bg-white/10 rounded-2xl py-4 border border-white/5"><div class="text-xl">📜</div><span class="text-[10px] font-bold block mt-1">History</span></button>
+<div class="header">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div class="logo-k">K</div>
+    <div><b>Kelly Osogar</b><div style="font-size:10px;color:#aaa">Black Diamond</div></div>
+  </div>
+  <div style="font-size:11px">2384 5601</div>
 </div>
 
-<div id="home-transfer" class="hidden bg-white/5 border border-white/10 rounded-3xl p-5"><h3 class="font-bold mb-3">Transfer</h3><input id="trAcct" placeholder="10-digit account" class="w-full p-3 rounded-xl bg-black border border-white/20 mb-2"><input id="trAmt" type="number" placeholder="Amount" class="w-full p-3 rounded-xl bg-black border border-white/20 mb-2"><input id="trNote" placeholder="Remark" class="w-full p-3 rounded-xl bg-black border border-white/20 mb-3"><button onclick="doTr()" class="w-full gold text-black font-bold py-3 rounded-xl">Send Now</button><p id="trErr" class="text-red-400 text-xs mt-2 hidden"></p></div>
-<div id="home-airtime" class="hidden bg-white/5 border border-white/10 rounded-3xl p-5"><h3 class="font-bold mb-2">Airtime</h3><div class="grid grid-cols-4 gap-2 mb-3"><button onclick="setNet('MTN')" id="net-MTN" class="bg-yellow-500 text-black py-2 rounded-lg text-xs font-bold">MTN</button><button onclick="setNet('GLO')" id="net-GLO" class="bg-white/10 py-2 rounded-lg text-xs">GLO</button><button onclick="setNet('AIRTEL')" id="net-AIRTEL" class="bg-white/10 py-2 rounded-lg text-xs">AIRTEL</button><button onclick="setNet('9MOBILE')" id="net-9MOBILE" class="bg-white/10 py-2 rounded-lg text-xs">9MO</button></div><input id="airPhone" placeholder="Phone" class="w-full p-3 rounded-xl bg-black border border-white/20 mb-2"><input id="airAmt" type="number" placeholder="Amount" class="w-full p-3 rounded-xl bg-black border border-white/20 mb-3"><button onclick="doAirtime()" class="w-full gold text-black font-bold py-3 rounded-xl">Buy</button></div>
-<div id="home-bills" class="hidden bg-white/5 border border-white/10 rounded-3xl p-5"><h3 class="font-bold mb-3">Bills</h3><button onclick="payB('DSTV',15000)" class="w-full text-left p-3 bg-black rounded-xl mb-2">DSTV ₦15k</button><button onclick="payB('PHED',10000)" class="w-full text-left p-3 bg-black rounded-xl mb-2">PHED ₦10k</button><button onclick="payB('Starlink',38000)" class="w-full text-left p-3 bg-black rounded-xl mb-2">Starlink ₦38k</button></div>
-<div id="home-history" class="bg-white/5 border border-white/10 rounded-3xl p-5"><h3 class="font-bold mb-3">Recent Transactions</h3><div id="txList"></div></div>
+<div class="balance">
+  <div style="font-size:11px;opacity:.7">TOTAL BALANCE</div>
+  <h1 id="bal">₦125,000.00</h1>
+  <div style="font-size:10px;margin-top:8px">**** 3456 • ACTIVE</div>
 </div>
 
-<!-- CARD PAGE -->
-<div id="page-card" class="hidden px-6 mt-6 space-y-4"><div class="gold rounded-[24px] p-6 text-black"><p class="text-xs font-bold">BLACK DIAMOND CARD</p><h2 class="text-xl font-bold mt-4">•••• •••• •••• 3456</h2><p class="text-xs mt-2">Kelly Osogar • 12/29</p><p class="text-xs mt-4">Status: <span id="cardStatus">ACTIVE</span></p></div><div id="cardsList"></div><button onclick="addNewCard()" class="w-full border border-dashed border-white/20 rounded-xl py-3 text-sm">+ Add New Card</button><button onclick="toggleFreeze()" class="w-full bg-white/10 rounded-xl py-3 text-sm mt-2">Toggle Freeze / Unfreeze</button></div>
-
-<!-- REWARD PAGE -->
-<div id="page-reward" class="hidden px-6 mt-6"><div class="bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-[24px] p-6 text-black"><h2 class="text-2xl font-bold">2,450 Points</h2><p class="text-sm">Black Diamond Rewards</p><p class="text-xs mt-3">₦1,000 = 10 points. Redeem for cash.</p><button onclick="redeem()" class="bg-black text-white px-6 py-2 rounded-full text-xs mt-4">Redeem ₦2,450</button></div><div class="mt-6 bg-white/5 rounded-2xl p-4"><p class="text-sm font-bold">Reward History</p><p class="text-xs text-gray-400 mt-2">✓ Transfer bonus +50 points - Today</p><p class="text-xs text-gray-400">✓ Airtime bonus +10 points - Yesterday</p></div></div>
-
-<!-- LOAN PAGE -->
-<div id="page-loan" class="hidden px-6 mt-6"><div class="bg-white/5 border border-white/10 rounded-3xl p-6"><h2 class="text-xl font-bold">Quick Loan</h2><p class="text-xs text-gray-400 mt-1">You are eligible for up to ₦500,000</p><div class="mt-6"><p class="text-xs">Loan Amount</p><input id="loanAmt" type="number" placeholder="e.g 50000" class="w-full p-3 rounded-xl bg-black border border-white/20 mt-2 mb-4"><button onclick="requestLoan()" class="w-full gold text-black font-bold py-3 rounded-xl">Request Loan</button><p id="loanMsg" class="text-xs mt-3 text-green-400 hidden"></p></div></div><div class="bg-white/5 rounded-2xl p-4 mt-4"><p class="text-xs text-gray-400">Interest: 5% • Repayment: 30 days • No collateral</p></div></div>
-
-<!-- PROFILE PAGE -->
-<div id="page-profile" class="hidden px-6 mt-6 space-y-4"><div class="bg-white/5 border border-white/10 rounded-3xl p-6 text-center"><img src="icon.png" class="w-20 h-20 rounded-2xl mx-auto"><h2 class="font-bold mt-3">Kelly Osogar</h2><p class="text-xs text-gray-400">kelly@kellybank.com • Black Diamond</p><p class="text-xs mt-2">Account: 2384562190</p><p class="text-xs">Status: <span id="profStatus">ACTIVE</span></p></div><button onclick="logout()" class="w-full bg-red-600 py-3 rounded-xl font-bold text-sm">Logout & Wipe Session</button><p class="text-[10px] text-center text-gray-600">v17 Secured • Encrypted Storage • Anti-Hack</p></div>
-
+<div class="actions">
+  <div class="btn active" onclick="openT()"><div>💸</div><div style="font-size:11px;margin-top:4px">Transfer</div></div>
+  <div class="btn"><div>📱</div><div style="font-size:11px;margin-top:4px">Airtime</div></div>
+  <div class="btn"><div>💡</div><div style="font-size:11px;margin-top:4px">Bills</div></div>
+  <div class="btn"><div>📜</div><div style="font-size:11px;margin-top:4px">History</div></div>
 </div>
 
-<!-- BOTTOM NAVIGATION - YOU REQUESTED -->
-<div class="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-xl border-t border-white/10 flex justify-around py-3 px-2">
-<button onclick="switchPage('home')" id="nav-home" class="nav-active flex flex-col items-center"><span class="text-xl">🏠</span><span class="text-[10px] font-bold">Home</span></button>
-<button onclick="switchPage('card')" id="nav-card" class="flex flex-col items-center text-gray-500"><span class="text-xl">💳</span><span class="text-[10px] font-bold">Card</span></button>
-<button onclick="switchPage('reward')" id="nav-reward" class="flex flex-col items-center text-gray-500"><span class="text-xl">🎁</span><span class="text-[10px] font-bold">Reward</span></button>
-<button onclick="switchPage('loan')" id="nav-loan" class="flex flex-col items-center text-gray-500"><span class="text-xl">💰</span><span class="text-[10px] font-bold">Loan</span></button>
-<button onclick="switchPage('profile')" id="nav-profile" class="flex flex-col items-center text-gray-500"><span class="text-xl">👤</span><span class="text-[10px] font-bold">Profile</span></button>
+<div style="padding:15px">
+  <div style="font-size:13px;margin-bottom:8px">Recent Transactions</div>
+  <div id="list" style="background:#1a1a1a;padding:12px;border-radius:12px;display:flex;justify-content:space-between">
+    <div><b style="font-size:13px">Salary from TechCorp</b><div style="font-size:10px;color:#888">Today</div></div>
+    <div style="color:#0f0">+₦125,000</div>
+  </div>
 </div>
 
-<!-- RECEIPT -->
-<div id="receipt" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-6 z-50"><div class="bg-white text-black rounded-3xl p-6 w-full max-w-sm text-center"><div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">✓</div><h2 class="font-bold text-xl">Success</h2><p id="rcptTxt" class="text-sm text-gray-600 my-4"></p><button onclick="document.getElementById('receipt').classList.add('hidden')" class="w-full gold py-3 rounded-xl font-bold">Done</button></div></div>
+<!-- TRANSFER WITH BANK SELECTOR -->
+<div id="modal" class="modal">
+  <div class="box">
+    <h3 style="text-align:center;color:gold;margin-bottom:15px">Transfer Money</h3>
+
+    <label>Select Bank</label>
+    <select id="bank">
+      <option value="">-- Select Bank --</option>
+      <option>Access Bank</option>
+      <option>GTBank</option>
+      <option>First Bank</option>
+      <option>UBA</option>
+      <option>Zenith Bank</option>
+      <option>Union Bank</option>
+      <option>Wema Bank</option>
+      <option>Fidelity Bank</option>
+      <option>FCMB</option>
+      <option>Ecobank</option>
+      <option>Sterling Bank</option>
+      <option>OPay</option>
+      <option>Moniepoint</option>
+      <option>Kuda Bank</option>
+      <option>PalmPay</option>
+    </select>
+
+    <label>Account Number</label>
+    <input id="acct" type="number" placeholder="10 digits" maxlength="10" oninput="if(this.value.length>10)this.value=this.value.slice(0,10)">
+
+    <label>Amount (₦)</label>
+    <input id="amt" type="number" placeholder="5000">
+
+    <label>Narration</label>
+    <input id="note" type="text" placeholder="Optional">
+
+    <button class="gold-btn" onclick="send()">Transfer Now</button>
+    <button class="close-btn" onclick="closeT()">Cancel</button>
+  </div>
+</div>
 
 <script>
-// SECURE CORE v17
-const _k1=atob('a2VsbHk='),_k2=atob('MTIzNA==');
-const _tk='_kb_v17_tkn_',_bk='_kb_v17_bal_enc_';
-function enc(n){return btoa(n.toString().split('').reverse().join('')+'_K3LLY')}
-function dec(s){try{let d=atob(s);d=d.replace('_K3LLY','');return parseFloat(d.split('').reverse().join(''))}catch(e){return 125000}}
-let balance=localStorage.getItem(_bk)?dec(localStorage.getItem(_bk)):125000;
-let isFrozen=localStorage.getItem('_kb_frz')==='1';
-let network='MTN';
-let txs=JSON.parse(localStorage.getItem('_kb_txs')||'[]');
-let cards=JSON.parse(localStorage.getItem('_kb_cards')||'[{"id":"3456","name":"Black Diamond"}]');
-if(txs.length===0){txs=[{n:'Salary',a:125000,t:new Date().toLocaleString()}];save();}
-function save(){localStorage.setItem(_bk,enc(balance));localStorage.setItem('_kb_frz',isFrozen?'1':'0');localStorage.setItem('_kb_txs',JSON.stringify(txs));localStorage.setItem('_kb_cards',JSON.stringify(cards));}
-function L(){const u=document.getElementById('u').value.trim().toLowerCase(),p=document.getElementById('p').value.trim(),e=document.getElementById('loginErr');if(u===_k1&&p===_k2){const t=btoa(Date.now()+'|'+Math.random()+'|KELLY').slice(0,32);sessionStorage.setItem(_tk,t);localStorage.setItem(_tk,t);showApp();}else{e.innerText='Wrong credentials';e.classList.remove('hidden');}}
-function checkAuth(){const a=sessionStorage.getItem(_tk),b=localStorage.getItem(_tk);return a&&b&&a===b;}
-function showApp(){if(!localStorage.getItem(_tk))return;if(!checkAuth())sessionStorage.setItem(_tk,localStorage.getItem(_tk));document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');render();}
-function logout(){sessionStorage.clear();localStorage.removeItem(_tk);location.reload();}
-function render(){document.getElementById('bal').innerText='₦'+balance.toLocaleString('en-NG',{minimumFractionDigits:2});document.getElementById('freezeTxt').innerText=isFrozen?'FROZEN':'ACTIVE';document.getElementById('cardStatus').innerText=isFrozen?'FROZEN':'ACTIVE';document.getElementById('profStatus').innerText=isFrozen?'FROZEN':'ACTIVE';document.getElementById('txList').innerHTML=txs.map(x=>`<div class="flex justify-between py-2 border-b border-white/5"><div><p class="text-sm font-bold">${x.n}</p><p class="text-[10px] text-gray-500">${x.t}</p></div><p class="text-sm font-bold ${x.a>0?'text-green-400':''}">${x.a>0?'+':''}₦${Math.abs(x.a).toLocaleString()}</p></div>`).join('');document.getElementById('cardsList').innerHTML=cards.map(c=>`<div class="gold rounded-xl p-4 text-black mb-2"><p class="font-bold text-sm">${c.name}</p><p class="text-xs">•••• ${c.id}</p></div>`).join('');}
-function switchPage(p){['home','card','reward','loan','profile'].forEach(x=>{document.getElementById('page-'+x).classList.add('hidden');document.getElementById('nav-'+x).classList.remove('nav-active');document.getElementById('nav-'+x).classList.add('text-gray-500');});document.getElementById('page-'+p).classList.remove('hidden');document.getElementById('nav-'+p).classList.add('nav-active');document.getElementById('nav-'+p).classList.remove('text-gray-500');}
-function openHomeAction(s){['transfer','airtime','bills','history'].forEach(id=>document.getElementById('home-'+id).classList.add('hidden'));document.getElementById('home-'+s).classList.remove('hidden');if(s==='history')document.getElementById('home-history').classList.remove('hidden');}
-function copyAcct(){navigator.clipboard.writeText('2384562190').then(()=>alert('Copied'));}
-function toggleFreeze(){isFrozen=!isFrozen;save();render();alert(isFrozen?'FROZEN - No transfers':'ACTIVE');}
-function addMoney(){balance+=50000;txs.unshift({n:'Add Money',a:50000,t:new Date().toLocaleString()});save();render();showRcpt('Added ₦50,000<br>New: ₦'+balance.toLocaleString());}
-function setNet(n){network=n;['MTN','GLO','AIRTEL','9MOBILE'].forEach(x=>document.getElementById('net-'+x).className=x===n?'bg-yellow-500 text-black py-2 rounded-lg text-xs font-bold':'bg-white/10 py-2 rounded-lg text-xs');}
-function doTr(){const acct=document.getElementById('trAcct').value.trim(),amt=parseFloat(document.getElementById('trAmt').value),note=document.getElementById('trNote').value||'Transfer',err=document.getElementById('trErr');err.classList.add('hidden');if(isFrozen){err.innerText='Card frozen';err.classList.remove('hidden');return;}if(acct.length<10||!amt){err.innerText='Invalid';err.classList.remove('hidden');return;}if(amt>balance){err.innerText='Insufficient: ₦'+balance.toLocaleString();err.classList.remove('hidden');return;}balance-=amt;txs.unshift({n:note+' → '+acct,a:-amt,t:new Date().toLocaleString()});save();render();showRcpt(`Sent ₦${amt.toLocaleString()} to ${acct}<br>New: ₦${balance.toLocaleString()}`);}
-function doAirtime(){const ph=document.getElementById('airPhone').value.trim(),amt=parseFloat(document.getElementById('airAmt').value);if(isFrozen){alert('Frozen');return;}if(ph.length<11||!amt){alert('Invalid');return;}if(amt>balance){alert('Insufficient');return;}balance-=amt;txs.unshift({n:network+' Airtime '+ph,a:-amt,t:new Date().toLocaleString()});save();render();showRcpt(`${network} Airtime ₦${amt.toLocaleString()} to ${ph}`);}
-function payB(name,cost){if(isFrozen){alert('Frozen');return;}if(cost>balance){alert('Insufficient');return;}balance-=cost;txs.unshift({n:name,a:-cost,t:new Date().toLocaleString()});save();render();showRcpt(`Paid ${name} ₦${cost.toLocaleString()}<br>New: ₦${balance.toLocaleString()}`);}
-function addNewCard(){const id=Math.floor(1000+Math.random()*9000).toString();cards.push({id:id,name:'New Card '+id});save();render();showRcpt('New Card •••• '+id+' Added');}
-function redeem(){balance+=2450;txs.unshift({n:'Reward Redemption',a:2450,t:new Date().toLocaleString()});save();render();showRcpt('Reward ₦2,450 redeemed!');}
-function requestLoan(){const amt=parseFloat(document.getElementById('loanAmt').value);if(!amt||amt>500000){alert('Enter amount up to 500k');return;}balance+=amt;txs.unshift({n:'Loan Disbursement',a:amt,t:new Date().toLocaleString()});save();render();document.getElementById('loanMsg').innerText='Loan ₦'+amt.toLocaleString()+' Approved! Added to balance';document.getElementById('loanMsg').classList.remove('hidden');showRcpt('Loan ₦'+amt.toLocaleString()+' Approved');}
-function showRcpt(txt){document.getElementById('rcptTxt').innerHTML=txt;document.getElementById('receipt').classList.remove('hidden');}
-setInterval(()=>{if(!document.getElementById('appScreen').classList.contains('hidden')&&!checkAuth())logout();},2500);
-if(localStorage.getItem(_tk))showApp();
-if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+let bal = 125000;
+function openT(){document.getElementById('modal').style.display='block'}
+function closeT(){document.getElementById('modal').style.display='none'}
+function send(){
+  let bank = document.getElementById('bank').value;
+  let acct = document.getElementById('acct').value;
+  let amt = Number(document.getElementById('amt').value);
+  if(!bank){alert('Select bank');return}
+  if(acct.length!=10){alert('Account must be 10 digits');return}
+  if(!amt||amt<=0){alert('Enter amount');return}
+  if(amt>bal){alert('Insufficient balance');return}
+  bal-=amt;
+  document.getElementById('bal').innerText='₦'+bal.toLocaleString()+'.00';
+  alert('Success! ₦'+amt.toLocaleString()+' sent to '+acct+' ('+bank+')');
+  closeT();
+  document.getElementById('bank').value='';
+  document.getElementById('acct').value='';
+  document.getElementById('amt').value='';
+  document.getElementById('note').value='';
+}
 </script>
 </body>
 </html>
