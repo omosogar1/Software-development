@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly Bank - The bank of the free</title>
-<link rel="manifest" href="manifest.json">
+<title>Kelly Bank v12 - The bank of the free</title>
 <meta name="theme-color" content="#0A2A7A">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
@@ -15,99 +14,88 @@ body{background:#F5F7FB;color:#111}
 .login-card p{text-align:center;color:#666;margin-bottom:20px;font-size:14px}
 .login-card input{width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin-bottom:12px;font-size:15px}
 .login-card button{width:100%;padding:14px;background:#0A2A7A;color:white;border:none;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer}
-#mainApp{display:none;flex-direction:column;min-height:100vh;padding-bottom:80px}
+#mainApp{display:none;flex-direction:column;min-height:100vh;padding-bottom:85px}
 .header{background:#0A2A7A;color:white;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
 .balance-card{margin:16px;background:linear-gradient(135deg,#0A2A7A,#3A6DFF);color:white;padding:20px;border-radius:20px}
-.balance-card h3{font-size:14px;opacity:.8}
-.balance-card h1{font-size:32px;margin:8px 0}
 .quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 16px;margin-top:16px}
 .action{background:white;padding:14px 6px;border-radius:16px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.05);cursor:pointer}
-.action span{font-size:22px;display:block}
-.action p{font-size:12px;margin-top:6px;font-weight:600}
-.tab{display:none;padding:16px}
-.tab.active{display:block}
-.card-view{background:#101828;color:white;border-radius:20px;padding:20px;margin-bottom:16px}
+.action span{font-size:22px;display:block}.action p{font-size:12px;margin-top:6px;font-weight:600}
+.tab{display:none;padding:16px}.tab.active{display:block}
+.card-view{background:linear-gradient(135deg,#0A2A7A 0%,#1E40AF 50%,#3B82F6 100%);color:white;border-radius:20px;padding:20px;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(10,42,122,.4)}
+.card-view::before{content:"";position:absolute;top:-50px;right:-50px;width:150px;height:150px;background:rgba(255,255,255,.08);border-radius:50%}
+.card-view.frozen{filter:grayscale(1);opacity:.6}
+.card-view.frozen::after{content:"FROZEN ❄️";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);font-size:32px;font-weight:900;color:#FF3B30;border:4px solid #FF3B30;padding:10px 20px;border-radius:10px;background:rgba(255,255,255,.9);z-index:2}
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #eee;z-index:100}
-.nav-item{text-align:center;font-size:12px;color:#888;cursor:pointer;background:none;border:none}
-.nav-item.active{color:#0A2A7A;font-weight:bold}
-.nav-item span{display:block;font-size:22px}
+.nav-item{text-align:center;font-size:11px;color:#888;background:none;border:none;cursor:pointer}
+.nav-item.active{color:#0A2A7A;font-weight:bold}.nav-item span{display:block;font-size:22px}
 .btn{padding:14px;border:none;border-radius:12px;font-weight:bold;width:100%;cursor:pointer}
-.btn-primary{background:#0A2A7A;color:white}
-.btn-danger{background:#FF3B30;color:white;margin-top:20px}
+.btn-primary{background:#0A2A7A;color:white}.btn-danger{background:#FF3B30;color:white;margin-top:20px}
+.input{width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin-bottom:12px;font-size:15px;background:white}
 .list-item{background:white;padding:14px;border-radius:12px;margin-bottom:10px;display:flex;justify-content:space-between;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 </style>
 </head>
 <body>
-<!-- LOGIN SCREEN -->
+
 <div id="loginScreen">
   <div style="font-size:48px;background:white;color:#0A2A7A;width:80px;height:80px;display:flex;align-items:center;justify-content:center;border-radius:20px;font-weight:bold;margin-bottom:20px;">K</div>
   <div class="login-card">
-    <h1>Kelly Bank</h1>
-    <p>The bank of the free</p>
-    <input id="username" placeholder="Username - kelly" value="kelly">
-    <input id="password" type="password" placeholder="Password - 1234" value="1234">
-    <button onclick="login()">Login</button>
-    <p style="margin-top:12px;font-size:12px;">Use kelly / 1234 to test</p>
+    <h1>Kelly Bank</h1><p>The bank of the free</p>
+    <input id="username" value="kelly"><input id="password" type="password" value="1234">
+    <button onclick="login()">Login</button><p style="margin-top:12px;font-size:12px;text-align:center">kelly / 1234</p>
   </div>
 </div>
-<!-- MAIN APP -->
+
 <div id="mainApp">
-  <div class="header">
-    <div><strong>Kelly Bank</strong><br><small id="userGreeting">Hello, Kelly</small></div>
-    <div style="font-size:22px">🔔</div>
-  </div>
-  <!-- HOME TAB -->
+  <div class="header"><div><strong>Kelly Bank</strong><br><small>Hello, Kelly</small></div><div>🔔</div></div>
+
   <div id="homeTab" class="tab active">
-    <div class="balance-card">
-      <h3>Total Balance <span onclick="toggleBalance()" style="cursor:pointer">👁️</span></h3>
-      <h1 id="balanceText">₦125,000.00</h1>
-      <small>Account: 816543... • Kelly Amos</small>
-    </div>
+    <div class="balance-card"><h3>Total Balance</h3><h1>₦125,000.00</h1><small>816543... • Kelly Amos</small></div>
     <div class="quick-actions">
       <div class="action" onclick="showTab('paymentsTab')"><span>💸</span><p>Transfer</p></div>
-      <div class="action" onclick="alert('Airtime coming')"><span>📱</span><p>Airtime</p></div>
-      <div class="action" onclick="alert('Bills coming')"><span>💡</span><p>Bills</p></div>
+      <div class="action" onclick="showTab('cardsTab')"><span>💳</span><p>Cards</p></div>
+      <div class="action"><span>📱</span><p>Airtime</p></div>
       <div class="action" onclick="showTab('savingsTab')"><span>🐷</span><p>Savings</p></div>
     </div>
-    <h4 style="padding:16px 16px 8px">Recent Transactions</h4>
-    <div id="transactionsList" style="padding:0 16px">
-      <div class="list-item"><span>MTN Airtime</span><span>-₦1,000</span></div>
-      <div class="list-item"><span>From Chinedu</span><span style="color:green">+₦20,000</span></div>
-      <div class="list-item"><span>Netflix</span><span>-₦5,500</span></div>
-    </div>
   </div>
-  <!-- CARDS TAB -->
+
   <div id="cardsTab" class="tab">
-    <div class="card-view">
-      <small>VISA • Virtual</small>
-      <h2 style="margin:20px 0;letter-spacing:2px">4242  1212  4021  8890</h2>
-      <div style="display:flex;justify-content:space-between"><span>KELLY AMOS</span><span>12/28</span></div>
+    <div id="cardBox" class="card-view">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:36px;height:36px;background:white;color:#0A2A7A;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px">K</div>
+          <div><div style="font-weight:800;font-size:15px;letter-spacing:1px">KELLY BANK</div><div style="font-size:9px;opacity:.7;letter-spacing:2px">THE BANK OF THE FREE</div></div>
+        </div><div style="font-size:20px">📶</div>
+      </div>
+      <div style="width:42px;height:32px;background:linear-gradient(135deg,#FFD700,#FFA500);border-radius:6px;margin-bottom:18px"></div>
+      <h2 style="letter-spacing:3px;margin-bottom:18px;font-size:19px">4242 1212 4021 8890</h2>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end">
+        <div><div style="font-size:9px;opacity:.6">CARD HOLDER</div><div style="font-weight:600;font-size:13px;margin-top:2px">KELLY AMOS</div></div>
+        <div><div style="font-size:9px;opacity:.6">EXPIRES</div><div style="font-weight:600;font-size:13px;margin-top:2px">12/28</div></div>
+        <div style="font-size:28px;font-style:italic;font-weight:bold">VISA</div>
+      </div>
+      <small style="position:absolute;top:12px;right:16px;background:rgba(0,200,81,.2);color:#00FF88;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:bold;z-index:1" id="cardStatus">● ACTIVE</small>
     </div>
-    <button class="btn btn-primary">Freeze Card</button>
+    <button id="freezeBtn" class="btn btn-primary" onclick="toggleCard()">Freeze Card ❄️</button>
+    <p id="freezeNote" style="text-align:center;margin-top:10px;color:#666;font-size:13px">Card is active and ready for transactions</p>
   </div>
-  <!-- PAYMENTS TAB -->
+
   <div id="paymentsTab" class="tab">
-    <h3>Send Money</h3><br>
-    <input id="payTo" placeholder="Account number" style="width:100%;padding:14px;border-radius:12px;border:1px solid #ddd;margin-bottom:10px">
-    <input id="payAmount" type="number" placeholder="Amount" style="width:100%;padding:14px;border-radius:12px;border:1px solid #ddd;margin-bottom:10px">
-    <button class="btn btn-primary" onclick="sendMoney()">Send Now</button>
+    <h3>Send Money to Any Bank</h3><br>
+    <label style="font-size:13px;font-weight:600">Select Bank</label>
+    <select id="bankSelect" class="input"><option value="">Choose bank...</option><option>Kuda Bank</option><option>OPay</option><option>PalmPay</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Zenith Bank</option><option>Moniepoint</option><option>Fidelity Bank</option><option>Union Bank</option><option>Kelly Bank</option></select>
+    <input id="payTo" class="input" placeholder="Account number (10 digits)" maxlength="10">
+    <input id="payAmount" class="input" type="number" placeholder="Amount">
+    <button class="btn btn-primary" onclick="sendMoney()">Send to <span id="bankNameLabel">Bank</span> →</button>
+    <div id="transferReceipt" style="display:none;margin-top:16px;background:white;padding:16px;border-radius:12px;text-align:center"><h2 style="color:green">✅ Success!</h2><p id="receiptText"></p></div>
   </div>
-  <!-- SAVINGS TAB -->
-  <div id="savingsTab" class="tab">
-    <h3>My Savings</h3><br>
-    <div class="list-item"><div><strong>iPhone 16</strong><br><small>75% • ₦750k/₦1M</small></div><span>🐷</span></div>
-    <button class="btn btn-primary">+ New Target</button>
-  </div>
-  <!-- PROFILE TAB -->
+
+  <div id="savingsTab" class="tab"><h3>Savings</h3><br><div class="list-item"><div><strong>iPhone 16</strong><br><small>75% • ₦750k/₦1M</small></div><span>🐷</span></div></div>
+
   <div id="profileTab" class="tab">
-    <h3>Profile</h3><br>
-    <div class="list-item"><span>Name</span><strong>Kelly Amos</strong></div>
-    <div class="list-item"><span>Email</span><strong>kelly@bank.com</strong></div>
-    <div class="list-item"><span>Phone</span><strong>0816...4321</strong></div>
-    <div class="list-item"><span>Version</span><strong>v10 Premium</strong></div>
-    <!-- THIS IS THE WORKING LOGOUT BUTTON -->
+    <h3>Profile</h3><br><div class="list-item"><span>Name</span><strong>Kelly Amos</strong></div><div class="list-item"><span>Version</span><strong>v12</strong></div>
     <button class="btn btn-danger" onclick="kellyLogout()">Log Out</button>
   </div>
+
   <div class="bottom-nav">
     <button class="nav-item active" onclick="showTab('homeTab',this)"><span>🏠</span>Home</button>
     <button class="nav-item" onclick="showTab('cardsTab',this)"><span>💳</span>Cards</button>
@@ -116,52 +104,27 @@ body{background:#F5F7FB;color:#111}
     <button class="nav-item" onclick="showTab('profileTab',this)"><span>👤</span>Profile</button>
   </div>
 </div>
+
 <script>
-let balance = 125000;
-let isHidden = false;
-function login(){
-  const u = document.getElementById('username').value;
-  const p = document.getElementById('password').value;
-  if(u==='kelly' && p==='1234'){
-    localStorage.setItem('kelly_isLoggedIn','true');
-    document.getElementById('loginScreen').style.display='none';
-    document.getElementById('mainApp').style.display='flex';
-  } else { alert('Use kelly / 1234'); }
+let isFrozen=false;
+function login(){document.getElementById('loginScreen').style.display='none';document.getElementById('mainApp').style.display='flex';localStorage.setItem('kelly_isLoggedIn','true');}
+function showTab(id,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));if(el)el.classList.add('active');}
+function toggleCard(){
+  isFrozen=!isFrozen;
+  const card=document.getElementById('cardBox'),btn=document.getElementById('freezeBtn'),status=document.getElementById('cardStatus'),note=document.getElementById('freezeNote');
+  if(isFrozen){card.classList.add('frozen');btn.innerText='Unfreeze Card 🔥';btn.style.background='#00C851';status.innerText='● FROZEN';status.style.color='#FF3B30';note.innerText='Card frozen. No transactions allowed ❄️';}
+  else{card.classList.remove('frozen');btn.innerText='Freeze Card ❄️';btn.style.background='#0A2A7A';status.innerText='● ACTIVE';status.style.color='#00FF88';note.innerText='Card is active and ready ✅';}
 }
-function showTab(tabId, el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  if(el) el.classList.add('active');
-}
-function toggleBalance(){
-  isHidden=!isHidden;
-  document.getElementById('balanceText').innerText = isHidden ? '₦****.**' : '₦'+balance.toLocaleString()+'.00';
-}
+const bankSelect=document.getElementById('bankSelect');
+bankSelect.addEventListener('change',()=>{document.getElementById('bankNameLabel').innerText=bankSelect.value||'Bank';});
 function sendMoney(){
-  const amt = document.getElementById('payAmount').value;
-  if(!amt) return alert('Enter amount');
-  balance += 0; // demo
-  alert('Sent ₦'+amt+' successfully ✅');
-  document.getElementById('payAmount').value='';
+  const bank=bankSelect.value,acc=document.getElementById('payTo').value,amt=document.getElementById('payAmount').value;
+  if(!bank) return alert('Please select a bank');if(acc.length<10) return alert('Enter 10-digit account');if(!amt) return alert('Enter amount');if(isFrozen) return alert('Card is frozen! Unfreeze in Cards tab');
+  document.getElementById('receiptText').innerHTML=`Sent <strong>₦${Number(amt).toLocaleString()}</strong><br>to ${acc}<br>${bank}`;document.getElementById('transferReceipt').style.display='block';
+  setTimeout(()=>{document.getElementById('transferReceipt').style.display='none';document.getElementById('payTo').value='';document.getElementById('payAmount').value='';},4000);
 }
-// === WORKING LOGOUT - v10 FIX ===
-function kellyLogout(){
-  if(confirm('Are you sure you want to log out of Kelly Bank?')){
-    localStorage.clear();
-    sessionStorage.clear();
-    alert('Logged out successfully 👋');
-    document.getElementById('mainApp').style.display='none';
-    document.getElementById('loginScreen').style.display='flex';
-    document.getElementById('password').value='1234';
-  }
-}
-// Auto login if already logged in
-if(localStorage.getItem('kelly_isLoggedIn')==='true'){
-  document.getElementById('loginScreen').style.display='none';
-  document.getElementById('mainApp').style.display='flex';
-}
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+function kellyLogout(){if(confirm('Log out of Kelly Bank?')){localStorage.clear();sessionStorage.clear();document.getElementById('mainApp').style.display='none';document.getElementById('loginScreen').style.display='flex';}}
+if(localStorage.getItem('kelly_isLoggedIn')==='true'){document.getElementById('loginScreen').style.display='none';document.getElementById('mainApp').style.display='flex';}
 </script>
 </body>
 </html>
