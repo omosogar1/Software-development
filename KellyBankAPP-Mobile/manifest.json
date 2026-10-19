@@ -1,22 +1,22 @@
 {
-  "name": "Kelly Bank - Black Diamond",
+  "name": "Kelly Bank - Black Diamond v17",
   "short_name": "Kelly Bank",
-  "description": "The bank of the free - Black Diamond Edition. Send money to any bank in Nigeria.",
-  "start_url": "./index.html?v=16",
+  "description": "The bank of the free - Black Diamond Edition",
+  "start_url": "./index.html?v=17",
   "display": "standalone",
-  "background_color": "#0A2A7A",
+  "background_color": "#000000",
   "theme_color": "#0A2A7A",
-  "orientation": "portrait",
   "scope": "./",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/5968/5968605.png",
+      "src": "icon.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/5968/5968605.png",
+      "src": "icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
