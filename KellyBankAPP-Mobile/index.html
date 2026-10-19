@@ -3,115 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly Bank v14 - Unique Card</title>
+<title>Kelly Bank v15 Fixed</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-body{background:#F5F7FB}
-#loginScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#0A2A7A;color:white;padding:20px}
+body{background:#F5F7FB;width:100%;overflow-x:hidden}
+#loginScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#0A2A7A;color:white;padding:20px;width:100%}
 .login-card{background:white;color:black;width:100%;max-width:380px;padding:28px;border-radius:20px}
 .login-card input{width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin-bottom:12px}
 .login-card button{width:100%;padding:14px;background:#0A2A7A;color:white;border:none;border-radius:12px;font-weight:bold}
-#mainApp{display:none;padding-bottom:90px;min-height:100vh}
-.header{background:#0A2A7A;color:white;padding:18px 20px;display:flex;justify-content:space-between}
-.tab{display:none;padding:16px}.tab.active{display:block}
-/* UNIQUE KELLY CARD COLOR - Black Diamond + Gold */
-.card-view{
-  background: radial-gradient(120% 120% at 10% 10%, #1A1A2E 0%, #0F0F1A 40%, #000000 100%);
-  color:white;
-  border-radius:22px;
-  padding:22px;
-  position:relative;
-  overflow:hidden;
-  box-shadow: 0 15px 40px rgba(0,0,0,.6);
-  border: 1.5px solid rgba(255,215,0,.3);
-}
-.card-view::before{
-  content:"";
-  position:absolute;
-  top:0;left:0;right:0;height:4px;
-  background: linear-gradient(90deg, #FFD700, #FFA500, #0A2A7A, #3B82F6, #FFD700);
-}
-.card-view::after{
-  content:"";
-  position:absolute;
-  bottom:-60px;right:-30px;
-  width:180px;height:180px;
-  background: radial-gradient(circle, rgba(255,215,0,.15) 0%, transparent 70%);
-  border-radius:50%;
-}
+/* FIXED - NO FLEX */
+#mainApp{display:none;min-height:100vh;width:100%;background:#F5F7FB;padding-bottom:90px}
+.header{background:#0A2A7A;color:white;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;width:100%}
+.tab{display:none;padding:16px;width:100%}.tab.active{display:block;width:100%}
+.card-view{background:radial-gradient(120% 120% at 10% 10%, #1A1A2E 0%, #000 100%);color:white;border-radius:22px;padding:22px;position:relative;overflow:hidden;border:1.5px solid rgba(255,215,0,.3);width:100%}
 .card-view.frozen{filter:grayscale(1);opacity:.5}
-.card-view.frozen::after{content:"FROZEN ❄️";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);font-size:28px;font-weight:900;color:red;background:white;padding:10px 20px;border-radius:10px;border:3px solid red;z-index:5}
-
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #eee}
-.nav-item{background:none;border:none;color:#888;font-size:11px}.nav-item.active{color:#0A2A7A;font-weight:bold}.nav-item span{display:block;font-size:22px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #eee;z-index:99}
+.nav-item{background:none;border:none;color:#888;font-size:11px;width:20%}.nav-item.active{color:#0A2A7A;font-weight:bold}.nav-item span{display:block;font-size:22px}
 .btn{width:100%;padding:14px;border:none;border-radius:12px;font-weight:bold;cursor:pointer}
 .btn-primary{background:#0A2A7A;color:white}.btn-gold{background:linear-gradient(90deg,#FFD700,#FFA500);color:black}.btn-danger{background:red;color:white;margin-top:20px}
-.input{width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin-bottom:12px;background:white;font-size:15px}
-.list-item{background:white;padding:14px;border-radius:12px;margin-bottom:10px;display:flex;justify-content:space-between}
+.input{width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin-bottom:12px;background:white;font-size:15px;display:block}
+.balance-box{margin:0;background:linear-gradient(135deg,#000,#1A1A2E);color:#FFD700;padding:20px;border-radius:20px;border:1px solid rgba(255,215,0,.3);width:100%}
 </style>
 </head>
 <body>
+
 <div id="loginScreen">
   <div style="width:70px;height:70px;background:linear-gradient(135deg,#FFD700,#000);color:white;border-radius:15px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:40px;margin-bottom:20px;border:2px solid #FFD700">K</div>
-  <div class="login-card">
-    <h2 style="text-align:center;color:#0A2A7A">Kelly Bank v14</h2>
-    <p style="text-align:center;color:gray;margin:10px 0 20px">Black Diamond Edition</p>
-    <input id="username" value="kelly"><input id="password" type="password" value="1234">
-    <button onclick="login()">Login</button>
-  </div>
+  <div class="login-card"><h2 style="text-align:center;color:#0A2A7A">Kelly Bank v15</h2><p style="text-align:center;color:gray;margin:10px 0 20px">Layout Fixed</p><input id="username" value="kelly"><input id="password" type="password" value="1234"><button onclick="login()">Login</button></div>
 </div>
+
 <div id="mainApp">
   <div class="header"><strong>Kelly Bank - Black Diamond</strong><span>🔔</span></div>
+
   <div id="homeTab" class="tab active">
-    <div style="margin:16px;background:linear-gradient(135deg,#000,#1A1A2E);color:#FFD700;padding:20px;border-radius:20px;border:1px solid rgba(255,215,0,.3)"><h3 style="color:white">Balance</h3><h1 style="color:#FFD700">₦125,000.00</h1><small style="color:gray">Kelly Amos • Black Diamond</small></div>
+    <div class="balance-box"><h3 style="color:white">Balance</h3><h1 style="color:#FFD700;font-size:28px">₦125,000.00</h1><small style="color:gray">Kelly Amos • Black Diamond</small></div>
+    <div style="margin-top:16px;background:white;padding:14px;border-radius:12px;display:flex;justify-content:space-between;width:100%"><span>MTN Airtime</span><span>-₦1,000</span></div>
   </div>
+
   <div id="cardsTab" class="tab">
     <div id="cardBox" class="card-view">
-      <!-- Bank Name with Gold -->
-      <div style="display:flex;justify-content:space-between;margin-bottom:18px;align-items:center">
-        <div style="display:flex;gap:10px;align-items:center">
-          <div style="width:38px;height:38px;background:linear-gradient(135deg,#FFD700,#FFA500);color:black;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;box-shadow:0 2px 10px rgba(255,215,0,.4)">K</div>
-          <div><div style="font-weight:900;letter-spacing:1.5px;font-size:15px;color:#FFD700">KELLY BANK</div><div style="font-size:8px;opacity:.6;letter-spacing:3px;color:white">BLACK DIAMOND • THE BANK OF THE FREE</div></div>
-        </div>
-        <div style="color:#FFD700;font-size:20px">◉</div>
-      </div>
-      <!-- Gold Chip -->
-      <div style="width:45px;height:33px;background:linear-gradient(135deg,#FFD700 0%,#FFEC8B 30%,#FFA500 70%,#B8860B 100%);border-radius:6px;margin-bottom:20px;box-shadow:inset 0 1px 2px rgba(0,0,0,.3)"></div>
-
-      <!-- Number in Gold -->
-      <h2 style="letter-spacing:3px;margin-bottom:20px;font-size:19px;color:white;text-shadow:0 1px 3px rgba(0,0,0,.5)">4242  1212  4021  8890</h2>
-
-      <div style="display:flex;justify-content:space-between;align-items:flex-end">
-        <div><div style="font-size:9px;opacity:.5;color:#FFD700;letter-spacing:1px">CARD HOLDER</div><div style="font-weight:700;font-size:13px;margin-top:3px;letter-spacing:.5px">KELLY AMOS</div></div>
-        <div><div style="font-size:9px;opacity:.5;color:#FFD700">EXPIRES</div><div style="font-weight:700;font-size:13px;margin-top:3px">12/28</div></div>
-        <div style="text-align:right"><div style="font-size:10px;color:#FFD700;letter-spacing:2px">WORLD</div><div style="font-size:24px;font-style:italic;font-weight:900;color:white;letter-spacing:1px">VISA</div></div>
-      </div>
-
-      <div id="cardStatus" style="position:absolute;top:12px;right:15px;background:linear-gradient(90deg,#FFD700,#FFA500);color:black;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:900">● BLACK DIAMOND ACTIVE</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:18px"><div style="display:flex;gap:10px;align-items:center"><div style="width:38px;height:38px;background:linear-gradient(135deg,#FFD700,#FFA500);color:black;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900">K</div><div><div style="font-weight:900;color:#FFD700">KELLY BANK</div><div style="font-size:8px;opacity:.6;color:white;letter-spacing:2px">BLACK DIAMOND</div></div></div><div style="color:#FFD700">◉</div></div>
+      <div style="width:45px;height:33px;background:linear-gradient(135deg,#FFD700,#FFA500);border-radius:6px;margin-bottom:20px"></div>
+      <h2 style="letter-spacing:2px;margin-bottom:20px;font-size:19px">4242 1212 4021 8890</h2>
+      <div style="display:flex;justify-content:space-between"><span>KELLY AMOS</span><span>12/28</span><span style="font-weight:900;font-style:italic">VISA</span></div>
+      <div id="cardStatus" style="position:absolute;top:12px;right:15px;background:#FFD700;color:black;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:900">ACTIVE</div>
     </div>
-
-    <button id="freezeBtn" class="btn btn-gold" onclick="toggleCard()">Freeze Card ❄️</button>
-    <p style="text-align:center;margin-top:12px;color:#666;font-size:12px">Unique Black Diamond • Only Kelly Bank has this color</p>
+    <button id="freezeBtn" class="btn btn-gold" onclick="toggleCard()" style="margin-top:16px">Freeze Card ❄️</button>
   </div>
 
   <div id="paymentsTab" class="tab">
-    <h2>Transfer to Any Bank 💸</h2><br>
+    <h2>Transfer 💸</h2><br>
     <label style="font-weight:bold;font-size:13px">SELECT BANK *</label>
-    <select id="bankSelect" class="input" style="border:2px solid #FFD700;background:#FFFEF0">
-      <option value="">-- Choose Bank --</option>
-      <option>Kuda Bank</option><option>OPay</option><option>PalmPay</option>
-      <option>Access Bank</option><option>GTBank</option><option>First Bank</option>
-      <option>UBA</option><option>Zenith Bank</option><option>Moniepoint</option>
-      <option>Fidelity Bank</option><option>Kelly Bank (Free)</option>
-    </select>
-    <input id="payTo" class="input" placeholder="10 digit account" maxlength="10">
-    <input id="payAmount" class="input" placeholder="Amount" type="number">
+    <select id="bankSelect" class="input" style="border:2px solid #FFD700;background:#FFFEF0"><option value="">-- Choose Bank --</option><option>Kuda Bank</option><option>OPay</option><option>PalmPay</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Zenith Bank</option><option>Moniepoint</option><option>Fidelity Bank</option><option>Kelly Bank (Free)</option></select>
+    <input id="payTo" class="input" placeholder="10 digit account" maxlength="10" type="number"><input id="payAmount" class="input" placeholder="Amount" type="number">
     <button class="btn btn-primary" onclick="sendMoney()">Send to <span id="bankNameLabel">Bank</span> →</button>
-    <div id="transferReceipt" style="display:none;margin-top:20px;background:white;padding:20px;border-radius:15px;text-align:center;border:2px solid #FFD700"><h2 style="color:green">✅ Success!</h2><p id="receiptText"></p></div>
+    <div id="transferReceipt" style="display:none;margin-top:20px;background:white;padding:20px;border-radius:15px;text-align:center;border:2px solid green"><h2 style="color:green">✅ Success!</h2><p id="receiptText"></p></div>
   </div>
 
-  <div id="savingsTab" class="tab"><h3>Savings</h3><br><div class="list-item"><span>iPhone 16</span><span>🐷</span></div></div>
-  <div id="profileTab" class="tab"><h3>Profile</h3><br><div class="list-item"><span>Version</span><b>v14 Black Diamond</b></div><button class="btn btn-danger" onclick="kellyLogout()">Log Out</button></div>
+  <div id="savingsTab" class="tab"><h3>Savings</h3><br><div style="background:white;padding:14px;border-radius:12px">iPhone 16 - 75% 🐷</div></div>
+  <div id="profileTab" class="tab"><h3>Profile</h3><br><div style="background:white;padding:14px;border-radius:12px;display:flex;justify-content:space-between;margin-bottom:10px"><span>Version</span><b>v15 Fixed</b></div><button class="btn btn-danger" onclick="kellyLogout()">Log Out</button></div>
 
   <div class="bottom-nav">
     <button class="nav-item active" onclick="showTab('homeTab',this)"><span>🏠</span>Home</button>
@@ -121,15 +71,16 @@ body{background:#F5F7FB}
     <button class="nav-item" onclick="showTab('profileTab',this)"><span>👤</span>Profile</button>
   </div>
 </div>
+
 <script>
-function login(){document.getElementById('loginScreen').style.display='none';document.getElementById('mainApp').style.display='flex';localStorage.setItem('kelly_isLoggedIn','true');}
+function login(){document.getElementById('loginScreen').style.display='none';document.getElementById('mainApp').style.display='block';localStorage.setItem('kelly_isLoggedIn','true');}
 function showTab(id,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));if(el)el.classList.add('active');}
 let isFrozen=false;
-function toggleCard(){isFrozen=!isFrozen;const c=document.getElementById('cardBox'),b=document.getElementById('freezeBtn'),s=document.getElementById('cardStatus');if(isFrozen){c.classList.add('frozen');b.innerText='Unfreeze Card 🔥';b.style.background='gray';s.innerText='FROZEN';}else{c.classList.remove('frozen');b.innerText='Freeze Card ❄️';b.style.background='';s.innerText='BLACK DIAMOND ACTIVE';}}
+function toggleCard(){isFrozen=!isFrozen;const c=document.getElementById('cardBox'),b=document.getElementById('freezeBtn'),s=document.getElementById('cardStatus');if(isFrozen){c.classList.add('frozen');b.innerText='Unfreeze Card 🔥';s.innerText='FROZEN';}else{c.classList.remove('frozen');b.innerText='Freeze Card ❄️';s.innerText='ACTIVE';}}
 document.getElementById('bankSelect').addEventListener('change',e=>{document.getElementById('bankNameLabel').innerText=e.target.value||'Bank';});
-function sendMoney(){const bank=document.getElementById('bankSelect').value,acc=document.getElementById('payTo').value,amt=document.getElementById('payAmount').value;if(!bank){alert('Select bank');return;}if(acc.length<10){alert('10 digit account');return;}if(!amt){alert('Enter amount');return;}if(isFrozen){alert('Card frozen! Unfreeze first');return;}document.getElementById('receiptText').innerHTML=`Sent <b>₦${Number(amt).toLocaleString()}</b> to ${acc}<br>${bank}`;document.getElementById('transferReceipt').style.display='block';setTimeout(()=>document.getElementById('transferReceipt').style.display='none',4000);}
+function sendMoney(){const bank=document.getElementById('bankSelect').value,acc=document.getElementById('payTo').value,amt=document.getElementById('payAmount').value;if(!bank){alert('Select bank first!');return;}if(acc.length<10){alert('10 digit account');return;}if(!amt){alert('Enter amount');return;}document.getElementById('receiptText').innerHTML=`Sent ₦${Number(amt).toLocaleString()} to ${acc}<br>${bank}`;document.getElementById('transferReceipt').style.display='block';}
 function kellyLogout(){if(confirm('Log out?')){localStorage.clear();document.getElementById('mainApp').style.display='none';document.getElementById('loginScreen').style.display='flex';}}
-if(localStorage.getItem('kelly_isLoggedIn')==='true'){document.getElementById('loginScreen').style.display='none';document.getElementById('mainApp').style.display='flex';}
+if(localStorage.getItem('kelly_isLoggedIn')==='true'){document.getElementById('loginScreen').style.display='none';document.getElementById('mainApp').style.display='block';}
 </script>
 </body>
 </html>
