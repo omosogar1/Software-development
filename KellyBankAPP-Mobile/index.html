@@ -1,118 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly Bank v17 - Fixed</title>
+<title>Kelly Bank v17 - With Bank Selector</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#0a0a0a;color:#fff;padding-bottom:80px}
-.header{padding:15px;display:flex;justify-content:space-between;align-items:center;background:#111}
-.logo-k{width:38px;height:38px;background:gold;color:#000;display:flex;align-items:center;justify-content:center;border-radius:8px;font-weight:900;font-size:22px}
-.balance{margin:15px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#000;border-radius:20px;padding:22px}
-.balance h1{font-size:30px;margin-top:6px}
-.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:15px}
-.btn{ background:#1c1c1c;border:1px solid #2a2a2a;border-radius:12px;padding:14px;text-align:center;cursor:pointer }
-.btn.active{border-color:gold}
-.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:#000000ee;display:none;z-index:9999;padding:20px}
-.box{max-width:380px;margin:20px auto;background:#151515;border:1px solid gold;border-radius:16px;padding:20px}
-.box input, .box select{width:100%;padding:13px;margin-top:8px;background:#222;color:#fff;border:1px solid gold;border-radius:10px}
-.box label{font-size:12px;color:gold;margin-top:12px;display:block}
-.gold-btn{width:100%;padding:15px;margin-top:15px;background:gold;color:#000;border:none;border-radius:12px;font-weight:900;cursor:pointer}
-.close-btn{width:100%;padding:12px;margin-top:10px;background:#222;color:#fff;border:1px solid #444;border-radius:10px;cursor:pointer}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, sans-serif}
+body{background:#0d0d0d;color:#fff;padding-bottom:80px}
+.top-gold{margin:10px;background:linear-gradient(90deg,#ffcc00,#ff9900);border-radius:16px;padding:12px;display:flex;gap:8px;color:#000;font-size:12px;font-weight:bold}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px}
+.act{background:#1e1e1e;border-radius:12px;padding:12px;text-align:center;cursor:pointer;border:1px solid #222}
+.act span{font-size:10px;display:block;margin-top:4px}
+.transfer-box{margin:10px;background:#111;border-radius:14px;padding:14px}
+.transfer-box h3{font-size:13px;margin-bottom:10px}
+.transfer-box select, .transfer-box input{width:100%;padding:14px;margin-bottom:10px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:10px;outline:none}
+.transfer-box select{border-color:#d4af37}
+.send-btn{width:100%;padding:14px;background:linear-gradient(90deg,#ffcc00,#ff9900);border:none;border-radius:10px;font-weight:900;cursor:pointer}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#111;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #222}
+.nav{font-size:9px;text-align:center;color:#777}
+.nav.active{color:#ffcc00}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div style="display:flex;align-items:center;gap:10px">
-    <div class="logo-k">K</div>
-    <div><b>Kelly Osogar</b><div style="font-size:10px;color:#aaa">Black Diamond</div></div>
-  </div>
-  <div style="font-size:11px">2384 5601</div>
-</div>
-
-<div class="balance">
-  <div style="font-size:11px;opacity:.7">TOTAL BALANCE</div>
-  <h1 id="bal">₦125,000.00</h1>
-  <div style="font-size:10px;margin-top:8px">**** 3456 • ACTIVE</div>
+<div class="top-gold">
+  <div style="background:#000;color:#ffcc00;padding:5px 10px;border-radius:20px">Freeze</div>
+  <div style="background:#000;color:#fff;padding:5px 10px;border-radius:20px">+ Add Money</div>
 </div>
 
 <div class="actions">
-  <div class="btn active" onclick="openT()"><div>💸</div><div style="font-size:11px;margin-top:4px">Transfer</div></div>
-  <div class="btn"><div>📱</div><div style="font-size:11px;margin-top:4px">Airtime</div></div>
-  <div class="btn"><div>💡</div><div style="font-size:11px;margin-top:4px">Bills</div></div>
-  <div class="btn"><div>📜</div><div style="font-size:11px;margin-top:4px">History</div></div>
+  <div class="act" onclick="document.getElementById('transfer').scrollIntoView({behavior:'smooth'})"><div>💸</div><span>Transfer</span></div>
+  <div class="act"><div>📱</div><span>Airtime</span></div>
+  <div class="act"><div>💡</div><span>Bills</span></div>
+  <div class="act"><div>📄</div><span>History</span></div>
 </div>
 
-<div style="padding:15px">
-  <div style="font-size:13px;margin-bottom:8px">Recent Transactions</div>
-  <div id="list" style="background:#1a1a1a;padding:12px;border-radius:12px;display:flex;justify-content:space-between">
-    <div><b style="font-size:13px">Salary from TechCorp</b><div style="font-size:10px;color:#888">Today</div></div>
-    <div style="color:#0f0">+₦125,000</div>
-  </div>
+<div id="transfer" class="transfer-box">
+  <h3>Transfer</h3>
+  
+  <!-- BANK SELECTOR - THIS WAS MISSING -->
+  <select id="bankSelect">
+    <option value="">-- Select Bank --</option>
+    <option value="Access Bank">Access Bank</option>
+    <option value="GTBank">GTBank (Guaranty Trust)</option>
+    <option value="First Bank">First Bank of Nigeria</option>
+    <option value="UBA">UBA - United Bank for Africa</option>
+    <option value="Zenith Bank">Zenith Bank</option>
+    <option value="Union Bank">Union Bank</option>
+    <option value="Wema Bank">Wema Bank</option>
+    <option value="Fidelity Bank">Fidelity Bank</option>
+    <option value="FCMB">FCMB</option>
+    <option value="Ecobank">Ecobank</option>
+    <option value="Sterling Bank">Sterling Bank</option>
+    <option value="OPay">OPay</option>
+    <option value="Moniepoint">Moniepoint</option>
+    <option value="Kuda">Kuda Microfinance</option>
+    <option value="PalmPay">PalmPay</option>
+  </select>
+
+  <input id="account" type="number" placeholder="10-digit account" maxlength="10" oninput="if(this.value.length>10)this.value=this.value.slice(0,10)">
+  <input id="amount" type="number" placeholder="Amount">
+  <input id="remark" type="text" placeholder="Remark">
+  
+  <button class="send-btn" onclick="sendMoney()">Send Now</button>
+  
+  <div style="margin-top:10px;font-size:10px;color:#888">Balance: <span id="balText">₦125,000.00</span> • Fee: ₦0</div>
 </div>
 
-<!-- TRANSFER WITH BANK SELECTOR -->
-<div id="modal" class="modal">
-  <div class="box">
-    <h3 style="text-align:center;color:gold;margin-bottom:15px">Transfer Money</h3>
-
-    <label>Select Bank</label>
-    <select id="bank">
-      <option value="">-- Select Bank --</option>
-      <option>Access Bank</option>
-      <option>GTBank</option>
-      <option>First Bank</option>
-      <option>UBA</option>
-      <option>Zenith Bank</option>
-      <option>Union Bank</option>
-      <option>Wema Bank</option>
-      <option>Fidelity Bank</option>
-      <option>FCMB</option>
-      <option>Ecobank</option>
-      <option>Sterling Bank</option>
-      <option>OPay</option>
-      <option>Moniepoint</option>
-      <option>Kuda Bank</option>
-      <option>PalmPay</option>
-    </select>
-
-    <label>Account Number</label>
-    <input id="acct" type="number" placeholder="10 digits" maxlength="10" oninput="if(this.value.length>10)this.value=this.value.slice(0,10)">
-
-    <label>Amount (₦)</label>
-    <input id="amt" type="number" placeholder="5000">
-
-    <label>Narration</label>
-    <input id="note" type="text" placeholder="Optional">
-
-    <button class="gold-btn" onclick="send()">Transfer Now</button>
-    <button class="close-btn" onclick="closeT()">Cancel</button>
-  </div>
+<div class="bottom-nav">
+  <div class="nav active">🏠<br>Home</div>
+  <div class="nav">💳<br>Card</div>
+  <div class="nav">🎁<br>Reward</div>
+  <div class="nav">💰<br>Loan</div>
+  <div class="nav">👤<br>Profile</div>
 </div>
 
 <script>
-let bal = 125000;
-function openT(){document.getElementById('modal').style.display='block'}
-function closeT(){document.getElementById('modal').style.display='none'}
-function send(){
-  let bank = document.getElementById('bank').value;
-  let acct = document.getElementById('acct').value;
-  let amt = Number(document.getElementById('amt').value);
-  if(!bank){alert('Select bank');return}
-  if(acct.length!=10){alert('Account must be 10 digits');return}
-  if(!amt||amt<=0){alert('Enter amount');return}
-  if(amt>bal){alert('Insufficient balance');return}
-  bal-=amt;
-  document.getElementById('bal').innerText='₦'+bal.toLocaleString()+'.00';
-  alert('Success! ₦'+amt.toLocaleString()+' sent to '+acct+' ('+bank+')');
-  closeT();
-  document.getElementById('bank').value='';
-  document.getElementById('acct').value='';
-  document.getElementById('amt').value='';
-  document.getElementById('note').value='';
+let balance = 125000;
+
+function sendMoney(){
+  const bank = document.getElementById('bankSelect').value;
+  const account = document.getElementById('account').value;
+  const amount = parseFloat(document.getElementById('amount').value);
+  const remark = document.getElementById('remark').value;
+
+  // VALIDATION WITH BANK SELECTOR
+  if(!bank){
+    alert('Please select bank');
+    return;
+  }
+  if(account.length !== 10){
+    alert('Account number must be 10 digits');
+    return;
+  }
+  if(!amount || amount <= 0){
+    alert('Enter valid amount');
+    return;
+  }
+  if(amount > balance){
+    alert('Insufficient balance. Your balance is ₦' + balance.toLocaleString());
+    return;
+  }
+
+  // SUCCESS
+  balance -= amount;
+  document.getElementById('balText').innerText = '₦' + balance.toLocaleString() + '.00';
+  
+  alert('SUCCESS!\n\nBank: ' + bank + '\nAccount: ' + account + '\nAmount: ₦' + amount.toLocaleString() + '\nRemark: ' + remark);
+  
+  // Clear form
+  document.getElementById('bankSelect').value = '';
+  document.getElementById('account').value = '';
+  document.getElementById('amount').value = '';
+  document.getElementById('remark').value = '';
 }
 </script>
+
 </body>
 </html>
