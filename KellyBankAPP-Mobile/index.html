@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly Bank v15 Fixed</title>
+<title>Kelly Bank - Black Diamond</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0A2A7A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Kelly Bank">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 body{background:#F5F7FB;width:100%;overflow-x:hidden}
@@ -11,7 +15,6 @@ body{background:#F5F7FB;width:100%;overflow-x:hidden}
 .login-card{background:white;color:black;width:100%;max-width:380px;padding:28px;border-radius:20px}
 .login-card input{width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin-bottom:12px}
 .login-card button{width:100%;padding:14px;background:#0A2A7A;color:white;border:none;border-radius:12px;font-weight:bold}
-/* FIXED - NO FLEX */
 #mainApp{display:none;min-height:100vh;width:100%;background:#F5F7FB;padding-bottom:90px}
 .header{background:#0A2A7A;color:white;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;width:100%}
 .tab{display:none;padding:16px;width:100%}.tab.active{display:block;width:100%}
@@ -29,47 +32,17 @@ body{background:#F5F7FB;width:100%;overflow-x:hidden}
 
 <div id="loginScreen">
   <div style="width:70px;height:70px;background:linear-gradient(135deg,#FFD700,#000);color:white;border-radius:15px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:40px;margin-bottom:20px;border:2px solid #FFD700">K</div>
-  <div class="login-card"><h2 style="text-align:center;color:#0A2A7A">Kelly Bank v15</h2><p style="text-align:center;color:gray;margin:10px 0 20px">Layout Fixed</p><input id="username" value="kelly"><input id="password" type="password" value="1234"><button onclick="login()">Login</button></div>
+  <div class="login-card"><h2 style="text-align:center;color:#0A2A7A">Kelly Bank v16</h2><p style="text-align:center;color:gray;margin:10px 0 20px">Black Diamond - PWA Ready</p><input id="username" value="kelly"><input id="password" type="password" value="1234"><button onclick="login()">Login</button></div>
 </div>
 
 <div id="mainApp">
   <div class="header"><strong>Kelly Bank - Black Diamond</strong><span>🔔</span></div>
-
-  <div id="homeTab" class="tab active">
-    <div class="balance-box"><h3 style="color:white">Balance</h3><h1 style="color:#FFD700;font-size:28px">₦125,000.00</h1><small style="color:gray">Kelly Amos • Black Diamond</small></div>
-    <div style="margin-top:16px;background:white;padding:14px;border-radius:12px;display:flex;justify-content:space-between;width:100%"><span>MTN Airtime</span><span>-₦1,000</span></div>
-  </div>
-
-  <div id="cardsTab" class="tab">
-    <div id="cardBox" class="card-view">
-      <div style="display:flex;justify-content:space-between;margin-bottom:18px"><div style="display:flex;gap:10px;align-items:center"><div style="width:38px;height:38px;background:linear-gradient(135deg,#FFD700,#FFA500);color:black;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900">K</div><div><div style="font-weight:900;color:#FFD700">KELLY BANK</div><div style="font-size:8px;opacity:.6;color:white;letter-spacing:2px">BLACK DIAMOND</div></div></div><div style="color:#FFD700">◉</div></div>
-      <div style="width:45px;height:33px;background:linear-gradient(135deg,#FFD700,#FFA500);border-radius:6px;margin-bottom:20px"></div>
-      <h2 style="letter-spacing:2px;margin-bottom:20px;font-size:19px">4242 1212 4021 8890</h2>
-      <div style="display:flex;justify-content:space-between"><span>KELLY AMOS</span><span>12/28</span><span style="font-weight:900;font-style:italic">VISA</span></div>
-      <div id="cardStatus" style="position:absolute;top:12px;right:15px;background:#FFD700;color:black;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:900">ACTIVE</div>
-    </div>
-    <button id="freezeBtn" class="btn btn-gold" onclick="toggleCard()" style="margin-top:16px">Freeze Card ❄️</button>
-  </div>
-
-  <div id="paymentsTab" class="tab">
-    <h2>Transfer 💸</h2><br>
-    <label style="font-weight:bold;font-size:13px">SELECT BANK *</label>
-    <select id="bankSelect" class="input" style="border:2px solid #FFD700;background:#FFFEF0"><option value="">-- Choose Bank --</option><option>Kuda Bank</option><option>OPay</option><option>PalmPay</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Zenith Bank</option><option>Moniepoint</option><option>Fidelity Bank</option><option>Kelly Bank (Free)</option></select>
-    <input id="payTo" class="input" placeholder="10 digit account" maxlength="10" type="number"><input id="payAmount" class="input" placeholder="Amount" type="number">
-    <button class="btn btn-primary" onclick="sendMoney()">Send to <span id="bankNameLabel">Bank</span> →</button>
-    <div id="transferReceipt" style="display:none;margin-top:20px;background:white;padding:20px;border-radius:15px;text-align:center;border:2px solid green"><h2 style="color:green">✅ Success!</h2><p id="receiptText"></p></div>
-  </div>
-
+  <div id="homeTab" class="tab active"><div class="balance-box"><h3 style="color:white">Balance</h3><h1 style="color:#FFD700;font-size:28px">₦125,000.00</h1><small style="color:gray">Kelly Amos • Black Diamond</small></div><div style="margin-top:16px;background:white;padding:14px;border-radius:12px;display:flex;justify-content:space-between;width:100%"><span>MTN Airtime</span><span>-₦1,000</span></div></div>
+  <div id="cardsTab" class="tab"><div id="cardBox" class="card-view"><div style="display:flex;justify-content:space-between;margin-bottom:18px"><div style="display:flex;gap:10px;align-items:center"><div style="width:38px;height:38px;background:linear-gradient(135deg,#FFD700,#FFA500);color:black;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900">K</div><div><div style="font-weight:900;color:#FFD700">KELLY BANK</div><div style="font-size:8px;opacity:.6;color:white;letter-spacing:2px">BLACK DIAMOND</div></div></div><div style="color:#FFD700">◉</div></div><div style="width:45px;height:33px;background:linear-gradient(135deg,#FFD700,#FFA500);border-radius:6px;margin-bottom:20px"></div><h2 style="letter-spacing:2px;margin-bottom:20px;font-size:19px">4242 1212 4021 8890</h2><div style="display:flex;justify-content:space-between"><span>KELLY AMOS</span><span>12/28</span><span style="font-weight:900;font-style:italic">VISA</span></div><div id="cardStatus" style="position:absolute;top:12px;right:15px;background:#FFD700;color:black;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:900">ACTIVE</div></div><button id="freezeBtn" class="btn btn-gold" onclick="toggleCard()" style="margin-top:16px">Freeze Card ❄️</button></div>
+  <div id="paymentsTab" class="tab"><h2>Transfer 💸</h2><br><label style="font-weight:bold;font-size:13px">SELECT BANK *</label><select id="bankSelect" class="input" style="border:2px solid #FFD700;background:#FFFEF0"><option value="">-- Choose Bank --</option><option>Kuda Bank</option><option>OPay</option><option>PalmPay</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Zenith Bank</option><option>Moniepoint</option><option>Fidelity Bank</option><option>Kelly Bank (Free)</option></select><input id="payTo" class="input" placeholder="10 digit account" maxlength="10" type="number"><input id="payAmount" class="input" placeholder="Amount" type="number"><button class="btn btn-primary" onclick="sendMoney()">Send to <span id="bankNameLabel">Bank</span> →</button><div id="transferReceipt" style="display:none;margin-top:20px;background:white;padding:20px;border-radius:15px;text-align:center;border:2px solid green"><h2 style="color:green">✅ Success!</h2><p id="receiptText"></p></div></div>
   <div id="savingsTab" class="tab"><h3>Savings</h3><br><div style="background:white;padding:14px;border-radius:12px">iPhone 16 - 75% 🐷</div></div>
-  <div id="profileTab" class="tab"><h3>Profile</h3><br><div style="background:white;padding:14px;border-radius:12px;display:flex;justify-content:space-between;margin-bottom:10px"><span>Version</span><b>v15 Fixed</b></div><button class="btn btn-danger" onclick="kellyLogout()">Log Out</button></div>
-
-  <div class="bottom-nav">
-    <button class="nav-item active" onclick="showTab('homeTab',this)"><span>🏠</span>Home</button>
-    <button class="nav-item" onclick="showTab('cardsTab',this)"><span>💳</span>Cards</button>
-    <button class="nav-item" onclick="showTab('paymentsTab',this)"><span>💸</span>Payments</button>
-    <button class="nav-item" onclick="showTab('savingsTab',this)"><span>🐷</span>Savings</button>
-    <button class="nav-item" onclick="showTab('profileTab',this)"><span>👤</span>Profile</button>
-  </div>
+  <div id="profileTab" class="tab"><h3>Profile</h3><br><div style="background:white;padding:14px;border-radius:12px;display:flex;justify-content:space-between;margin-bottom:10px"><span>Version</span><b>v16 PWA Ready</b></div><button class="btn btn-danger" onclick="kellyLogout()">Log Out</button></div>
+  <div class="bottom-nav"><button class="nav-item active" onclick="showTab('homeTab',this)"><span>🏠</span>Home</button><button class="nav-item" onclick="showTab('cardsTab',this)"><span>💳</span>Cards</button><button class="nav-item" onclick="showTab('paymentsTab',this)"><span>💸</span>Payments</button><button class="nav-item" onclick="showTab('savingsTab',this)"><span>🐷</span>Savings</button><button class="nav-item" onclick="showTab('profileTab',this)"><span>👤</span>Profile</button></div>
 </div>
 
 <script>
@@ -81,6 +54,7 @@ document.getElementById('bankSelect').addEventListener('change',e=>{document.get
 function sendMoney(){const bank=document.getElementById('bankSelect').value,acc=document.getElementById('payTo').value,amt=document.getElementById('payAmount').value;if(!bank){alert('Select bank first!');return;}if(acc.length<10){alert('10 digit account');return;}if(!amt){alert('Enter amount');return;}document.getElementById('receiptText').innerHTML=`Sent ₦${Number(amt).toLocaleString()} to ${acc}<br>${bank}`;document.getElementById('transferReceipt').style.display='block';}
 function kellyLogout(){if(confirm('Log out?')){localStorage.clear();document.getElementById('mainApp').style.display='none';document.getElementById('loginScreen').style.display='flex';}}
 if(localStorage.getItem('kelly_isLoggedIn')==='true'){document.getElementById('loginScreen').style.display='none';document.getElementById('mainApp').style.display='block';}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(()=>console.log('SW registered'));}
 </script>
 </body>
 </html>
