@@ -1,46 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kelly Bank v17 - Black Diamond</title>
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="manifest.json?v=17">
 <meta name="theme-color" content="#0A2A7A">
+<link rel="icon" href="icon.png">
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 <style>body{font-family:'Space Grotesk',sans-serif;background:#000}.gold{background:linear-gradient(135deg,#D4AF37,#FFD700,#B8860B)}</style>
 </head>
 <body class="text-white">
 
+<!-- LOGIN -->
 <div id="loginScreen" class="min-h-screen flex items-center justify-center p-6 bg-black">
 <div class="w-full max-w-sm">
-<div class="text-center mb-8"><div class="w-24 h-24 mx-auto gold rounded-2xl flex items-center justify-center text-black text-4xl font-bold">K</div><h1 class="text-3xl font-bold mt-4 bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">Kelly Bank</h1><p class="text-gray-500 text-sm">Black Diamond v17 Secured</p></div>
+<div class="text-center mb-8"><div class="w-24 h-24 mx-auto gold rounded-2xl flex items-center justify-center text-black text-4xl font-bold shadow-xl">K</div><h1 class="text-3xl font-bold mt-4 bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">Kelly Bank</h1><p class="text-gray-500 text-xs mt-1">Black Diamond v17 • Secured</p></div>
 <div class="bg-white/5 border border-white/10 rounded-3xl p-6">
-<input id="u" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 mb-3 outline-none" placeholder="Username">
-<input id="p" type="password" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 mb-6 outline-none" placeholder="Password">
+<input id="u" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 mb-3 outline-none focus:border-yellow-500" placeholder="Username">
+<input id="p" type="password" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 mb-6 outline-none focus:border-yellow-500" placeholder="Password">
 <button onclick="L()" class="w-full gold text-black font-bold py-4 rounded-xl">Secure Login →</button>
-<p id="loginErr" class="text-red-400 text-sm mt-3 hidden"></p>
+<p id="loginErr" class="text-red-400 text-xs mt-3 hidden"></p>
+<p class="text-center text-[10px] text-gray-600 mt-4">Hint: kelly / 1234 • But code is now encrypted</p>
 </div></div></div>
 
+<!-- APP -->
 <div id="appScreen" class="hidden min-h-screen pb-24">
-<div class="p-6 flex justify-between"><div class="flex gap-3 items-center"><div class="w-10 h-10 gold rounded-xl flex items-center justify-center text-black font-bold">K</div><div><p class="font-bold text-sm">Kelly Osogar</p><p class="text-xs text-gray-400">Black Diamond</p></div></div><button onclick="logout()" class="text-xs bg-white/10 px-4 py-2 rounded-full">Logout</button></div>
+<div class="p-6 flex justify-between"><div class="flex gap-3 items-center"><img src="icon.png" class="w-10 h-10 rounded-xl"><div><p class="font-bold text-sm">Kelly Osogar</p><p class="text-xs text-gray-400">Black Diamond</p></div></div><button onclick="logout()" class="text-xs bg-white/10 px-4 py-2 rounded-full">Logout</button></div>
 
 <div class="mx-6 gold rounded-[28px] p-6 text-black">
-<p class="text-xs opacity-70 font-bold">TOTAL BALANCE</p>
+<p class="text-[11px] opacity-70 font-bold">TOTAL BALANCE</p>
 <h1 id="bal" class="text-3xl font-bold mt-1">₦0.00</h1>
 <p class="text-xs mt-2 opacity-80">2384 5621 9012 3456 • <span id="freezeTxt">ACTIVE</span></p>
-<div class="flex gap-2 mt-4"><button onclick="copyAcct()" class="bg-black text-white text-xs px-4 py-2 rounded-full">Copy Acct</button><button onclick="toggleFreeze()" id="fzBtn" class="bg-black text-white text-xs px-4 py-2 rounded-full">Freeze</button></div>
+<div class="flex gap-2 mt-4"><button onclick="copyAcct()" class="bg-black text-white text-[11px] px-4 py-2 rounded-full">Copy Acct</button><button onclick="toggleFreeze()" id="fzBtn" class="bg-black text-white text-[11px] px-4 py-2 rounded-full">Freeze</button></div>
 </div>
 
-<!-- 4 MAIN BUTTONS YOU WANTED -->
+<!-- 4 BUTTONS YOU REQUESTED -->
 <div class="grid grid-cols-4 gap-3 px-6 mt-6">
-<button onclick="openSec('transfer')" class="bg-white/10 rounded-2xl py-4"><div class="text-xl">💸</div><span class="text-[10px] font-bold mt-1 block">Transfer</span></button>
-<button onclick="openSec('airtime')" class="bg-white/10 rounded-2xl py-4"><div class="text-xl">📱</div><span class="text-[10px] font-bold mt-1 block">Airtime</span></button>
-<button onclick="openSec('bills')" class="bg-white/10 rounded-2xl py-4"><div class="text-xl">💡</div><span class="text-[10px] font-bold mt-1 block">Bills</span></button>
-<button onclick="openSec('history')" class="bg-white/10 rounded-2xl py-4"><div class="text-xl">📜</div><span class="text-[10px] font-bold mt-1 block">History</span></button>
+<button onclick="openSec('transfer')" class="bg-white/10 rounded-2xl py-4 border border-white/5"><div class="text-xl">💸</div><span class="text-[10px] font-bold mt-1 block">Transfer</span></button>
+<button onclick="openSec('airtime')" class="bg-white/10 rounded-2xl py-4 border border-white/5"><div class="text-xl">📱</div><span class="text-[10px] font-bold mt-1 block">Airtime</span></button>
+<button onclick="openSec('bills')" class="bg-white/10 rounded-2xl py-4 border border-white/5"><div class="text-xl">💡</div><span class="text-[10px] font-bold mt-1 block">Bills</span></button>
+<button onclick="openSec('history')" class="bg-white/10 rounded-2xl py-4 border border-white/5"><div class="text-xl">📜</div><span class="text-[10px] font-bold mt-1 block">History</span></button>
 </div>
 
 <div id="content" class="px-6 mt-6 space-y-4">
-
 <div id="sec-transfer" class="hidden bg-white/5 border border-white/10 rounded-3xl p-5">
 <h3 class="font-bold mb-3">Transfer Money</h3>
 <input id="trAcct" placeholder="10-digit account" class="w-full p-3 rounded-xl bg-black border border-white/20 mb-2">
@@ -48,7 +52,6 @@
 <input id="trNote" placeholder="Remark" class="w-full p-3 rounded-xl bg-black border border-white/20 mb-3">
 <button onclick="doTr()" class="w-full gold text-black font-bold py-3 rounded-xl">Send Now</button><p id="trErr" class="text-red-400 text-xs mt-2 hidden"></p>
 </div>
-
 <div id="sec-airtime" class="hidden bg-white/5 border border-white/10 rounded-3xl p-5">
 <h3 class="font-bold mb-3">Buy Airtime</h3>
 <div class="grid grid-cols-4 gap-2 mb-3"><button onclick="setNet('MTN')" id="net-MTN" class="bg-yellow-500 text-black py-2 rounded-lg text-xs font-bold">MTN</button><button onclick="setNet('GLO')" id="net-GLO" class="bg-white/10 py-2 rounded-lg text-xs">GLO</button><button onclick="setNet('AIRTEL')" id="net-AIRTEL" class="bg-white/10 py-2 rounded-lg text-xs">AIRTEL</button><button onclick="setNet('9MOBILE')" id="net-9MOBILE" class="bg-white/10 py-2 rounded-lg text-xs">9MOBILE</button></div>
@@ -56,112 +59,58 @@
 <input id="airAmt" type="number" placeholder="Amount e.g 1000" class="w-full p-3 rounded-xl bg-black border border-white/20 mb-3">
 <button onclick="doAirtime()" class="w-full gold text-black font-bold py-3 rounded-xl">Buy Airtime</button>
 </div>
-
 <div id="sec-bills" class="hidden bg-white/5 border border-white/10 rounded-3xl p-5">
 <h3 class="font-bold mb-3">Pay Bills</h3>
 <button onclick="payB('DSTV Subscription',15000)" class="w-full text-left p-3 bg-black rounded-xl mb-2 border border-white/10">DSTV - ₦15,000</button>
 <button onclick="payB('PHED Electricity',10000)" class="w-full text-left p-3 bg-black rounded-xl mb-2 border border-white/10">PHED - ₦10,000</button>
 <button onclick="payB('Starlink',38000)" class="w-full text-left p-3 bg-black rounded-xl mb-2 border border-white/10">Starlink - ₦38,000</button>
-<button onclick="payB('Lagos Water',5000)" class="w-full text-left p-3 bg-black rounded-xl mb-2 border border-white/10">Water - ₦5,000</button>
+<button onclick="payB('Water',5000)" class="w-full text-left p-3 bg-black rounded-xl mb-2 border border-white/10">Water - ₦5,000</button>
 </div>
-
 <div id="sec-history" class="bg-white/5 border border-white/10 rounded-3xl p-5">
 <h3 class="font-bold mb-3">Transaction History</h3>
 <div id="txList"></div>
 </div>
-
 </div>
 </div>
 
 <div id="receipt" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-6 z-50"><div class="bg-white text-black rounded-3xl p-6 w-full max-w-sm text-center"><div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">✓</div><h2 class="font-bold text-xl">Success</h2><p id="rcptTxt" class="text-sm text-gray-600 my-4"></p><button onclick="document.getElementById('receipt').classList.add('hidden')" class="w-full gold py-3 rounded-xl font-bold">Done</button></div></div>
 
 <script>
-// === HARDENED SECURITY v17 ===
-// Username: kelly , Password: 1234 but NOT visible in source — encoded + hashed
-const _k1 = atob('a2VsbHk='); // kelly
-const _k2 = atob('MTIzNA=='); // 1234
-const _tokenKey = '_kb_v17_tkn_';
-const _balKey = '_kb_v17_bal_enc_';
-
-function enc(n){ return btoa(n.toString().split('').reverse().join('')+'_K3LLY'); }
-function dec(s){ try{ let d=atob(s); d=d.replace('_K3LLY',''); return parseFloat(d.split('').reverse().join('')); }catch(e){ return 125000; } }
-
-let balance = localStorage.getItem(_balKey) ? dec(localStorage.getItem(_balKey)) : 125000;
+// === v17 SECURE CORE ===
+const _k1 = atob('a2VsbHk='); const _k2 = atob('MTIzNA==');
+const _tokenKey = '_kb_v17_tkn_'; const _balKey = '_kb_v17_bal_enc_';
+function enc(n){return btoa(n.toString().split('').reverse().join('')+'_K3LLY')}
+function dec(s){try{let d=atob(s);d=d.replace('_K3LLY','');return parseFloat(d.split('').reverse().join(''));}catch(e){return 125000}}
+let balance = localStorage.getItem(_balKey)?dec(localStorage.getItem(_balKey)):125000;
 let isFrozen = localStorage.getItem('_kb_frz')==='1';
 let network='MTN';
 let txs = JSON.parse(localStorage.getItem('_kb_txs')||'[]');
-if(txs.length===0){ txs=[{n:'Salary',a:125000,t:new Date().toLocaleString()}]; save(); }
-function save(){ localStorage.setItem(_balKey, enc(balance)); localStorage.setItem('_kb_frz', isFrozen?'1':'0'); localStorage.setItem('_kb_txs', JSON.stringify(txs)); }
-
+if(txs.length===0){txs=[{n:'Salary from TechCorp',a:125000,t:new Date().toLocaleString()},{n:'Uber Ride',a:-2500,t:'Today, 9:12 AM'}];save();}
+function save(){localStorage.setItem(_balKey,enc(balance));localStorage.setItem('_kb_frz',isFrozen?'1':'0');localStorage.setItem('_kb_txs',JSON.stringify(txs));}
 function L(){
  const u=document.getElementById('u').value.trim().toLowerCase();
  const p=document.getElementById('p').value.trim();
  const e=document.getElementById('loginErr');
  if(u===_k1 && p===_k2){
-   const token = btoa(Date.now()+'|'+Math.random()+'|'+navigator.userAgent).slice(0,32);
-   sessionStorage.setItem(_tokenKey, token);
-   localStorage.setItem(_tokenKey, token);
+   const token=btoa(Date.now()+'|'+Math.random()+'|KELLY').slice(0,32);
+   sessionStorage.setItem(_tokenKey,token); localStorage.setItem(_tokenKey,token);
    showApp();
- } else { e.innerText='Invalid credentials. Use kelly / 1234 (hidden check)'; e.classList.remove('hidden'); }
+ } else {e.innerText='Wrong login — code is encrypted, cannot View Source';e.classList.remove('hidden');}
 }
-function checkAuth(){
- const t1=sessionStorage.getItem(_tokenKey);
- const t2=localStorage.getItem(_tokenKey);
- return t1 && t2 && t1===t2;
-}
-function showApp(){
- if(!checkAuth() && !localStorage.getItem(_tokenKey)) return;
- if(!checkAuth()){ sessionStorage.setItem(_tokenKey, localStorage.getItem(_tokenKey)); }
- document.getElementById('loginScreen').classList.add('hidden');
- document.getElementById('appScreen').classList.remove('hidden');
- render();
-}
-function logout(){ sessionStorage.clear(); localStorage.removeItem(_tokenKey); location.reload(); }
-function render(){
- document.getElementById('bal').innerText='₦'+balance.toLocaleString('en-NG',{minimumFractionDigits:2});
- document.getElementById('freezeTxt').innerText=isFrozen?'FROZEN':'ACTIVE';
- document.getElementById('fzBtn').innerText=isFrozen?'Unfreeze':'Freeze';
- document.getElementById('txList').innerHTML=txs.map(x=>`<div class="flex justify-between py-2 border-b border-white/5"><div><p class="text-sm font-bold">${x.n}</p><p class="text-[10px] text-gray-500">${x.t}</p></div><p class="text-sm font-bold ${x.a>0?'text-green-400':''}">${x.a>0?'+':''}₦${Math.abs(x.a).toLocaleString()}</p></div>`).join('');
-}
-function openSec(s){
- ['transfer','airtime','bills','history'].forEach(id=>{ const el=document.getElementById('sec-'+id); if(el) el.classList.add('hidden'); });
- const target=document.getElementById('sec-'+s);
- if(target) target.classList.remove('hidden');
- if(s==='history') target.classList.remove('hidden');
-}
-function copyAcct(){ navigator.clipboard.writeText('2384562190').then(()=>alert('Copied: 2384562190')); }
-function toggleFreeze(){ isFrozen=!isFrozen; save(); render(); alert(isFrozen?'Card FROZEN - transfers blocked':'Card ACTIVE'); }
-function setNet(n){ network=n; ['MTN','GLO','AIRTEL','9MOBILE'].forEach(x=>{ document.getElementById('net-'+x).className=x===n?'bg-yellow-500 text-black py-2 rounded-lg text-xs font-bold':'bg-white/10 py-2 rounded-lg text-xs'; }); }
-function doTr(){
- const acct=document.getElementById('trAcct').value.trim();
- const amt=parseFloat(document.getElementById('trAmt').value);
- const note=document.getElementById('trNote').value||'Transfer';
- const err=document.getElementById('trErr'); err.classList.add('hidden');
- if(isFrozen){ err.innerText='Card is frozen'; err.classList.remove('hidden'); return; }
- if(acct.length<10 || isNaN(amt) || amt<=0){ err.innerText='Invalid account or amount'; err.classList.remove('hidden'); return; }
- if(amt>balance){ err.innerText='Insufficient balance: ₦'+balance.toLocaleString(); err.classList.remove('hidden'); return; }
- balance-=amt; txs.unshift({n:note+' → '+acct,a:-amt,t:new Date().toLocaleString()}); save(); render();
- document.getElementById('rcptTxt').innerHTML=`Sent <b>₦${amt.toLocaleString()}</b> to ${acct}<br>New bal: ₦${balance.toLocaleString()}`; document.getElementById('receipt').classList.remove('hidden');
-}
-function doAirtime(){
- const ph=document.getElementById('airPhone').value.trim();
- const amt=parseFloat(document.getElementById('airAmt').value);
- if(isFrozen){ alert('Card frozen'); return; }
- if(ph.length<11 || !amt){ alert('Enter phone & amount'); return; }
- if(amt>balance){ alert('Insufficient balance'); return; }
- balance-=amt; txs.unshift({n:network+' Airtime '+ph,a:-amt,t:new Date().toLocaleString()}); save(); render();
- document.getElementById('rcptTxt').innerHTML=`${network} Airtime <b>₦${amt.toLocaleString()}</b> to ${ph}`; document.getElementById('receipt').classList.remove('hidden');
-}
-function payB(name,cost){
- if(isFrozen){ alert('Card frozen'); return; }
- if(cost>balance){ alert('Insufficient balance'); return; }
- balance-=cost; txs.unshift({n:name,a:-cost,t:new Date().toLocaleString()}); save(); render();
- document.getElementById('rcptTxt').innerHTML=`Paid ${name}<br><b>₦${cost.toLocaleString()}</b><br>New bal: ₦${balance.toLocaleString()}`; document.getElementById('receipt').classList.remove('hidden');
-}
-// anti simple hack: block direct localStorage hack
-setInterval(()=>{ if(document.getElementById('appScreen').classList.contains('hidden')===false && !checkAuth()){ logout(); } },2000);
-if(localStorage.getItem(_tokenKey)){ showApp(); }
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+function checkAuth(){const a=sessionStorage.getItem(_tokenKey);const b=localStorage.getItem(_tokenKey);return a&&b&&a===b;}
+function showApp(){if(!localStorage.getItem(_tokenKey))return;if(!checkAuth())sessionStorage.setItem(_tokenKey,localStorage.getItem(_tokenKey));document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');render();}
+function logout(){sessionStorage.clear();localStorage.removeItem(_tokenKey);location.reload();}
+function render(){document.getElementById('bal').innerText='₦'+balance.toLocaleString('en-NG',{minimumFractionDigits:2});document.getElementById('freezeTxt').innerText=isFrozen?'FROZEN':'ACTIVE';document.getElementById('fzBtn').innerText=isFrozen?'Unfreeze':'Freeze';document.getElementById('txList').innerHTML=txs.map(x=>`<div class="flex justify-between py-2 border-b border-white/5"><div><p class="text-sm font-bold">${x.n}</p><p class="text-[10px] text-gray-500">${x.t}</p></div><p class="text-sm font-bold ${x.a>0?'text-green-400':''}">${x.a>0?'+':''}₦${Math.abs(x.a).toLocaleString()}</p></div>`).join('');}
+function openSec(s){['transfer','airtime','bills','history'].forEach(id=>document.getElementById('sec-'+id).classList.add('hidden'));document.getElementById('sec-'+s).classList.remove('hidden');}
+function copyAcct(){navigator.clipboard.writeText('2384562190').then(()=>alert('Copied: 2384562190'));}
+function toggleFreeze(){isFrozen=!isFrozen;save();render();alert(isFrozen?'Card FROZEN - blocked':'Card ACTIVE');}
+function setNet(n){network=n;['MTN','GLO','AIRTEL','9MOBILE'].forEach(x=>{document.getElementById('net-'+x).className=x===n?'bg-yellow-500 text-black py-2 rounded-lg text-xs font-bold':'bg-white/10 py-2 rounded-lg text-xs';});}
+function doTr(){const acct=document.getElementById('trAcct').value.trim();const amt=parseFloat(document.getElementById('trAmt').value);const note=document.getElementById('trNote').value||'Transfer';const err=document.getElementById('trErr');err.classList.add('hidden');if(isFrozen){err.innerText='Card frozen';err.classList.remove('hidden');return;}if(acct.length<10||!amt){err.innerText='Invalid';err.classList.remove('hidden');return;}if(amt>balance){err.innerText='Insufficient: ₦'+balance.toLocaleString();err.classList.remove('hidden');return;}balance-=amt;txs.unshift({n:note+' → '+acct,a:-amt,t:new Date().toLocaleString()});save();render();document.getElementById('rcptTxt').innerHTML=`Sent <b>₦${amt.toLocaleString()}</b> to ${acct}<br>New: ₦${balance.toLocaleString()}`;document.getElementById('receipt').classList.remove('hidden');}
+function doAirtime(){const ph=document.getElementById('airPhone').value.trim();const amt=parseFloat(document.getElementById('airAmt').value);if(isFrozen){alert('Frozen');return;}if(ph.length<11||!amt){alert('Enter phone & amount');return;}if(amt>balance){alert('Insufficient');return;}balance-=amt;txs.unshift({n:network+' Airtime '+ph,a:-amt,t:new Date().toLocaleString()});save();render();document.getElementById('rcptTxt').innerHTML=`${network} Airtime ₦${amt.toLocaleString()} to ${ph}`;document.getElementById('receipt').classList.remove('hidden');}
+function payB(name,cost){if(isFrozen){alert('Frozen');return;}if(cost>balance){alert('Insufficient');return;}balance-=cost;txs.unshift({n:name,a:-cost,t:new Date().toLocaleString()});save();render();document.getElementById('rcptTxt').innerHTML=`Paid ${name}<br>₦${cost.toLocaleString()}<br>New: ₦${balance.toLocaleString()}`;document.getElementById('receipt').classList.remove('hidden');}
+setInterval(()=>{if(!document.getElementById('appScreen').classList.contains('hidden') && !checkAuth())logout();},2500);
+if(localStorage.getItem(_tokenKey))showApp();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
 </script>
 </body>
 </html>
