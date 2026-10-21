@@ -1,10 +1,10 @@
 {
-  "name": "KellyBank - Your Money, Your Bank",
-  "short_name": "KellyBank",
-  "description": "Secure bank app with BVN, Transfer PIN, Remark and Auto-lock",
-  "start_url": "./index.html?v=8",
+  "name": "KellyBank V26",
+  "short_name": "KellyBank V26",
+  "description": "KellyBank V26 - Secure with BVN, PIN, Auto-lock",
+  "start_url": "./index.html?v=26",
   "display": "standalone",
-  "background_color": "#0f0f0f",
+  "background_color": "#121212",
   "theme_color": "#ff6a00",
   "orientation": "portrait",
   "icons": [
