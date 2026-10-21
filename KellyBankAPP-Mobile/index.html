@@ -8,9 +8,11 @@
 <meta name="theme-color" content="#ffcc00">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#0d0d0d;color:#fff;padding-bottom:90px}
-.top{padding:14px;display:flex;justify-content:space-between;font-weight:900;color:#ffcc00;font-size:18px}
-.card{margin:10px;background:#1c1c1c;border:1px solid #333;border-radius:20px;padding:20px}
+body{background:#0d0d0d;color:#fff;padding-bottom:95px}
+.top{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;background:#0d0d0d;position:sticky;top:0;z-index:10}
+.top-left{display:flex;align-items:center;gap:10px;font-weight:900;color:#ffcc00;font-size:18px}
+.top-left img{width:34px;height:34px;border-radius:50%;border:1.5px solid #ffcc00;background:#000;object-fit:cover}
+.card{margin:10px 12px;background:linear-gradient(135deg,#1c1c1c,#222);border:1px solid #333;border-radius:20px;padding:20px}
 .card h1{color:#ffcc00;font-size:32px}
 .card p{color:#888;font-size:12px;margin-top:6px}
 .small{display:flex;gap:10px;margin-top:12px}
@@ -18,45 +20,66 @@ body{background:#0d0d0d;color:#fff;padding-bottom:90px}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
 .act{background:#1e1e1e;border-radius:16px;padding:22px;text-align:center;border:1px solid #333;cursor:pointer}
 .act span{color:#ffcc00;display:block;margin-top:8px;font-size:13px}
+.history-wrap{margin:12px;background:#141414;border:1px solid #2a2a2a;border-radius:16px;padding:12px}
+.history-wrap h3{color:#ffcc00;font-size:14px;margin-bottom:10px;display:flex;justify-content:space-between}
+.txn{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #222;font-size:12px}
+.txn:last-child{border:none}
+.txn b{color:#fff}
+.txn .amt{color:#ffcc00;font-weight:900}
+.txn .neg{color:#ff4444}
 #transferModal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.88);display:none;justify-content:center;align-items:flex-end;z-index:9999}
-.modal{width:100%;max-width:500px;background:#121212;border:2px solid #ffcc00;border-radius:22px 22px 0 0;padding:20px}
+.modal{width:100%;max-width:500px;background:#121212;border:2px solid #ffcc00;border-radius:22px 22px 0 0;padding:20px;animation:slide .3s}
+@keyframes slide{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .modal h3{color:#ffcc00;display:flex;justify-content:space-between;margin-bottom:15px}
 .modal select{width:100%;padding:14px;background:#000;color:#fff;border:2px solid #ffcc00;border-radius:10px;margin-bottom:10px}
 .modal input{width:100%;padding:14px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:10px;margin-bottom:10px}
 .send{width:100%;padding:15px;background:#ffcc00;border:none;border-radius:12px;font-weight:900;font-size:18px;color:#000;cursor:pointer}
 .close{cursor:pointer;font-size:20px;color:#fff}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#111;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #222}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#111;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #222;z-index:5}
 .bnav{font-size:10px;color:#777;text-align:center;cursor:pointer}
 .bnav.active{color:#ffcc00}
 </style>
 </head>
 <body>
-<div class="top"><div>Kelly Bank</div><div>🔔</div></div>
+
+<div class="top">
+<div class="top-left"><img src="logo.png?v=26" onerror="this.style.display='none'" alt="K"> Kelly Bank</div>
+<div onclick="alert('Notifications: No new alerts')">🔔</div>
+</div>
+
 <div class="card">
 <h1 id="mainBal">₦125,000.00</h1>
-<p>Account 1234 **** 7890 • Savings</p>
+<p>Account 1234567890 • Savings • Kelly Osaro</p>
 <div class="small">
 <div onclick="freezeCard()">🔒 Freeze</div>
 <div onclick="addMoney()">+ Add Money</div>
 </div>
 </div>
+
 <div class="actions">
 <div class="act" onclick="openTransfer()"><div style="font-size:26px">💸</div><span>Transfer</span></div>
 <div class="act" onclick="airtime()"><div style="font-size:26px">📱</div><span>Airtime</span></div>
 <div class="act" onclick="bills()"><div style="font-size:26px">💡</div><span>Bills</span></div>
-<div class="act" onclick="historys()"><div style="font-size:26px">📄</div><span>History</span></div>
+<div class="act" onclick="openHistory()"><div style="font-size:26px">📄</div><span>History</span></div>
 </div>
+
+<div class="history-wrap" id="historyBox">
+<h3>Recent Transactions <span onclick="clearHistory()" style="color:#888;cursor:pointer;font-size:11px">Clear</span></h3>
+<div id="txnList"><div style="color:#555;font-size:12px;text-align:center;padding:10px">No transactions yet. Send money to see history.</div></div>
+</div>
+
 <div id="transferModal" onclick="if(event.target==this)closeTransfer()">
 <div class="modal">
 <h3>Transfer to Bank <span class="close" onclick="closeTransfer()">✕</span></h3>
 <select id="bankSelect"><option value="">-- Select Bank --</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Zenith Bank</option><option>Union Bank</option><option>Wema Bank</option><option>Fidelity Bank</option><option>FCMB</option><option>Ecobank</option><option>Sterling Bank</option><option>OPay</option><option>Moniepoint</option><option>Kuda</option><option>PalmPay</option></select>
 <input id="acct" type="tel" maxlength="10" placeholder="10-digit account number">
-<input id="amt" type="number" placeholder="Amount">
+<input id="amt" type="number" placeholder="Amount (e.g 5000)">
 <input id="rem" type="text" placeholder="Remark e.g Rent">
 <button class="send" onclick="sendMoney()">Send Now</button>
 <div style="margin-top:10px;text-align:center;color:#888;font-size:11px">Balance: <span id="bal2">₦125,000.00</span></div>
 </div>
 </div>
+
 <div class="bottom">
 <div class="bnav active" onclick="home()">🏠<br>Home</div>
 <div class="bnav" onclick="showCard()">💳<br>Card</div>
@@ -64,42 +87,62 @@ body{background:#0d0d0d;color:#fff;padding-bottom:90px}
 <div class="bnav" onclick="loan()">💰<br>Loan</div>
 <div class="bnav" onclick="profile()">👤<br>Profile</div>
 </div>
+
 <script>
-let balance = 125000;
+let balance = Number(localStorage.getItem('kb_balance')) || 125000;
 let frozen = false;
+let txns = JSON.parse(localStorage.getItem('kb_txns')||'[]');
+
+function save(){ localStorage.setItem('kb_balance', balance); localStorage.setItem('kb_txns', JSON.stringify(txns)); }
 function updateBal(){
-  document.getElementById('mainBal').innerText = '₦'+balance.toLocaleString()+'.00';
-  document.getElementById('bal2').innerText = '₦'+balance.toLocaleString()+'.00';
+  const f='₦'+balance.toLocaleString()+'.00';
+  document.getElementById('mainBal').innerText=f;
+  document.getElementById('bal2').innerText=f;
 }
-function openTransfer(){ if(frozen){alert('Card is frozen, unfreeze first');return;} document.getElementById('transferModal').style.display='flex'; }
+function renderHistory(){
+  const list=document.getElementById('txnList');
+  if(txns.length==0){ list.innerHTML='<div style="color:#555;font-size:12px;text-align:center;padding:10px">No transactions yet. Send money to see history.</div>'; return; }
+  list.innerHTML = txns.map(t=>`
+    <div class="txn">
+      <div><b>${t.bank}</b><br><span style="color:#888">${t.acct} • ${t.date}</span><br><span style="color:#888">${t.remark||''}</span></div>
+      <div class="amt neg">-₦${Number(t.amount).toLocaleString()}</div>
+    </div>
+  `).join('');
+}
+function openTransfer(){ if(frozen){alert('Card is frozen ❄️ Unfreeze first');return;} document.getElementById('transferModal').style.display='flex'; }
 function closeTransfer(){ document.getElementById('transferModal').style.display='none'; }
 function freezeCard(){ frozen=!frozen; alert(frozen?'Card Frozen ❄️':'Card Unfrozen ✅'); }
-function addMoney(){ let a=prompt('Enter amount to add:'); if(a && !isNaN(a)){ balance+=parseFloat(a); updateBal(); alert('Added ₦'+a); } }
-function airtime(){ alert('Airtime: Select network and enter number - coming soon'); }
-function bills(){ alert('Bills: Electricity, Data, TV - coming soon'); }
-function historys(){ alert('History: No transactions yet'); }
+function addMoney(){ let a=prompt('Enter amount to add:'); if(a && !isNaN(a) && a>0){ balance+=parseFloat(a); save(); updateBal(); txns.unshift({bank:'Deposit',acct:'Self',amount:a,remark:'Add Money',date:new Date().toLocaleString()}); save(); renderHistory(); alert('Added ₦'+Number(a).toLocaleString()); } }
+function airtime(){ let n=prompt('Enter phone number:'); let amt=prompt('Amount:'); if(n&&amt){ if(parseFloat(amt)>balance){alert('Insufficient balance');return;} balance-=parseFloat(amt); txns.unshift({bank:'Airtime',acct:n,amount:amt,remark:'MTN Airtime',date:new Date().toLocaleString()}); save(); updateBal(); renderHistory(); alert('Airtime ₦'+amt+' sent to '+n); } }
+function bills(){ let b=prompt('Bill type: Electricity/Data/TV'); let amt=prompt('Amount:'); if(b&&amt){ if(parseFloat(amt)>balance){alert('Insufficient balance');return;} balance-=parseFloat(amt); txns.unshift({bank:'Bills',acct:b,amount:amt,remark:b, date:new Date().toLocaleString()}); save(); updateBal(); renderHistory(); alert(b+' bill of ₦'+amt+' paid'); } }
+function openHistory(){ document.getElementById('historyBox').scrollIntoView({behavior:'smooth'}); }
+function clearHistory(){ if(confirm('Clear all history?')){ txns=[]; save(); renderHistory(); } }
 function home(){ window.scrollTo({top:0,behavior:'smooth'}); }
-function showCard(){ alert('Card: 1234 5678 9012 3456\nExpiry: 12/29'); }
-function reward(){ alert('Rewards: 0 points - Keep using Kelly Bank'); }
-function loan(){ alert('Loan: You are eligible for ₦50,000'); }
-function profile(){ alert('Profile: Kelly Osaro\nAccount: 1234567890'); }
+function showCard(){ alert('💳 Kelly Bank Card\n1234 5678 9012 3456\nExpiry: 12/29\nCVV: ***'); }
+function reward(){ alert('🎁 Rewards: 250 points\nKeep using Kelly Bank to earn more'); }
+function loan(){ alert('💰 Loan Offer: You are eligible for ₦50,000\nTap to apply (coming soon)'); }
+function profile(){ alert('👤 Profile\nName: Kelly Osaro\nAccount: 1234567890\nPhone: 080********\nTier 3 Verified'); }
+
 function sendMoney(){
   const bank=document.getElementById('bankSelect').value;
   const acct=document.getElementById('acct').value.trim();
   const amt=parseFloat(document.getElementById('amt').value);
-  const rem=document.getElementById('rem').value;
+  const rem=document.getElementById('rem').value||'Transfer';
   if(!bank){alert('Please select bank');return;}
   if(acct.length!=10||isNaN(acct)){alert('Account must be 10 digits');return;}
   if(!amt||amt<=0){alert('Enter valid amount');return;}
   if(amt>balance){alert('Insufficient balance: ₦'+balance.toLocaleString());return;}
-  balance-=amt; updateBal();
-  alert('SUCCESS!\nBank: '+bank+'\nAccount: '+acct+'\nAmount: ₦'+amt.toLocaleString()+'\nRemark: '+rem);
+  balance-=amt;
+  const now=new Date().toLocaleString();
+  txns.unshift({bank,acct,amount:amt,remark:rem,date:now});
+  save(); updateBal(); renderHistory();
+  alert('✅ SUCCESS!\nBank: '+bank+'\nAccount: '+acct+'\nAmount: ₦'+amt.toLocaleString()+'\nRemark: '+rem);
   closeTransfer();
   document.getElementById('bankSelect').value='';document.getElementById('acct').value='';document.getElementById('amt').value='';document.getElementById('rem').value='';
 }
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js?v=26');
-}
+
+updateBal(); renderHistory();
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?v=26'); }
 </script>
 </body>
 </html>
