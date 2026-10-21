@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly Bank App v26.2 Full</title>
-<link rel="manifest" href="manifest.json?v=26.2">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Kelly Bank App v26.3 Full Fixed</title>
+<link rel="manifest" href="manifest.json?v=26.3">
 <meta name="theme-color" content="#ffcc00">
 <link rel="icon" href="logo.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-:root{--bg:#0d0d0d;--card:#1c1c1c;--card2:#151515;--text:#fff;--muted:#888;--border:#333;--yellow:#ffcc00}
-body{background:var(--bg);color:var(--text)}
+:root{--bg:#0d0d0d;--card:#1c1c1c;--card2:#151515;--text:#fff;--muted:#888;--border:#2a2a2a;--yellow:#ffcc00}
+body{background:var(--bg);color:var(--text);overflow-x:hidden}
 #loginScreen{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;background:radial-gradient(circle at top,#222,var(--bg))}
 .loginBox{width:100%;max-width:380px;background:var(--card2);border:1px solid var(--border);border-radius:22px;padding:28px;text-align:center}
 .loginBox img{width:80px;height:80px;border-radius:50%;border:3px solid var(--yellow);background:#000;object-fit:cover}
@@ -20,111 +20,123 @@ body{background:var(--bg);color:var(--text)}
 .loginBtn{width:100%;padding:14px;background:var(--yellow);border:none;border-radius:12px;font-weight:900;color:#000;cursor:pointer;margin-top:14px;font-size:15px}
 .createBtn{width:100%;padding:14px;background:transparent;border:2px solid var(--yellow);border-radius:12px;font-weight:900;color:var(--yellow);cursor:pointer;margin-top:12px;font-size:14px}
 .link{color:#666;font-size:11px;margin-top:12px;display:block}
-#appScreen{display:none}
+#appScreen{display:none;max-width:500px;margin:0 auto;background:var(--bg);min-height:100vh}
 .page{display:none;padding-bottom:90px}.page.active{display:block}
 .top{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg);z-index:10;border-bottom:1px solid var(--border)}
 .top-left{display:flex;align-items:center;gap:8px;font-weight:900;color:var(--yellow)}
 .top-left img{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--yellow);background:#000}
-.card{margin:12px;background:linear-gradient(135deg,var(--card),#222);border:1px solid var(--border);border-radius:20px;padding:20px}
-.card h1{color:var(--yellow);font-size:28px}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
-.act{background:var(--card2);border-radius:16px;padding:22px;text-align:center;border:1px solid var(--border);cursor:pointer}
-.act span{color:var(--yellow);display:block;margin-top:8px;font-size:13px}
+.card{margin:12px;background:linear-gradient(135deg,#1f1f1f,#2a2a2a);border:1px solid var(--border);border-radius:20px;padding:20px}
+.card h1{color:var(--yellow);font-size:26px;letter-spacing:0.5px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
+.act{background:var(--card2);border-radius:16px;padding:20px;text-align:center;border:1px solid var(--border);cursor:pointer}
+.act span{color:var(--yellow);display:block;margin-top:8px;font-size:12px;font-weight:700}
 .history-wrap{margin:12px;background:var(--card2);border:1px solid var(--border);border-radius:16px;padding:12px}
-.txn{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:12px;cursor:pointer}
+.txn{display:flex;justify-content:space-between;align-items:center;padding:14px 4px;border-bottom:1px solid #222;font-size:12px;cursor:pointer}
+.txn b{font-size:13px}
 .bigBox{margin:12px;background:var(--card2);border:1px solid var(--border);border-radius:16px;padding:20px;text-align:center}
 .modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.88);display:none;justify-content:center;align-items:center;z-index:9999;padding:15px}
-.modal{width:100%;max-width:480px;background:#121212;border:2px solid var(--yellow);border-radius:22px;padding:20px;max-height:90vh;overflow:auto}
+.modal{width:100%;max-width:460px;background:#121212;border:2px solid var(--yellow);border-radius:22px;padding:20px;max-height:92vh;overflow:auto}
 .modal h3{color:var(--yellow);display:flex;justify-content:space-between;margin-bottom:15px}
 .modal input,.modal select{width:100%;padding:14px;background:#000;color:#fff;border:1px solid #333;border-radius:10px;margin-bottom:10px}
 .send{width:100%;padding:15px;background:var(--yellow);border:none;border-radius:12px;font-weight:900;font-size:16px;color:#000;cursor:pointer}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:var(--card2);display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid var(--border);z-index:20}
-.bnav{font-size:10px;color:var(--muted);text-align:center;cursor:pointer;padding:4px 10px;border-radius:10px}
-.bnav.active{color:var(--yellow);background:var(--bg)}
+/* FIXED BOTTOM NAV - NOW ALL 5 VISIBLE */
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:500px;background:#151515;display:flex;justify-content:space-between;padding:8px 2px;border-top:1px solid var(--border);z-index:20}
+.bnav{flex:1;flex-shrink:0;font-size:10px;color:var(--muted);text-align:center;cursor:pointer;padding:6px 2px;border-radius:10px;min-width:50px}
+.bnav.active{color:var(--yellow);background:#0d0d0d}
+.bnav div{font-size:18px}
 </style>
 </head>
 <body>
 
 <div id="loginScreen">
 <div class="loginBox">
-<img src="logo.png">
-<h2>Kelly Bank v26.2</h2>
-<p>Built by Omosogar1 • Secure • Fast • Reliable</p>
-<input id="username" placeholder="Username">
-<input id="password" type="password" placeholder="Password">
+<img src="logo.png?v=26.3">
+<h2>Kelly Bank v26.3</h2>
+<p>Built by Omosogar1 • Secure Banking</p>
+<input id="username" placeholder="Username - kelly">
+<input id="password" type="password" placeholder="Password - 1234">
 <button class="loginBtn" onclick="login()">LOGIN</button>
 <button type="button" class="createBtn" onclick="openRegister()">🆕 CREATE NEW ACCOUNT</button>
-<span class="link">Default: kelly / 1234</span>
+<span class="link">Default: kelly / 1234 • No balance shown here</span>
 </div>
 </div>
 
 <div id="appScreen">
-<div class="top"><div class="top-left"><img src="logo.png"> Kelly Bank</div><div style="display:flex;gap:12px"><span onclick="logout()" style="color:var(--yellow);font-size:12px;cursor:pointer">Logout</span></div></div>
+<div class="top"><div class="top-left"><img src="logo.png?v=26.3"> Kelly Bank</div><div style="color:var(--yellow);font-size:12px;cursor:pointer" onclick="logout()">Logout</div></div>
 
 <div id="page-home" class="page active">
-<div class="card"><h1 id="mainBal">₦30,075,000.00</h1><p id="welcomeUser">Welcome Savings</p></div>
+<div class="card"><h1 id="mainBal">₦30,075,000.00</h1><p id="welcomeUser" style="font-size:12px;color:#aaa;margin-top:4px">Welcome Kelly Osaro</p></div>
 <div class="actions">
 <div class="act" onclick="openModal('transfer')">💸<span>Transfer</span></div>
 <div class="act" onclick="openModal('airtime')">📱<span>Airtime</span></div>
 <div class="act" onclick="openModal('bills')">💡<span>Bills</span></div>
-<div class="act" onclick="openRegister()" style="border-color:var(--yellow)">👤<span>Create Account</span></div>
+<div class="act" onclick="openRegister()" style="border:1.5px solid var(--yellow)">👤<span>Create Account</span></div>
 </div>
-<div class="history-wrap"><h3 style="color:var(--yellow)">Recent Transactions</h3><div id="txnList"></div></div>
+<div class="history-wrap"><h3 style="color:var(--yellow);font-size:14px;margin-bottom:8px">Transactions</h3><div id="txnList"></div></div>
 </div>
 
-<div id="page-card" class="page"><div class="bigBox"><h3 style="color:var(--yellow)">💳 My GOLD Card</h3><div id="realCard" onclick="flipCard()" style="width:100%;max-width:340px;height:200px;margin:15px auto;position:relative;transform-style:preserve-3d;transition:0.6s;cursor:pointer"><div style="position:absolute;width:100%;height:100%;backface-visibility:hidden;background:linear-gradient(135deg,#ffcc00,#8a6d00);border-radius:18px;padding:18px;color:#000"><div style="font-weight:900">Kelly Bank GOLD</div><div style="font-size:20px;letter-spacing:3px;font-weight:700;margin:30px 0 10px">1234 5678 9012 3456</div><div id="cardHolder" style="font-weight:900">KELLY OSARO</div><div style="font-size:11px;margin-top:8px">09/28 • OMOSOGAR1</div></div><div style="position:absolute;width:100%;height:100%;backface-visibility:hidden;transform:rotateY(180deg);background:#1a1a1a;border-radius:18px"><div style="height:40px;background:#000;margin-top:20px"></div><div style="padding:15px;color:#fff"><div style="background:#fff;color:#000;padding:5px 10px;width:120px">•••</div><div style="text-align:right;color:var(--yellow)">CVV 847</div></div></div></div><p style="color:#666;font-size:11px">Tap card to flip</p></div></div>
-<div id="page-reward" class="page"><div class="bigBox"><h3>🎁 Rewards</h3><div style="font-size:50px">🏆</div><h2 style="color:var(--yellow)">250 Points</h2><p style="color:#666;margin-top:10px">Earn points on every transaction</p></div></div>
-<div id="page-loan" class="page"><div class="bigBox"><h3>💰 Instant Loan</h3><h1 style="color:var(--yellow);margin:15px 0">₦50,000</h1><p style="color:#666;font-size:12px">Eligible • Low Interest</p><button class="send" style="margin-top:15px" onclick="alert('Loan Applied!')">Apply Now</button></div></div>
-<div id="page-me" class="page"><div class="bigBox"><img id="mePic" src="logo.png" style="width:90px;height:90px;border-radius:50%;border:3px solid var(--yellow)"><h3 id="meName">Kelly Osaro</h3><p id="meUser" style="font-size:12px;color:var(--muted)">kelly • 3007500001</p><div style="margin-top:15px;text-align:left;font-size:12px;border-top:1px solid var(--border)"><div id="meAcct" style="padding:10px 0">🏦 3007500001</div><div id="mePhone" style="padding:10px 0;border-top:1px solid var(--border)">📱 08012345678</div></div><button class="createBtn" style="margin-top:15px" onclick="openRegister()">➕ CREATE NEW ACCOUNT</button><button class="loginBtn" style="background:var(--card);color:var(--muted);border:1px solid var(--border);margin-top:10px" onclick="logout()">Logout</button></div></div>
+<div id="page-card" class="page"><div class="bigBox"><h3 style="color:var(--yellow)">💳 My GOLD Card</h3><div id="realCard" onclick="flipCard()" style="width:100%;max-width:340px;height:200px;margin:15px auto;position:relative;transform-style:preserve-3d;transition:0.6s;cursor:pointer"><div style="position:absolute;width:100%;height:100%;backface-visibility:hidden;background:linear-gradient(135deg,#ffcc00,#8a6d00);border-radius:18px;padding:18px;color:#000;text-align:left"><div style="font-weight:900">Kelly Bank GOLD</div><div style="font-size:20px;letter-spacing:3px;font-weight:700;margin:30px 0 10px">1234 5678 9012 3456</div><div id="cardHolder" style="font-weight:900">KELLY OSARO</div><div style="font-size:11px;margin-top:8px">09/28 • OMOSOGAR1</div></div><div style="position:absolute;width:100%;height:100%;backface-visibility:hidden;transform:rotateY(180deg);background:#1a1a1a;border-radius:18px;text-align:left"><div style="height:40px;background:#000;margin-top:20px"></div><div style="padding:15px;color:#fff"><div style="background:#fff;color:#000;padding:5px 10px;width:120px">•••</div><div style="text-align:right;color:var(--yellow)">CVV 847</div></div></div></div><p style="color:#555;font-size:11px">Tap card to flip</p></div></div>
+
+<div id="page-reward" class="page"><div class="bigBox"><h3>🎁 Rewards</h3><div style="font-size:50px">🏆</div><h2 style="color:var(--yellow)">250 Points</h2><p style="color:#666;margin-top:8px;font-size:12px">Earn points on every transaction</p></div></div>
+
+<div id="page-loan" class="page"><div class="bigBox"><h3>💰 Instant Loan</h3><h1 style="color:var(--yellow);margin:15px 0">₦50,000</h1><p style="color:#666;font-size:12px">Eligible • Low Interest</p><button class="send" style="margin-top:15px" onclick="alert('Loan request sent!')">Apply Now</button></div></div>
+
+<div id="page-me" class="page"><div class="bigBox"><img id="mePic" src="logo.png?v=26.3" style="width:90px;height:90px;border-radius:50%;border:3px solid var(--yellow)"><h3 id="meName" style="margin-top:10px">Kelly Osaro</h3><p id="meUser" style="font-size:12px;color:var(--muted)">kelly • 3007500001</p><div style="margin-top:15px;text-align:left;font-size:12px;border-top:1px solid var(--border)"><div id="meAcct" style="padding:10px 0">🏦 3007500001 • Kelly Bank</div><div id="mePhone" style="padding:10px 0;border-top:1px solid var(--border)">📱 08012345678</div></div><button class="createBtn" style="margin-top:15px" onclick="openRegister()">➕ CREATE NEW ACCOUNT</button><button class="loginBtn" style="background:#222;color:#888;border:1px solid #333;margin-top:10px" onclick="logout()">Logout</button></div></div>
 
 <div class="bottom">
-<div class="bnav active" id="nav-home" onclick="switchPage('home')">🏠<br>Home</div>
-<div class="bnav" id="nav-card" onclick="switchPage('card')">💳<br>Card</div>
-<div class="bnav" id="nav-reward" onclick="switchPage('reward')">🎁<br>Reward</div>
-<div class="bnav" id="nav-loan" onclick="switchPage('loan')">💰<br>Loan</div>
-<div class="bnav" id="nav-me" onclick="switchPage('me')">👤<br>Me</div>
+<div class="bnav active" id="nav-home" onclick="switchPage('home')"><div>🏠</div>Home</div>
+<div class="bnav" id="nav-card" onclick="switchPage('card')"><div>💳</div>Card</div>
+<div class="bnav" id="nav-reward" onclick="switchPage('reward')"><div>🎁</div>Reward</div>
+<div class="bnav" id="nav-loan" onclick="switchPage('loan')"><div>💰</div>Loan</div>
+<div class="bnav" id="nav-me" onclick="switchPage('me')"><div>👤</div>Me</div>
 </div>
 </div>
 
-<div id="modal-transfer" class="modal-bg"><div class="modal"><h3>Transfer <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="bankSelect"><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>OPay</option><option>Kuda</option><option>Moniepoint</option></select><input id="acct" maxlength="10" type="tel" placeholder="10-digit Account"><input id="amt" type="number" placeholder="Amount"><input id="rem" placeholder="Remark"><button class="send" onclick="sendMoney()">Send Now</button></div></div>
-<div id="modal-airtime" class="modal-bg"><div class="modal"><h3>Airtime <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="airNetwork"><option>MTN</option><option>GLO</option><option>Airtel</option><option>9mobile</option></select><input id="airPhone" type="tel" placeholder="Phone"><select id="airAmount"><option value="100">₦100</option><option value="500">₦500</option><option value="1000">₦1,000</option><option value="5000">₦5,000</option></select><button class="send" onclick="buyAirtime()">Buy Airtime</button></div></div>
-<div id="modal-bills" class="modal-bg"><div class="modal"><h3>Bills <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="billType"><option>BEDC</option><option>WAEC</option><option>JAMB</option><option>DSTV</option><option>GOTV</option></select><input id="billRef" placeholder="Meter / Ref"><select id="billAmount"><option value="2000">₦2,000</option><option value="3500">₦3,500</option><option value="10000">₦10,000</option></select><button class="send" onclick="payBill()">Pay Bill</button></div></div>
-<div id="modal-receipt" class="modal-bg"><div class="modal"><div style="background:#fff;color:#000;border-radius:16px;padding:20px;text-align:center"><h2>✅ Receipt</h2><div id="receiptDetails" style="margin:15px 0;text-align:left;font-size:13px;border-top:1px dashed #000;padding-top:10px"></div></div><button class="send" style="margin-top:12px;background:#000;color:#fff" onclick="closeAll()">Close</button></div></div>
+<div id="modal-transfer" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Transfer <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="bankSelect"><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>OPay</option><option>Kuda</option><option>Moniepoint</option></select><input id="acct" maxlength="10" type="tel" placeholder="10-digit Account"><input id="amt" type="number" placeholder="Amount"><input id="rem" placeholder="Remark"><button class="send" onclick="sendMoney()">Send Now</button></div></div>
+<div id="modal-airtime" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Airtime <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="airNetwork"><option>MTN</option><option>GLO</option><option>Airtel</option><option>9mobile</option></select><input id="airPhone" type="tel" placeholder="Phone"><select id="airAmount"><option value="100">₦100</option><option value="500">₦500</option><option value="1000">₦1,000</option><option value="5000">₦5,000</option></select><button class="send" onclick="buyAirtime()">Buy Airtime</button></div></div>
+<div id="modal-bills" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Bills <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="billType"><option>BEDC</option><option>WAEC</option><option>JAMB</option><option>DSTV</option><option>GOTV</option></select><input id="billRef" placeholder="Meter / Ref"><select id="billAmount"><option value="2000">₦2,000</option><option value="3500">₦3,500</option><option value="10000">₦10,000</option></select><button class="send" onclick="payBill()">Pay Bill</button></div></div>
+<div id="modal-receipt" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><div style="background:#fff;color:#000;border-radius:16px;padding:20px;text-align:center"><h2>✅ Receipt</h2><div id="receiptDetails" style="margin:15px 0;text-align:left;font-size:13px;border-top:1px dashed #000;padding-top:10px;line-height:1.8"></div></div><button class="send" style="margin-top:12px;background:#000;color:#fff" onclick="closeAll()">Close</button></div></div>
 
-<!-- FIXED REGISTER MODAL - NOW WORKING -->
-<div id="modal-register" class="modal-bg"><div class="modal"><h3>🆕 CREATE NEW ACCOUNT <span onclick="closeAll()" style="cursor:pointer">✕</span></h3>
-<input id="regFullname" placeholder="Full Name - e.g Kelly Osaro">
-<input id="regUsername" placeholder="Choose Username - e.g kelly2">
-<input id="regPhone" type="tel" placeholder="Phone - e.g 08012345678">
-<input id="regPassword" type="password" placeholder="Create Password - min 4 chars">
-<p style="font-size:11px;color:#888;margin:8px 0;line-height:1.5">✅ Acct No: Auto 30075xxxxx<br>✅ Balance: ₦30,075,000.00<br>✅ Tier 3 Verified</p>
+<div id="modal-register" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>🆕 CREATE NEW ACCOUNT <span onclick="closeAll()" style="cursor:pointer">✕</span></h3>
+<input id="regFullname" placeholder="Full Name">
+<input id="regUsername" placeholder="Username">
+<input id="regPhone" type="tel" placeholder="Phone">
+<input id="regPassword" type="password" placeholder="Password min 4">
+<p style="font-size:11px;color:#888;margin:8px 0">✅ Acct Auto • ✅ ₦30,075,000.00 • ✅ Verified</p>
 <button class="send" onclick="registerUser()">🎉 CREATE MY ACCOUNT NOW</button>
 </div></div>
 
 <script>
 let users=JSON.parse(localStorage.getItem('kb_users')||'null')||[{fullname:'Kelly Osaro',username:'kelly',password:'1234',phone:'08012345678',acct:'3007500001',balance:30075000}];
 let currentUser=JSON.parse(localStorage.getItem('kb_current')||'null');
-let txns=JSON.parse(localStorage.getItem('kb_txns')||'null')||[{bank:'MTN Airtime',acct:'0803****',amount:1000,date:'Today 08:41 AM',type:'airtime'},{bank:'WAEC PIN',acct:'Card',amount:3500,date:'Yesterday',type:'bills'}];
+let txns=JSON.parse(localStorage.getItem('kb_txns')||'null')||[
+{bank:'Deposit',acct:'Self',amount:30000000,date:'Today',type:'deposit'},
+{bank:'OPay',acct:'8109074593',amount:50000,date:'Today',type:'transfer'},
+{bank:'MTN Airtime',acct:'0803****123',amount:1000,date:'Today',type:'airtime'},
+{bank:'WAEC PIN',acct:'Card Purchase',amount:3500,date:'Today',type:'bills'},
+{bank:'BEDC Electricity',acct:'Meter 5419***123',amount:10000,date:'Today',type:'bills'},
+{bank:'Access Bank',acct:'00676**21 - John O.',amount:25000,date:'Today',type:'transfer'}
+];
 let balance=currentUser?currentUser.balance:30075000; let cardFlipped=false;
 function saveUsers(){localStorage.setItem('kb_users',JSON.stringify(users));}
 function saveAll(){localStorage.setItem('kb_txns',JSON.stringify(txns)); if(currentUser){localStorage.setItem('kb_current',JSON.stringify(currentUser)); localStorage.setItem('kb_logged','1');}}
-function updateBal(){document.getElementById('mainBal').innerText='₦'+Number(balance).toLocaleString()+'.00';}
-function renderHistory(){document.getElementById('txnList').innerHTML=txns.map((t,i)=>`<div class="txn" onclick="showReceipt(${i})"><div><b>${t.bank}</b><br><span style="color:#888">${t.acct} • ${t.date}</span></div><div style="font-weight:900">-₦${Number(t.amount).toLocaleString()}</div></div>`).join('');}
+function updateBal(){let el=document.getElementById('mainBal'); if(el) el.innerText='₦'+Number(balance).toLocaleString()+'.00';}
+function renderHistory(){document.getElementById('txnList').innerHTML=txns.map((t,i)=>`<div class="txn" onclick="showReceipt(${i})"><div><b>${t.bank}</b><br><span style="color:#777">${t.acct}</span></div><div style="font-weight:900;color:#fff">-₦${Number(t.amount).toLocaleString()}</div></div>`).join('');}
 function refreshUI(){if(!currentUser)return; document.getElementById('welcomeUser').innerText='Welcome '+currentUser.fullname; document.getElementById('meName').innerText=currentUser.fullname; document.getElementById('meUser').innerText=currentUser.username+' • '+currentUser.acct; document.getElementById('meAcct').innerText='🏦 '+currentUser.acct+' • Kelly Bank'; document.getElementById('mePhone').innerText='📱 '+currentUser.phone; document.getElementById('cardHolder').innerText=currentUser.fullname.toUpperCase(); balance=currentUser.balance; updateBal();}
-function login(){let u=document.getElementById('username').value.trim().toLowerCase(),p=document.getElementById('password').value.trim(); let f=users.find(x=>x.username.toLowerCase()===u && x.password===p); if(f){currentUser=f; document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; refreshUI(); renderHistory(); saveAll();}else{alert('Invalid login! Use kelly / 1234 or CREATE NEW ACCOUNT');}}
+function login(){let u=document.getElementById('username').value.trim().toLowerCase(),p=document.getElementById('password').value.trim(); let f=users.find(x=>x.username.toLowerCase()===u && x.password===p); if(f){currentUser=f; document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; refreshUI(); renderHistory(); saveAll();}else{alert('Invalid! Use kelly / 1234 or CREATE NEW ACCOUNT');}}
 function openRegister(){document.getElementById('modal-register').style.display='flex';}
 function openModal(n){document.getElementById('modal-'+n).style.display='flex';}
 function closeAll(){document.querySelectorAll('.modal-bg').forEach(m=>m.style.display='none');}
-function registerUser(){let fn=document.getElementById('regFullname').value.trim(),un=document.getElementById('regUsername').value.trim().toLowerCase(),ph=document.getElementById('regPhone').value.trim(),pw=document.getElementById('regPassword').value.trim(); if(!fn||!un||!ph||!pw){alert('Fill all fields');return;} if(pw.length<4){alert('Password min 4');return;} if(users.find(x=>x.username.toLowerCase()===un)){alert('Username exists!');return;} let acct='30075'+Math.floor(10000+Math.random()*90000); let nu={fullname:fn,username:un,password:pw,phone:ph,acct:acct,balance:30075000}; users.push(nu); currentUser=nu; saveUsers(); closeAll(); document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; refreshUI(); renderHistory(); saveAll(); alert('🎉 ACCOUNT CREATED!\nName: '+fn+'\nUser: '+un+'\nAcct: '+acct+'\nBalance: ₦30,075,000.00');}
+function registerUser(){let fn=document.getElementById('regFullname').value.trim(),un=document.getElementById('regUsername').value.trim().toLowerCase(),ph=document.getElementById('regPhone').value.trim(),pw=document.getElementById('regPassword').value.trim(); if(!fn||!un||!ph||!pw){alert('Fill all');return;} if(pw.length<4){alert('Password min 4');return;} if(users.find(x=>x.username.toLowerCase()===un)){alert('Username exists!');return;} let acct='30075'+Math.floor(10000+Math.random()*90000); let nu={fullname:fn,username:un,password:pw,phone:ph,acct:acct,balance:30075000}; users.push(nu); currentUser=nu; saveUsers(); closeAll(); document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; refreshUI(); renderHistory(); saveAll(); alert('🎉 CREATED!\nUser: '+un+'\nAcct: '+acct+'\n₦30,075,000.00');}
 function logout(){localStorage.removeItem('kb_logged');localStorage.removeItem('kb_current');location.reload();}
 function switchPage(n){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.bnav').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+n).classList.add('active');document.getElementById('nav-'+n).classList.add('active');}
 function flipCard(){cardFlipped=!cardFlipped;document.getElementById('realCard').style.transform=cardFlipped?'rotateY(180deg)':'rotateY(0deg)';}
-function sendMoney(){let ac=document.getElementById('acct').value,am=+document.getElementById('amt').value; if(!ac||!am||am>balance){alert('Check amount/account');return;} currentUser.balance-=am; balance=currentUser.balance; txns.unshift({bank:document.getElementById('bankSelect').value,acct:ac,amount:am,date:new Date().toLocaleString(),type:'transfer'}); saveUsers(); saveAll(); updateBal(); renderHistory(); closeAll(); showReceipt(0);}
-function buyAirtime(){let ph=document.getElementById('airPhone').value,am=+document.getElementById('airAmount').value; if(!ph||!am||am>balance){alert('Fill all');return;} currentUser.balance-=am; balance=currentUser.balance; txns.unshift({bank:document.getElementById('airNetwork').value+' Airtime',acct:ph,amount:am,date:new Date().toLocaleString(),type:'airtime'}); saveUsers(); saveAll(); updateBal(); renderHistory(); closeAll(); showReceipt(0);}
-function payBill(){let r=document.getElementById('billRef').value,am=+document.getElementById('billAmount').value; if(!r||!am||am>balance){alert('Fill all');return;} currentUser.balance-=am; balance=currentUser.balance; txns.unshift({bank:document.getElementById('billType').value,acct:r,amount:am,date:new Date().toLocaleString(),type:'bills'}); saveUsers(); saveAll(); updateBal(); renderHistory(); closeAll(); showReceipt(0);}
+function sendMoney(){let ac=document.getElementById('acct').value,am=+document.getElementById('amt').value; if(!ac||!am||am>balance){alert('Check');return;} currentUser.balance-=am; balance=currentUser.balance; txns.unshift({bank:document.getElementById('bankSelect').value,acct:ac,amount:am,date:new Date().toLocaleString(),type:'transfer'}); saveUsers(); saveAll(); updateBal(); renderHistory(); closeAll(); showReceipt(0);}
+function buyAirtime(){let ph=document.getElementById('airPhone').value,am=+document.getElementById('airAmount').value; if(!ph||!am||am>balance){alert('Fill');return;} currentUser.balance-=am; balance=currentUser.balance; txns.unshift({bank:document.getElementById('airNetwork').value+' Airtime',acct:ph,amount:am,date:new Date().toLocaleString(),type:'airtime'}); saveUsers(); saveAll(); updateBal(); renderHistory(); closeAll(); showReceipt(0);}
+function payBill(){let r=document.getElementById('billRef').value,am=+document.getElementById('billAmount').value; if(!r||!am||am>balance){alert('Fill');return;} currentUser.balance-=am; balance=currentUser.balance; txns.unshift({bank:document.getElementById('billType').value,acct:r,amount:am,date:new Date().toLocaleString(),type:'bills'}); saveUsers(); saveAll(); updateBal(); renderHistory(); closeAll(); showReceipt(0);}
 function showReceipt(i){let t=txns[i]; document.getElementById('receiptDetails').innerHTML=`Type: ${t.bank}<br>Account: ${t.acct}<br>Amount: ₦${Number(t.amount).toLocaleString()}<br>Date: ${t.date}<br>Status: Successful ✅<br>Ref: KB${Date.now().toString().slice(-8)}`; document.getElementById('modal-receipt').style.display='flex';}
 if(localStorage.getItem('kb_logged')&&currentUser){document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; refreshUI(); renderHistory();}
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js?v=26.2');}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js?v=26.3');}
 </script>
 </body>
 </html>
