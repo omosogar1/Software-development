@@ -1,13 +1,12 @@
-{
-  "name": "Kpay - Fast Secure Payments",
-  "short_name": "Kpay",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#0d0d0d",
-  "theme_color": "#ffcc00",
-  "description": "Kpay by Omosogar1",
-  "icons": [
-    { "src": "logo.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "logo.png", "sizes": "512x512", "type": "image/png" }
-  ]
-}
+const CACHE_NAME = "kpay-v2";
+const urlsToCache = ["./","./index.html","./manifest.json","./logo.png","./icon-192.png","./icon-512.png"];
+
+self.addEventListener("install", event => {
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
+});
+self.addEventListener("fetch", event => {
+  event.respondWith(caches.match(event.request).then(res => res || fetch(event.request)));
+});
+self.addEventListener("activate", event => {
+  event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => { if(k!==CACHE_NAME) return caches.delete(k);}))));
+});
