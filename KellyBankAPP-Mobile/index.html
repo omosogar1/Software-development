@@ -3,77 +3,102 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly Bank v26 - Modal Transfer</title>
+<title>Kelly Bank v26</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ffcc00">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 body{background:#0d0d0d;color:#fff;padding-bottom:90px}
-.top{padding:14px;display:flex;justify-content:space-between}
-.balance-card{margin:10px;background:#1c1c1c;border:1px solid #333;border-radius:20px;padding:20px}
-.balance-card h1{color:#ffcc00;font-size:32px}
-.small-btns{margin-top:12px;display:flex;gap:8px}
-.small-btns div{border:1px solid #ffcc00;color:#ffcc00;padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
-.act{background:#1e1e1e;border-radius:16px;padding:20px;text-align:center;border:1px solid #222;cursor:pointer}
-.act span{color:#ffcc00;display:block;margin-top:8px;font-size:12px}
-#transferModal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);display:none;justify-content:center;align-items:flex-end;z-index:9999}
-.modal-content{width:100%;max-width:500px;background:#111;border:2px solid #ffcc00;border-radius:20px 20px 0 0;padding:20px;animation:slideUp 0.3s ease}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.modal-content h3{color:#ffcc00;margin-bottom:15px;display:flex;justify-content:space-between}
-.modal-content select{width:100%;padding:14px;background:#000;color:#fff;border:2px solid #ffcc00;border-radius:10px;margin-bottom:10px}
-.modal-content input{width:100%;padding:14px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:10px;margin-bottom:10px}
-.send{width:100%;padding:15px;background:#ffcc00;border:none;border-radius:12px;font-weight:900;font-size:18px;color:#000}
-.close{color:#fff;cursor:pointer;font-size:20px}
+.top{padding:14px;display:flex;justify-content:space-between;font-weight:900;color:#ffcc00;font-size:18px}
+.card{margin:10px;background:#1c1c1c;border:1px solid #333;border-radius:20px;padding:20px}
+.card h1{color:#ffcc00;font-size:32px}
+.card p{color:#888;font-size:12px;margin-top:6px}
+.small{display:flex;gap:10px;margin-top:12px}
+.small div{border:1px solid #ffcc00;color:#ffcc00;padding:7px 14px;border-radius:20px;font-size:12px;cursor:pointer}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
+.act{background:#1e1e1e;border-radius:16px;padding:22px;text-align:center;border:1px solid #333;cursor:pointer}
+.act span{color:#ffcc00;display:block;margin-top:8px;font-size:13px}
+#transferModal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.88);display:none;justify-content:center;align-items:flex-end;z-index:9999}
+.modal{width:100%;max-width:500px;background:#121212;border:2px solid #ffcc00;border-radius:22px 22px 0 0;padding:20px}
+.modal h3{color:#ffcc00;display:flex;justify-content:space-between;margin-bottom:15px}
+.modal select{width:100%;padding:14px;background:#000;color:#fff;border:2px solid #ffcc00;border-radius:10px;margin-bottom:10px}
+.modal input{width:100%;padding:14px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:10px;margin-bottom:10px}
+.send{width:100%;padding:15px;background:#ffcc00;border:none;border-radius:12px;font-weight:900;font-size:18px;color:#000;cursor:pointer}
+.close{cursor:pointer;font-size:20px;color:#fff}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#111;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #222}
-.bnav{font-size:10px;color:#777;text-align:center}
+.bnav{font-size:10px;color:#777;text-align:center;cursor:pointer}
 .bnav.active{color:#ffcc00}
 </style>
 </head>
 <body>
-<div class="top"><b style="color:#ffcc00;font-size:20px">Kelly Bank</b><span>🔔</span></div>
-<div class="balance-card">
+<div class="top"><div>Kelly Bank</div><div>🔔</div></div>
+<div class="card">
 <h1 id="mainBal">₦125,000.00</h1>
-<p style="font-size:12px;color:#888">Account 1234 **** 7890 • Kelly Savings</p>
-<div class="small-btns"><div onclick="alert('Card frozen')">🔒 Freeze</div><div onclick="addMoney()">+ Add Money</div></div>
+<p>Account 1234 **** 7890 • Savings</p>
+<div class="small">
+<div onclick="freezeCard()">🔒 Freeze</div>
+<div onclick="addMoney()">+ Add Money</div>
+</div>
 </div>
 <div class="actions">
-<div class="act" onclick="openTransfer()"><div style="font-size:24px">💸</div><span>Transfer</span></div>
-<div class="act" onclick="alert('Airtime coming')"><div style="font-size:24px">📱</div><span>Airtime</span></div>
-<div class="act" onclick="alert('Bills coming')"><div style="font-size:24px">💡</div><span>Bills</span></div>
-<div class="act" onclick="alert('History empty')"><div style="font-size:24px">📄</div><span>History</span></div>
+<div class="act" onclick="openTransfer()"><div style="font-size:26px">💸</div><span>Transfer</span></div>
+<div class="act" onclick="airtime()"><div style="font-size:26px">📱</div><span>Airtime</span></div>
+<div class="act" onclick="bills()"><div style="font-size:26px">💡</div><span>Bills</span></div>
+<div class="act" onclick="historys()"><div style="font-size:26px">📄</div><span>History</span></div>
 </div>
-<!-- HIDDEN MODAL - ONLY SHOWS ON CLICK -->
-<div id="transferModal">
-<div class="modal-content">
+<div id="transferModal" onclick="if(event.target==this)closeTransfer()">
+<div class="modal">
 <h3>Transfer to Bank <span class="close" onclick="closeTransfer()">✕</span></h3>
-<select id="bank"><option value="">-- Select Bank --</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Zenith Bank</option><option>Union Bank</option><option>Wema Bank</option><option>Fidelity Bank</option><option>FCMB</option><option>Ecobank</option><option>Sterling Bank</option><option>OPay</option><option>Moniepoint</option><option>Kuda</option><option>PalmPay</option></select>
+<select id="bankSelect"><option value="">-- Select Bank --</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Zenith Bank</option><option>Union Bank</option><option>Wema Bank</option><option>Fidelity Bank</option><option>FCMB</option><option>Ecobank</option><option>Sterling Bank</option><option>OPay</option><option>Moniepoint</option><option>Kuda</option><option>PalmPay</option></select>
 <input id="acct" type="tel" maxlength="10" placeholder="10-digit account number">
 <input id="amt" type="number" placeholder="Amount">
-<input id="rem" type="text" placeholder="Remark">
-<button class="send" onclick="send()">Send Now</button>
-<div style="margin-top:10px;font-size:11px;color:#888;text-align:center">Balance: <span id="bal2">₦125,000.00</span></div>
+<input id="rem" type="text" placeholder="Remark e.g Rent">
+<button class="send" onclick="sendMoney()">Send Now</button>
+<div style="margin-top:10px;text-align:center;color:#888;font-size:11px">Balance: <span id="bal2">₦125,000.00</span></div>
 </div>
 </div>
 <div class="bottom">
-<div class="bnav active">🏠<br>Home</div><div class="bnav">💳<br>Card</div><div class="bnav">🎁<br>Reward</div><div class="bnav">💰<br>Loan</div><div class="bnav">👤<br>Profile</div>
+<div class="bnav active" onclick="home()">🏠<br>Home</div>
+<div class="bnav" onclick="showCard()">💳<br>Card</div>
+<div class="bnav" onclick="reward()">🎁<br>Reward</div>
+<div class="bnav" onclick="loan()">💰<br>Loan</div>
+<div class="bnav" onclick="profile()">👤<br>Profile</div>
 </div>
 <script>
-let bal=125000;
-function openTransfer(){document.getElementById('transferModal').style.display='flex';}
-function closeTransfer(){document.getElementById('transferModal').style.display='none';}
-function addMoney(){let a=prompt('Add amount:');if(a){bal+=parseFloat(a);upd();}}
-function upd(){document.getElementById('mainBal').innerText='₦'+bal.toLocaleString()+'.00';document.getElementById('bal2').innerText='₦'+bal.toLocaleString()+'.00';}
-function send(){
-const bank=document.getElementById('bank').value;
-const acct=document.getElementById('acct').value;
-const amt=parseFloat(document.getElementById('amt').value);
-if(!bank){alert('Select bank');return;}
-if(acct.length!=10){alert('10 digits needed');return;}
-if(!amt||amt<=0){alert('Enter amount');return;}
-if(amt>bal){alert('Insufficient balance');return;}
-bal-=amt;upd();
-alert('SUCCESS! Sent ₦'+amt.toLocaleString()+' to '+bank+' - '+acct);
-closeTransfer();
-document.getElementById('bank').value='';document.getElementById('acct').value='';document.getElementById('amt').value='';document.getElementById('rem').value='';
+let balance = 125000;
+let frozen = false;
+function updateBal(){
+  document.getElementById('mainBal').innerText = '₦'+balance.toLocaleString()+'.00';
+  document.getElementById('bal2').innerText = '₦'+balance.toLocaleString()+'.00';
+}
+function openTransfer(){ if(frozen){alert('Card is frozen, unfreeze first');return;} document.getElementById('transferModal').style.display='flex'; }
+function closeTransfer(){ document.getElementById('transferModal').style.display='none'; }
+function freezeCard(){ frozen=!frozen; alert(frozen?'Card Frozen ❄️':'Card Unfrozen ✅'); }
+function addMoney(){ let a=prompt('Enter amount to add:'); if(a && !isNaN(a)){ balance+=parseFloat(a); updateBal(); alert('Added ₦'+a); } }
+function airtime(){ alert('Airtime: Select network and enter number - coming soon'); }
+function bills(){ alert('Bills: Electricity, Data, TV - coming soon'); }
+function historys(){ alert('History: No transactions yet'); }
+function home(){ window.scrollTo({top:0,behavior:'smooth'}); }
+function showCard(){ alert('Card: 1234 5678 9012 3456\nExpiry: 12/29'); }
+function reward(){ alert('Rewards: 0 points - Keep using Kelly Bank'); }
+function loan(){ alert('Loan: You are eligible for ₦50,000'); }
+function profile(){ alert('Profile: Kelly Osaro\nAccount: 1234567890'); }
+function sendMoney(){
+  const bank=document.getElementById('bankSelect').value;
+  const acct=document.getElementById('acct').value.trim();
+  const amt=parseFloat(document.getElementById('amt').value);
+  const rem=document.getElementById('rem').value;
+  if(!bank){alert('Please select bank');return;}
+  if(acct.length!=10||isNaN(acct)){alert('Account must be 10 digits');return;}
+  if(!amt||amt<=0){alert('Enter valid amount');return;}
+  if(amt>balance){alert('Insufficient balance: ₦'+balance.toLocaleString());return;}
+  balance-=amt; updateBal();
+  alert('SUCCESS!\nBank: '+bank+'\nAccount: '+acct+'\nAmount: ₦'+amt.toLocaleString()+'\nRemark: '+rem);
+  closeTransfer();
+  document.getElementById('bankSelect').value='';document.getElementById('acct').value='';document.getElementById('amt').value='';document.getElementById('rem').value='';
+}
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js?v=26');
 }
 </script>
 </body>
