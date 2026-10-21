@@ -22,124 +22,123 @@ body{background:#0d0d0d;color:#fff;padding-bottom:95px}
 .act span{color:#ffcc00;display:block;margin-top:8px;font-size:13px}
 .history-wrap{margin:12px;background:#141414;border:1px solid #2a2a2a;border-radius:16px;padding:12px}
 .history-wrap h3{color:#ffcc00;font-size:14px;margin-bottom:10px;display:flex;justify-content:space-between}
-.txn{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #222;font-size:12px}
+.txn{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #222;font-size:12px}
 .txn:last-child{border:none}
-.txn b{color:#fff}
-.txn .amt{color:#ffcc00;font-weight:900}
-.txn .neg{color:#ff4444}
-#transferModal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.88);display:none;justify-content:center;align-items:flex-end;z-index:9999}
-.modal{width:100%;max-width:500px;background:#121212;border:2px solid #ffcc00;border-radius:22px 22px 0 0;padding:20px;animation:slide .3s}
+.txn b{color:#fff;font-size:13px}
+.txn .sub{color:#888;font-size:11px}
+.txn .amt{font-weight:900;font-size:13px}
+.neg{color:#ff4444}.pos{color:#00e676}
+.badge{font-size:9px;padding:3px 7px;border-radius:10px;background:#222;color:#aaa}
+.modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.88);display:none;justify-content:center;align-items:flex-end;z-index:9999}
+.modal{width:100%;max-width:500px;background:#121212;border:2px solid #ffcc00;border-radius:22px 22px 0 0;padding:20px;animation:slide .25s}
 @keyframes slide{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.modal h3{color:#ffcc00;display:flex;justify-content:space-between;margin-bottom:15px}
-.modal select{width:100%;padding:14px;background:#000;color:#fff;border:2px solid #ffcc00;border-radius:10px;margin-bottom:10px}
-.modal input{width:100%;padding:14px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:10px;margin-bottom:10px}
+.modal h3{color:#ffcc00;display:flex;justify-content:space-between;margin-bottom:15px;font-size:16px}
+.modal select,.modal input{width:100%;padding:14px;background:#000;color:#fff;border:2px solid #ffcc00;border-radius:10px;margin-bottom:10px}
+.modal input{border:1px solid #333;background:#1a1a1a}
 .send{width:100%;padding:15px;background:#ffcc00;border:none;border-radius:12px;font-weight:900;font-size:18px;color:#000;cursor:pointer}
 .close{cursor:pointer;font-size:20px;color:#fff}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#111;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #222;z-index:5}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#111;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #222}
 .bnav{font-size:10px;color:#777;text-align:center;cursor:pointer}
 .bnav.active{color:#ffcc00}
 </style>
 </head>
 <body>
 
-<div class="top">
-<div class="top-left"><img src="logo.png?v=26" onerror="this.style.display='none'" alt="K"> Kelly Bank</div>
-<div onclick="alert('Notifications: No new alerts')">🔔</div>
-</div>
+<div class="top"><div class="top-left"><img src="logo.png?v=26" onerror="this.style.display='none'"> Kelly Bank</div><div>🔔</div></div>
 
 <div class="card">
 <h1 id="mainBal">₦125,000.00</h1>
-<p>Account 1234567890 • Savings • Kelly Osaro</p>
-<div class="small">
-<div onclick="freezeCard()">🔒 Freeze</div>
-<div onclick="addMoney()">+ Add Money</div>
-</div>
+<p>1234567890 • Savings • Kelly Osaro</p>
+<div class="small"><div onclick="freezeCard()">🔒 Freeze</div><div onclick="addMoney()">+ Add Money</div></div>
 </div>
 
 <div class="actions">
-<div class="act" onclick="openTransfer()"><div style="font-size:26px">💸</div><span>Transfer</span></div>
-<div class="act" onclick="airtime()"><div style="font-size:26px">📱</div><span>Airtime</span></div>
-<div class="act" onclick="bills()"><div style="font-size:26px">💡</div><span>Bills</span></div>
-<div class="act" onclick="openHistory()"><div style="font-size:26px">📄</div><span>History</span></div>
+<div class="act" onclick="openModal('transfer')"><div style="font-size:26px">💸</div><span>Transfer</span></div>
+<div class="act" onclick="openModal('airtime')"><div style="font-size:26px">📱</div><span>Airtime</span></div>
+<div class="act" onclick="openModal('bills')"><div style="font-size:26px">💡</div><span>Bills</span></div>
+<div class="act" onclick="document.getElementById('historyBox').scrollIntoView({behavior:'smooth'})"><div style="font-size:26px">📄</div><span>History</span></div>
 </div>
 
 <div class="history-wrap" id="historyBox">
 <h3>Recent Transactions <span onclick="clearHistory()" style="color:#888;cursor:pointer;font-size:11px">Clear</span></h3>
-<div id="txnList"><div style="color:#555;font-size:12px;text-align:center;padding:10px">No transactions yet. Send money to see history.</div></div>
+<div id="txnList"></div>
 </div>
 
-<div id="transferModal" onclick="if(event.target==this)closeTransfer()">
-<div class="modal">
-<h3>Transfer to Bank <span class="close" onclick="closeTransfer()">✕</span></h3>
-<select id="bankSelect"><option value="">-- Select Bank --</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Zenith Bank</option><option>Union Bank</option><option>Wema Bank</option><option>Fidelity Bank</option><option>FCMB</option><option>Ecobank</option><option>Sterling Bank</option><option>OPay</option><option>Moniepoint</option><option>Kuda</option><option>PalmPay</option></select>
+<!-- TRANSFER MODAL -->
+<div id="modal-transfer" class="modal-bg" onclick="if(event.target==this)closeAll()">
+<div class="modal"><h3>Transfer to Bank <span class="close" onclick="closeAll()">✕</span></h3>
+<select id="bankSelect"><option value="">-- Select Bank --</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Zenith Bank</option><option>Wema Bank</option><option>Fidelity Bank</option><option>FCMB</option><option>OPay</option><option>Moniepoint</option><option>Kuda</option><option>PalmPay</option></select>
 <input id="acct" type="tel" maxlength="10" placeholder="10-digit account number">
-<input id="amt" type="number" placeholder="Amount (e.g 5000)">
-<input id="rem" type="text" placeholder="Remark e.g Rent">
+<input id="amt" type="number" placeholder="Amount">
+<input id="rem" type="text" placeholder="Remark">
 <button class="send" onclick="sendMoney()">Send Now</button>
-<div style="margin-top:10px;text-align:center;color:#888;font-size:11px">Balance: <span id="bal2">₦125,000.00</span></div>
-</div>
-</div>
+<div style="text-align:center;color:#888;font-size:11px;margin-top:8px">Balance: <span id="bal2">₦125,000.00</span></div>
+</div></div>
+
+<!-- AIRTIME MODAL -->
+<div id="modal-airtime" class="modal-bg" onclick="if(event.target==this)closeAll()">
+<div class="modal"><h3>Buy Airtime <span class="close" onclick="closeAll()">✕</span></h3>
+<select id="airNetwork"><option value="">-- Select Network --</option><option>MTN</option><option>GLO</option><option>Airtel</option><option>9mobile</option></select>
+<input id="airPhone" type="tel" placeholder="Phone number (080...)">
+<select id="airAmount"><option value="">-- Select Amount --</option><option value="100">₦100</option><option value="200">₦200</option><option value="500">₦500</option><option value="1000">₦1,000</option><option value="2000">₦2,000</option><option value="5000">₦5,000</option></select>
+<button class="send" onclick="buyAirtime()">Buy Airtime</button>
+</div></div>
+
+<!-- BILLS MODAL -->
+<div id="modal-bills" class="modal-bg" onclick="if(event.target==this)closeAll()">
+<div class="modal"><h3>Pay Bills <span class="close" onclick="closeAll()">✕</span></h3>
+<select id="billType" onchange="updateBillFields()"><option value="">-- Select Bill --</option><option value="BEDC">BEDC - Electricity</option><option value="EEDC">EEDC - Electricity</option><option value="IKEDC">IKEDC - Electricity</option><option value="WAEC">WAEC - Result Checker PIN</option><option value="JAMB">JAMB - ePIN</option><option value="DSTV">DSTV Subscription</option><option value="GOTV">GOTV Subscription</option><option value="Data">Mobile Data</option></select>
+<input id="billRef" type="text" placeholder="Meter No / Smartcard / Phone">
+<select id="billAmount"><option value="">-- Select Amount --</option><option value="2000">₦2,000</option><option value="3500">₦3,500 - WAEC Card</option><option value="5000">₦5,000</option><option value="10000">₦10,000</option><option value="15000">₦15,000</option></select>
+<button class="send" onclick="payBill()">Pay Bill</button>
+</div></div>
 
 <div class="bottom">
-<div class="bnav active" onclick="home()">🏠<br>Home</div>
-<div class="bnav" onclick="showCard()">💳<br>Card</div>
-<div class="bnav" onclick="reward()">🎁<br>Reward</div>
-<div class="bnav" onclick="loan()">💰<br>Loan</div>
-<div class="bnav" onclick="profile()">👤<br>Profile</div>
+<div class="bnav active">🏠<br>Home</div><div class="bnav" onclick="alert('Card: 1234 5678...')">💳<br>Card</div><div class="bnav" onclick="alert('Rewards: 250 pts')">🎁<br>Reward</div><div class="bnav" onclick="alert('Loan eligible: ₦50k')">💰<br>Loan</div><div class="bnav" onclick="alert('Kelly Osaro - 1234567890')">👤<br>Profile</div>
 </div>
 
 <script>
 let balance = Number(localStorage.getItem('kb_balance')) || 125000;
-let frozen = false;
-let txns = JSON.parse(localStorage.getItem('kb_txns')||'[]');
+let defaultTxns = [
+  {bank:'MTN Airtime',acct:'0803****123',amount:1000,remark:'Airtime Purchase',date:'Today 08:41 AM',type:'airtime'},
+  {bank:'WAEC PIN',acct:'Card Purchase',amount:3500,remark:'WAEC Result Checker',date:'Yesterday 07:12 PM',type:'bills'},
+  {bank:'BEDC',acct:'Meter 5419***123',amount:10000,remark:'Electricity - BEDC',date:'Oct 19, 06:30 PM',type:'bills'},
+  {bank:'Access Bank',acct:'00876***21 - John O.',amount:25000,remark:'Outgoing Transfer',date:'Oct 18, 02:15 PM',type:'transfer'},
+  {bank:'GTBank',acct:'01234***56 - Salary',amount:75000,remark:'Incoming Transfer',date:'Oct 17, 09:00 AM',type:'incoming'},
+  {bank:'Airtel Data',acct:'0802****890',amount:5000,remark:'5GB Data',date:'Oct 16, 04:20 PM',type:'airtime'}
+];
+let txns = JSON.parse(localStorage.getItem('kb_txns')||'null') || defaultTxns;
 
-function save(){ localStorage.setItem('kb_balance', balance); localStorage.setItem('kb_txns', JSON.stringify(txns)); }
-function updateBal(){
-  const f='₦'+balance.toLocaleString()+'.00';
-  document.getElementById('mainBal').innerText=f;
-  document.getElementById('bal2').innerText=f;
-}
+function save(){ localStorage.setItem('kb_balance',balance); localStorage.setItem('kb_txns',JSON.stringify(txns)); }
+function updateBal(){ let f='₦'+balance.toLocaleString()+'.00'; document.getElementById('mainBal').innerText=f; document.getElementById('bal2').innerText=f; }
 function renderHistory(){
-  const list=document.getElementById('txnList');
-  if(txns.length==0){ list.innerHTML='<div style="color:#555;font-size:12px;text-align:center;padding:10px">No transactions yet. Send money to see history.</div>'; return; }
-  list.innerHTML = txns.map(t=>`
-    <div class="txn">
-      <div><b>${t.bank}</b><br><span style="color:#888">${t.acct} • ${t.date}</span><br><span style="color:#888">${t.remark||''}</span></div>
-      <div class="amt neg">-₦${Number(t.amount).toLocaleString()}</div>
-    </div>
-  `).join('');
+  document.getElementById('txnList').innerHTML = txns.map(t=>{
+    let isIn = t.type==='incoming';
+    let icon = t.type==='airtime'?'📱': t.type==='bills'?(t.bank.includes('WAEC')?'🎓':t.bank.includes('BEDC')?'💡':'📺'): isIn?'⬇️':'⬆️';
+    return `<div class="txn"><div style="display:flex;gap:10px;align-items:center"><div style="width:36px;height:36px;background:#1f1f1f;border-radius:50%;display:flex;align-items:center;justify-content:center">${icon}</div><div><b>${t.bank}</b><br><span class="sub">${t.acct} • ${t.date}</span><br><span class="badge">${t.remark}</span></div></div><div class="amt ${isIn?'pos':'neg'}">${isIn?'+':'-'}₦${Number(t.amount).toLocaleString()}</div></div>`;
+  }).join('');
 }
-function openTransfer(){ if(frozen){alert('Card is frozen ❄️ Unfreeze first');return;} document.getElementById('transferModal').style.display='flex'; }
-function closeTransfer(){ document.getElementById('transferModal').style.display='none'; }
-function freezeCard(){ frozen=!frozen; alert(frozen?'Card Frozen ❄️':'Card Unfrozen ✅'); }
-function addMoney(){ let a=prompt('Enter amount to add:'); if(a && !isNaN(a) && a>0){ balance+=parseFloat(a); save(); updateBal(); txns.unshift({bank:'Deposit',acct:'Self',amount:a,remark:'Add Money',date:new Date().toLocaleString()}); save(); renderHistory(); alert('Added ₦'+Number(a).toLocaleString()); } }
-function airtime(){ let n=prompt('Enter phone number:'); let amt=prompt('Amount:'); if(n&&amt){ if(parseFloat(amt)>balance){alert('Insufficient balance');return;} balance-=parseFloat(amt); txns.unshift({bank:'Airtime',acct:n,amount:amt,remark:'MTN Airtime',date:new Date().toLocaleString()}); save(); updateBal(); renderHistory(); alert('Airtime ₦'+amt+' sent to '+n); } }
-function bills(){ let b=prompt('Bill type: Electricity/Data/TV'); let amt=prompt('Amount:'); if(b&&amt){ if(parseFloat(amt)>balance){alert('Insufficient balance');return;} balance-=parseFloat(amt); txns.unshift({bank:'Bills',acct:b,amount:amt,remark:b, date:new Date().toLocaleString()}); save(); updateBal(); renderHistory(); alert(b+' bill of ₦'+amt+' paid'); } }
-function openHistory(){ document.getElementById('historyBox').scrollIntoView({behavior:'smooth'}); }
-function clearHistory(){ if(confirm('Clear all history?')){ txns=[]; save(); renderHistory(); } }
-function home(){ window.scrollTo({top:0,behavior:'smooth'}); }
-function showCard(){ alert('💳 Kelly Bank Card\n1234 5678 9012 3456\nExpiry: 12/29\nCVV: ***'); }
-function reward(){ alert('🎁 Rewards: 250 points\nKeep using Kelly Bank to earn more'); }
-function loan(){ alert('💰 Loan Offer: You are eligible for ₦50,000\nTap to apply (coming soon)'); }
-function profile(){ alert('👤 Profile\nName: Kelly Osaro\nAccount: 1234567890\nPhone: 080********\nTier 3 Verified'); }
-
+function openModal(name){ document.getElementById('modal-'+name).style.display='flex'; }
+function closeAll(){ document.querySelectorAll('.modal-bg').forEach(m=>m.style.display='none'); }
+function freezeCard(){ alert('Card Frozen/Unfrozen'); }
+function addMoney(){ let a=prompt('Amount to add:'); if(a&&!isNaN(a)){ balance+=+a; txns.unshift({bank:'Kelly Bank',acct:'Deposit',amount:a,remark:'Incoming Transfer - Funding',date:'Now',type:'incoming'}); save(); updateBal(); renderHistory(); alert('Added'); } }
 function sendMoney(){
-  const bank=document.getElementById('bankSelect').value;
-  const acct=document.getElementById('acct').value.trim();
-  const amt=parseFloat(document.getElementById('amt').value);
-  const rem=document.getElementById('rem').value||'Transfer';
-  if(!bank){alert('Please select bank');return;}
-  if(acct.length!=10||isNaN(acct)){alert('Account must be 10 digits');return;}
-  if(!amt||amt<=0){alert('Enter valid amount');return;}
-  if(amt>balance){alert('Insufficient balance: ₦'+balance.toLocaleString());return;}
-  balance-=amt;
-  const now=new Date().toLocaleString();
-  txns.unshift({bank,acct,amount:amt,remark:rem,date:now});
-  save(); updateBal(); renderHistory();
-  alert('✅ SUCCESS!\nBank: '+bank+'\nAccount: '+acct+'\nAmount: ₦'+amt.toLocaleString()+'\nRemark: '+rem);
-  closeTransfer();
-  document.getElementById('bankSelect').value='';document.getElementById('acct').value='';document.getElementById('amt').value='';document.getElementById('rem').value='';
+  let bank=document.getElementById('bankSelect').value, acct=document.getElementById('acct').value, amt=+document.getElementById('amt').value, rem=document.getElementById('rem').value||'Transfer';
+  if(!bank||acct.length!=10||!amt||amt>balance){ alert('Check bank, 10-digit account, amount and balance'); return; }
+  balance-=amt; txns.unshift({bank,acct,amount:amt,remark:rem,date:'Now',type:'transfer'}); save(); updateBal(); renderHistory(); closeAll(); alert('Sent ₦'+amt.toLocaleString()+' to '+bank);
 }
+function buyAirtime(){
+  let net=document.getElementById('airNetwork').value, phone=document.getElementById('airPhone').value, amt=+document.getElementById('airAmount').value;
+  if(!net||!phone||!amt||amt>balance){ alert('Select network, phone and amount'); return; }
+  balance-=amt; txns.unshift({bank:net+' Airtime',acct:phone,amount:amt,remark:'Airtime Purchase',date:'Now',type:'airtime'}); save(); updateBal(); renderHistory(); closeAll(); alert(net+' ₦'+amt+' sent to '+phone);
+}
+function payBill(){
+  let type=document.getElementById('billType').value, ref=document.getElementById('billRef').value, amt=+document.getElementById('billAmount').value;
+  if(!type||!ref||!amt||amt>balance){ alert('Select bill type, reference and amount'); return; }
+  balance-=amt; txns.unshift({bank:type,acct:ref,amount:amt,remark:type+' Payment',date:'Now',type:'bills'}); save(); updateBal(); renderHistory(); closeAll(); alert(type+' paid ₦'+amt.toLocaleString());
+}
+function updateBillFields(){ let t=document.getElementById('billType').value; let r=document.getElementById('billRef'); if(t.includes('BEDC')||t.includes('EEDC')||t.includes('IKEDC')) r.placeholder='Meter Number'; else if(t.includes('WAEC')||t.includes('JAMB')) r.placeholder='Email to receive PIN'; else if(t.includes('DSTV')||t.includes('GOTV')) r.placeholder='Smartcard Number'; else r.placeholder='Phone / Reference'; }
+function clearHistory(){ if(confirm('Reset to default history?')){ txns=[...defaultTxns]; save(); renderHistory(); } }
 
 updateBal(); renderHistory();
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?v=26'); }
