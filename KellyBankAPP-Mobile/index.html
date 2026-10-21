@@ -12,33 +12,36 @@ body{background:#0d0d0d;color:#fff}
 #loginScreen{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;background:radial-gradient(circle at top,#222,#0d0d0d)}
 .loginBox{width:100%;max-width:380px;background:#151515;border:1px solid #333;border-radius:22px;padding:28px;text-align:center}
 .loginBox img{width:70px;height:70px;border-radius:50%;border:2px solid #ffcc00;margin-bottom:10px;background:#000;object-fit:cover}
-.loginBox h2{color:#ffcc00;margin:10px 0 4px} .loginBox p{color:#888;font-size:12px;margin-bottom:20px}
-.loginBox input{width:100%;padding:14px;background:#0f0f0f;border:1px solid #333;border-radius:12px;color:#fff;margin-bottom:12px}
-.loginBox input:focus{border-color:#ffcc00;outline:none}
-.loginBtn{width:100%;padding:14px;background:#ffcc00;border:none;border-radius:12px;font-weight:900;color:#000;font-size:16px;cursor:pointer}
-.forgot{display:block;margin-top:12px;color:#ffcc00;font-size:12px;cursor:pointer}
+.loginBox h2{color:#ffcc00} .loginBox input{width:100%;padding:14px;background:#0f0f0f;border:1px solid #333;border-radius:12px;color:#fff;margin-bottom:12px;margin-top:12px}
+.loginBtn{width:100%;padding:14px;background:#ffcc00;border:none;border-radius:12px;font-weight:900;color:#000;cursor:pointer}
+.forgot{color:#ffcc00;font-size:12px;cursor:pointer;display:block;margin-top:10px}
 #appScreen{display:none}
+.page{display:none;padding-bottom:90px} .page.active{display:block}
 .top{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#0d0d0d;z-index:10}
 .top-left{display:flex;align-items:center;gap:10px;font-weight:900;color:#ffcc00;font-size:18px}
 .top-left img{width:34px;height:34px;border-radius:50%;border:1.5px solid #ffcc00;background:#000}
 .card{margin:10px 12px;background:linear-gradient(135deg,#1c1c1c,#222);border:1px solid #333;border-radius:20px;padding:20px}
-.card h1{color:#ffcc00;font-size:30px} .small{display:flex;gap:10px;margin-top:12px}
+.card h1{color:#ffcc00;font-size:30px}
+.small{display:flex;gap:10px;margin-top:12px}
 .small div{border:1px solid #ffcc00;color:#ffcc00;padding:7px 14px;border-radius:20px;font-size:12px;cursor:pointer}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
 .act{background:#1e1e1e;border-radius:16px;padding:22px;text-align:center;border:1px solid #333;cursor:pointer}
 .act span{color:#ffcc00;display:block;margin-top:8px;font-size:13px}
-.history-wrap{margin:12px;background:#141414;border:1px solid #2a2a2a;border-radius:16px;padding:12px;margin-bottom:90px}
+.history-wrap{margin:12px;background:#141414;border:1px solid #2a2a2a;border-radius:16px;padding:12px}
 .history-wrap h3{color:#ffcc00;font-size:14px;margin-bottom:10px;display:flex;justify-content:space-between}
-.txn{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #222;font-size:12px}
+.txn{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #222;font-size:12px}
 .pos{color:#00e676}.neg{color:#ff4444}
+.bigBox{margin:12px;background:#151515;border:1px solid #333;border-radius:16px;padding:20px;text-align:center}
+.bigBox h3{color:#ffcc00;margin-bottom:10px}
 .modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.88);display:none;justify-content:center;align-items:flex-end;z-index:9999}
 .modal{width:100%;max-width:500px;background:#121212;border:2px solid #ffcc00;border-radius:22px 22px 0 0;padding:20px}
 .modal h3{color:#ffcc00;display:flex;justify-content:space-between;margin-bottom:15px}
 .modal select,.modal input{width:100%;padding:14px;background:#000;color:#fff;border:2px solid #ffcc00;border-radius:10px;margin-bottom:10px}
 .modal input{border:1px solid #333;background:#1a1a1a}
-.send{width:100%;padding:15px;background:#ffcc00;border:none;border-radius:12px;font-weight:900;font-size:18px;color:#000;cursor:pointer}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#111;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #222}
-.bnav{font-size:10px;color:#777;text-align:center;cursor:pointer}
+.send{width:100%;padding:15px;background:#ffcc00;border:none;border-radius:12px;font-weight:900;font-size:16px;color:#000;cursor:pointer}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#111;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #222;z-index:20}
+.bnav{font-size:10px;color:#777;text-align:center;cursor:pointer;padding:4px 10px;border-radius:10px}
+.bnav.active{color:#ffcc00;background:#1f1f1f}
 </style>
 </head>
 <body>
@@ -46,18 +49,20 @@ body{background:#0d0d0d;color:#fff}
 <div id="loginScreen">
 <div class="loginBox">
 <img src="logo.png?v=26" onerror="this.style.display='none'">
-<h2>Kelly Bank</h2><p>Secure banking - Login to continue</p>
-<input id="username" type="text" placeholder="Username">
-<input id="password" type="password" placeholder="Password">
+<h2>Kelly Bank</h2><p style="color:#888;font-size:12px;margin:8px 0 15px">Secure banking - Login</p>
+<input id="username" placeholder="Username (kelly)">
+<input id="password" type="password" placeholder="Password (1234)">
 <button class="loginBtn" onclick="login()">Login</button>
 <span class="forgot" onclick="forgot()">Forgotten Password?</span>
-<div style="margin-top:16px;color:#666;font-size:10px">Default: Username kelly / Password 1234</div>
 </div>
 </div>
 
 <div id="appScreen">
-<div class="top"><div class="top-left"><img src="logo.png?v=26"> Kelly Bank</div><div onclick="logout()" style="cursor:pointer;color:#ffcc00;font-size:12px">Logout</div></div>
-<div class="card"><h1 id="mainBal">₦125,000.00</h1><p id="welcomeUser">Savings Account</p><div class="small"><div onclick="freezeCard()">🔒 Freeze</div><div onclick="addMoney()">+ Add Money</div></div></div>
+<div class="top"><div class="top-left"><img src="logo.png?v=26"> Kelly Bank</div><div onclick="logout()" style="color:#ffcc00;font-size:12px;cursor:pointer">Logout</div></div>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+<div class="card"><h1 id="mainBal">₦125,000.00</h1><p id="welcomeUser">Savings</p><div class="small"><div onclick="freezeCard()">🔒 Freeze</div><div onclick="addMoney()">+ Add Money</div></div></div>
 <div class="actions">
 <div class="act" onclick="openModal('transfer')">💸<span>Transfer</span></div>
 <div class="act" onclick="openModal('airtime')">📱<span>Airtime</span></div>
@@ -65,40 +70,75 @@ body{background:#0d0d0d;color:#fff}
 <div class="act" onclick="document.getElementById('historyBox').scrollIntoView({behavior:'smooth'})">📄<span>History</span></div>
 </div>
 <div class="history-wrap" id="historyBox"><h3>Recent Transactions <span onclick="clearHistory()" style="color:#888;font-size:11px;cursor:pointer">Clear</span></h3><div id="txnList"></div></div>
+</div>
 
-<div id="modal-transfer" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Transfer <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="bankSelect"><option value="">-- Select Bank --</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Wema Bank</option><option>OPay</option><option>Moniepoint</option><option>Kuda</option><option>PalmPay</option></select><input id="acct" maxlength="10" type="tel" placeholder="10-digit account"><input id="amt" type="number" placeholder="Amount"><input id="rem" type="text" placeholder="Remark"><button class="send" onclick="sendMoney()">Send Now</button></div></div>
-<div id="modal-airtime" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Buy Airtime <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="airNetwork"><option value="">-- Select Network --</option><option>MTN</option><option>GLO</option><option>Airtel</option><option>9mobile</option></select><input id="airPhone" type="tel" placeholder="Phone number"><select id="airAmount"><option value="">-- Select Amount --</option><option value="100">₦100</option><option value="500">₦500</option><option value="1000">₦1,000</option><option value="2000">₦2,000</option><option value="5000">₦5,000</option></select><button class="send" onclick="buyAirtime()">Buy Airtime</button></div></div>
-<div id="modal-bills" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Pay Bills <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="billType"><option value="">-- Select Bill --</option><option>BEDC - Electricity</option><option>WAEC - Result Checker</option><option>JAMB - ePIN</option><option>DSTV</option><option>GOTV</option><option>Data Bundle</option></select><input id="billRef" type="text" placeholder="Meter No / Smartcard / Email"><select id="billAmount"><option value="">-- Select Amount --</option><option value="2000">₦2,000</option><option value="3500">₦3,500 - WAEC Card</option><option value="5000">₦5,000</option><option value="10000">₦10,000 - BEDC</option><option value="15000">₦15,000</option></select><button class="send" onclick="payBill()">Pay Bill</button></div></div>
+<!-- CARD PAGE -->
+<div id="page-card" class="page">
+<div class="bigBox"><h3>💳 My Card</h3><div style="background:linear-gradient(135deg,#ffcc00,#b89600);color:#000;border-radius:16px;padding:20px;margin:15px 0;text-align:left"><div style="font-size:12px">Kelly Bank • Savings</div><div style="font-size:20px;margin:15px 0;letter-spacing:3px">1234 5678 9012 3456</div><div style="display:flex;justify-content:space-between;font-size:12px"><span>KELLY OSARO</span><span>12/29</span></div></div><p style="color:#888;font-size:12px">Freeze card to block transactions</p><button class="send" style="margin-top:12px" onclick="freezeCard()">Toggle Freeze</button></div>
+</div>
 
-<div class="bottom"><div class="bnav" style="color:#ffcc00">🏠<br>Home</div><div class="bnav">💳<br>Card</div><div class="bnav">🎁<br>Reward</div><div class="bnav">💰<br>Loan</div><div class="bnav">👤<br>Profile</div></div>
+<!-- REWARD PAGE -->
+<div id="page-reward" class="page">
+<div class="bigBox"><h3>🎁 Rewards</h3><div style="font-size:40px;margin:15px">🏆</div><h2 style="color:#ffcc00">250 Points</h2><p style="color:#888;font-size:12px;margin:10px 0">Keep transacting to earn more</p><div style="background:#1a1a1a;border-radius:12px;padding:12px;text-align:left;font-size:12px;margin-top:15px"><div>✅ Transfer - 10 pts</div><div>✅ Airtime - 5 pts</div><div>✅ Bills - 15 pts</div></div></div>
+</div>
+
+<!-- LOAN PAGE -->
+<div id="page-loan" class="page">
+<div class="bigBox"><h3>💰 Instant Loan</h3><p style="color:#888;font-size:12px">You are eligible</p><h1 style="color:#ffcc00;margin:15px 0">₦50,000</h1><p style="color:#888;font-size:12px">Repay in 30 days - 15% interest</p><button class="send" style="margin-top:15px" onclick="alert('Loan application submitted! You will receive ₦50,000 shortly')">Apply Now</button><div style="margin-top:15px;background:#1a1a1a;border-radius:10px;padding:12px;text-align:left;font-size:11px;color:#888"><div>• No collateral</div><div>• Instant disbursement</div><div>• Repay: ₦57,500</div></div></div>
+</div>
+
+<!-- ME PAGE -->
+<div id="page-me" class="page">
+<div class="bigBox"><img src="logo.png?v=26" style="width:80px;height:80px;border-radius:50%;border:2px solid #ffcc00"><h3 style="margin-top:10px">Kelly Osaro</h3><p style="color:#888;font-size:12px">kelly • Tier 3 Verified</p><div style="background:#1a1a1a;border-radius:12px;padding:12px;margin-top:15px;text-align:left;font-size:12px"><div style="padding:8px 0;border-bottom:1px solid #222">📱 Phone: 080****1234</div><div style="padding:8px 0;border-bottom:1px solid #222">🏦 Account: 1234567890</div><div style="padding:8px 0;border-bottom:1px solid #222">✉️ Email: kelly@email.com</div><div style="padding:8px 0">🔒 Change Password</div></div><button class="send" style="margin-top:15px;background:#222;color:#ffcc00;border:1px solid #ffcc00" onclick="logout()">Logout</button></div>
+</div>
+
+<!-- MODALS -->
+<div id="modal-transfer" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Transfer <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="bankSelect"><option value="">-- Select Bank --</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Wema Bank</option><option>OPay</option><option>Moniepoint</option><option>Kuda</option></select><input id="acct" maxlength="10" type="tel" placeholder="10-digit"><input id="amt" type="number" placeholder="Amount"><input id="rem" placeholder="Remark"><button class="send" onclick="sendMoney()">Send Now</button></div></div>
+<div id="modal-airtime" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Airtime <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="airNetwork"><option value="">-- Network --</option><option>MTN</option><option>GLO</option><option>Airtel</option><option>9mobile</option></select><input id="airPhone" type="tel" placeholder="Phone"><select id="airAmount"><option value="">-- Amount --</option><option value="100">₦100</option><option value="500">₦500</option><option value="1000">₦1,000</option><option value="2000">₦2,000</option><option value="5000">₦5,000</option></select><button class="send" onclick="buyAirtime()">Buy Airtime</button></div></div>
+<div id="modal-bills" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Bills <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="billType"><option value="">-- Bill --</option><option>BEDC</option><option>WAEC</option><option>JAMB</option><option>DSTV</option><option>GOTV</option><option>Data</option></select><input id="billRef" placeholder="Meter / Smartcard / Email"><select id="billAmount"><option value="">-- Amount --</option><option value="2000">₦2,000</option><option value="3500">₦3,500 - WAEC</option><option value="5000">₦5,000</option><option value="10000">₦10,000 - BEDC</option></select><button class="send" onclick="payBill()">Pay Bill</button></div></div>
+
+<div class="bottom">
+<div class="bnav active" id="nav-home" onclick="switchPage('home')">🏠<br>Home</div>
+<div class="bnav" id="nav-card" onclick="switchPage('card')">💳<br>Card</div>
+<div class="bnav" id="nav-reward" onclick="switchPage('reward')">🎁<br>Reward</div>
+<div class="bnav" id="nav-loan" onclick="switchPage('loan')">💰<br>Loan</div>
+<div class="bnav" id="nav-me" onclick="switchPage('me')">👤<br>Me</div>
+</div>
+
 </div>
 
 <script>
 let defaultUser='kelly', defaultPass='1234';
 let balance=Number(localStorage.getItem('kb_balance'))||125000;
 let defaultTxns=[
- {bank:'MTN Airtime',acct:'0803****123',amount:1000,remark:'Airtime Purchase',date:'Today 08:41 AM',type:'airtime'},
- {bank:'WAEC PIN',acct:'Card Purchase',amount:3500,remark:'WAEC Result Checker',date:'Yesterday 07:12 PM',type:'bills'},
- {bank:'BEDC Electricity',acct:'Meter 5419***123',amount:10000,remark:'BEDC Outgoing',date:'Oct 19, 06:30 PM',type:'bills'},
- {bank:'Access Bank',acct:'00876***21 - John O.',amount:25000,remark:'Outgoing Transfer',date:'Oct 18, 02:15 PM',type:'transfer'},
- {bank:'GTBank - Salary',acct:'Incoming',amount:75000,remark:'Incoming Transfer',date:'Oct 17, 09:00 AM',type:'incoming'},
- {bank:'Airtel Data',acct:'0802****890',amount:5000,remark:'5GB Data Bundle',date:'Oct 16, 04:20 PM',type:'airtime'}
+ {bank:'MTN Airtime',acct:'0803****123',amount:1000,remark:'Airtime',date:'Today 08:41 AM',type:'airtime'},
+ {bank:'WAEC PIN',acct:'Card Purchase',amount:3500,remark:'WAEC',date:'Yesterday 07:12 PM',type:'bills'},
+ {bank:'BEDC Electricity',acct:'Meter 5419***',amount:10000,remark:'BEDC',date:'Oct 19, 06:30 PM',type:'bills'},
+ {bank:'Access Bank',acct:'00876***21',amount:25000,remark:'Outgoing',date:'Oct 18, 02:15 PM',type:'transfer'},
+ {bank:'GTBank - Salary',acct:'Incoming',amount:75000,remark:'Incoming',date:'Oct 17, 09:00 AM',type:'incoming'}
 ];
 let txns=JSON.parse(localStorage.getItem('kb_txns')||'null')||defaultTxns;
 function save(){ localStorage.setItem('kb_balance',balance); localStorage.setItem('kb_txns',JSON.stringify(txns)); localStorage.setItem('kb_logged','1'); }
 function updateBal(){ document.getElementById('mainBal').innerText='₦'+balance.toLocaleString()+'.00'; }
 function renderHistory(){ document.getElementById('txnList').innerHTML=txns.map(t=>`<div class="txn"><div><b>${t.bank}</b><br><span style="color:#888;font-size:11px">${t.acct} • ${t.date} • ${t.remark}</span></div><div style="font-weight:900" class="${t.type==='incoming'?'pos':'neg'}">${t.type==='incoming'?'+':'-'}₦${Number(t.amount).toLocaleString()}</div></div>`).join(''); }
-function login(){ let u=document.getElementById('username').value.trim().toLowerCase(), p=document.getElementById('password').value.trim(); if(u===defaultUser && p===defaultPass){ document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; document.getElementById('welcomeUser').innerText='Welcome '+u+' • Savings'; save(); updateBal(); renderHistory(); }else{ alert('Invalid!\nUsername: kelly\nPassword: 1234'); } }
-function forgot(){ let np=prompt('Forgotten Password?\nEnter new password for kelly:'); if(np&&np.length>=4){ defaultPass=np; alert('Password reset to: '+np); } }
+function login(){ let u=document.getElementById('username').value.trim().toLowerCase(), p=document.getElementById('password').value.trim(); if(u===defaultUser && p===defaultPass){ document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; document.getElementById('welcomeUser').innerText='Welcome '+u+' • Savings'; save(); updateBal(); renderHistory(); }else{ alert('Use kelly / 1234'); } }
+function forgot(){ let np=prompt('New password for kelly:'); if(np&&np.length>=4){ defaultPass=np; alert('New password: '+np); } }
 function logout(){ localStorage.removeItem('kb_logged'); location.reload(); }
+function switchPage(name){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.querySelectorAll('.bnav').forEach(b=>b.classList.remove('active'));
+ document.getElementById('page-'+name).classList.add('active');
+ document.getElementById('nav-'+name).classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
 function openModal(n){ document.getElementById('modal-'+n).style.display='flex'; }
 function closeAll(){ document.querySelectorAll('.modal-bg').forEach(m=>m.style.display='none'); }
 function freezeCard(){ alert('Card Frozen/Unfrozen'); }
 function addMoney(){ let a=prompt('Add amount:'); if(a&&!isNaN(a)){ balance+=+a; txns.unshift({bank:'Deposit',acct:'Self',amount:a,remark:'Incoming',date:'Now',type:'incoming'}); save(); updateBal(); renderHistory(); } }
-function sendMoney(){ let b=document.getElementById('bankSelect').value, ac=document.getElementById('acct').value, am=+document.getElementById('amt').value; if(!b||ac.length!=10||!am||am>balance){alert('Check fields');return;} balance-=am; txns.unshift({bank:b,acct:ac,amount:am,remark:'Outgoing Transfer',date:'Now',type:'transfer'}); save(); updateBal(); renderHistory(); closeAll(); alert('Sent ₦'+am.toLocaleString()); }
+function sendMoney(){ let b=document.getElementById('bankSelect').value, ac=document.getElementById('acct').value, am=+document.getElementById('amt').value; if(!b||ac.length!=10||!am||am>balance){alert('Check fields');return;} balance-=am; txns.unshift({bank:b,acct:ac,amount:am,remark:'Outgoing',date:'Now',type:'transfer'}); save(); updateBal(); renderHistory(); closeAll(); alert('Sent'); }
 function buyAirtime(){ let n=document.getElementById('airNetwork').value, ph=document.getElementById('airPhone').value, am=+document.getElementById('airAmount').value; if(!n||!ph||!am||am>balance){alert('Fill all');return;} balance-=am; txns.unshift({bank:n+' Airtime',acct:ph,amount:am,remark:'Airtime',date:'Now',type:'airtime'}); save(); updateBal(); renderHistory(); closeAll(); }
-function payBill(){ let t=document.getElementById('billType').value, r=document.getElementById('billRef').value, am=+document.getElementById('billAmount').value; if(!t||!r||!am||am>balance){alert('Fill all');return;} balance-=am; txns.unshift({bank:t,acct:r,amount:am,remark:t+' Bill',date:'Now',type:'bills'}); save(); updateBal(); renderHistory(); closeAll(); }
-function clearHistory(){ if(confirm('Reset history?')){ txns=[...defaultTxns]; save(); renderHistory(); } }
+function payBill(){ let t=document.getElementById('billType').value, r=document.getElementById('billRef').value, am=+document.getElementById('billAmount').value; if(!t||!r||!am||am>balance){alert('Fill all');return;} balance-=am; txns.unshift({bank:t,acct:r,amount:am,remark:t,date:'Now',type:'bills'}); save(); updateBal(); renderHistory(); closeAll(); }
+function clearHistory(){ if(confirm('Reset?')){ txns=[...defaultTxns]; save(); renderHistory(); } }
 if(localStorage.getItem('kb_logged')){ document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; updateBal(); renderHistory(); }
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?v=26'); }
 </script>
