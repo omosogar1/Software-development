@@ -1,7 +1,7 @@
 {
   "name": "KellyBank V26",
   "short_name": "KellyBank V26",
-  "description": "KellyBank V26 - Secure with BVN, PIN, Auto-lock",
+  "description": "KellyBank V26 - Login first, BVN inside for Tier upgrade, Auto-lock 60s",
   "start_url": "./index.html?v=26",
   "display": "standalone",
   "background_color": "#121212",
