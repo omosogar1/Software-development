@@ -1,8 +1,8 @@
 {
-  "name": "KellyBank V26",
-  "short_name": "KellyBank V26",
-  "description": "KellyBank V26 - Login first, BVN inside for Tier upgrade, Auto-lock 60s",
-  "start_url": "./index.html?v=26",
+  "name": "KellyBank V26.9",
+  "short_name": "KellyBank V26.9",
+  "description": "KellyBank V26.9 - Login First, BVN Inside for Tier, Auto-lock 60s, Delete Key",
+  "start_url": "./index.html?v=26.9",
   "display": "standalone",
   "background_color": "#121212",
   "theme_color": "#ff6a00",
