@@ -31,8 +31,7 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 .screen.active{display:flex;flex-direction:column}
 .screen-inner{max-width:420px;width:100%;margin:0 auto;padding-top:20px;text-align:center}
 .logo-img-big{width:90px;height:90px;border-radius:50%;border:2px solid #ffcc00;object-fit:cover;margin:0 auto 15px auto;display:block;background:#000}
-.title{font-size:24px;font-weight:800;text-align:center;margin-bottom:15px;color:#ffcc00}
-.subtitle{font-size:14px;color:#888;text-align:center;margin-bottom:20px}
+.title{font-size:24px;font-weight:800;text-align:center;margin-bottom:20px;color:#ffcc00}
 .box{background:#1e1e1e;padding:15px;border-radius:15px;margin:15px;display:none;border:1px solid #2a2a2a;text-align:left}
 </style>
 </head>
@@ -43,13 +42,12 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
   <div class="screen-inner">
     <img src="logo.png" class="logo-img-big" alt="Logo">
     <div class="title">Kelly Bank</div>
-    <div class="subtitle">Secure Banking</div>
     <button class="btn-primary" onclick="goToLogin()">Login</button>
     <button class="btn-secondary" onclick="goToRegister()">Create New Account</button>
   </div>
 </div>
 
-<!-- CREATE ACCOUNT - CLEAN, NO PIN, NO SUBTITLE -->
+<!-- CREATE ACCOUNT - FINAL: NO SUBTITLE, NO PIN -->
 <div id="registerScreen" class="screen">
   <div class="screen-inner">
     <img src="logo.png" class="logo-img-big" alt="Logo">
