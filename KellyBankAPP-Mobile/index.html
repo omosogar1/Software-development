@@ -16,9 +16,9 @@ body{background:#0f0f0f;color:#fff;min-height:100vh;padding:15px}
 .balance-card{background:linear-gradient(135deg,#ff6a00,#ff8c42);border-radius:20px;padding:20px;margin-bottom:18px}
 .balance-card h1{font-size:30px;margin:8px 0}
 .actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px}
-.action-btn{background:#2a2a2a;border:none;color:#fff;padding:14px;border-radius:14px;cursor:pointer;font-size:13px}
+.action-btn{background:#2a2a2a;border:none;color:#fff;padding:14px;border-radius:14px;cursor:pointer}
 .box{background:#2a2a2a;padding:15px;border-radius:15px;margin-bottom:15px;display:none}
-input{width:100%;padding:12px;border-radius:10px;border:none;margin:8px 0;background:#1a1a1a;color:#fff;border:1px solid #333}
+input{width:100%;padding:12px;border-radius:10px;margin:8px 0;background:#1a1a1a;color:#fff;border:1px solid #333}
 .btn-primary{background:#ff6a00;color:#fff;border:none;padding:13px;border-radius:12px;width:100%;cursor:pointer;font-weight:800;margin-top:10px}
 .pin-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;display:flex;align-items:center;justify-content:center;z-index:100;padding:15px}
 .pin-box{background:#1a1a1a;padding:25px;border-radius:20px;text-align:center;width:100%;max-width:360px;border:1px solid #333}
@@ -26,36 +26,41 @@ input{width:100%;padding:12px;border-radius:10px;border:none;margin:8px 0;backgr
 .dot{width:14px;height:14px;border-radius:50%;border:2px solid #ff6a00}
 .dot.filled{background:#ff6a00}
 .numpad{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.num-btn{background:#2a2a2a;border:none;color:#fff;font-size:20px;padding:18px;border-radius:12px;cursor:pointer}
+.num-btn{background:#2a2a2a;border:none;color:#fff;font-size:20px;padding:18px;border-radius:12px;cursor:pointer;user-select:none}
+.num-btn.del{background:#3a1f1f}
+.num-btn.ok{background:#ff6a00}
 .receipt{background:#fff;color:#000;padding:18px;border-radius:15px;margin-top:15px;display:none}
 .badge{font-size:11px;padding:4px 8px;border-radius:20px;background:#2a2a2a;color:#ff6a00}
-.verified{color:#00ff88}
+#idleWarning{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#ff6a00;color:#fff;padding:8px 15px;border-radius:20px;font-size:12px;display:none;z-index:200}
 </style>
 </head>
 <body>
 
-<!-- 1. BVN VERIFICATION SCREEN -->
+<div id="idleWarning">Auto-lock in <span id="countdown">60</span>s</div>
+
+<!-- BVN SCREEN -->
 <div id="bvnScreen" class="pin-screen" style="display:none">
   <div class="pin-box">
     <h2>Verify Your BVN</h2>
     <p style="font-size:13px;color:#888;margin:10px 0">CBN requires BVN for KellyBank</p>
-    <input id="bvnInput" type="number" placeholder="Enter 11-digit BVN" maxlength="11">
+    <input id="bvnInput" type="number" placeholder="Enter 11-digit BVN">
     <input id="bvnName" placeholder="Full Name as on BVN">
     <button class="btn-primary" onclick="verifyBVN()">Verify BVN</button>
     <p id="bvnMsg" style="margin-top:10px;font-size:12px"></p>
   </div>
 </div>
 
-<!-- 2. SETUP PIN SCREENS -->
+<!-- SETUP PIN -->
 <div id="setupPinScreen" class="pin-screen" style="display:none">
   <div class="pin-box">
     <h2 id="setupTitle">Create Login PIN</h2>
     <div class="pin-dots" id="setupDots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="numpad" id="setupPad"></div>
+    <p style="margin-top:10px;font-size:11px;color:#666">⌫ = Delete one | Hold = Clear all</p>
   </div>
 </div>
 
-<!-- 3. LOGIN PIN SCREEN -->
+<!-- LOGIN PIN -->
 <div id="pinScreen" class="pin-screen">
   <div class="pin-box">
     <h2>Welcome Back</h2>
@@ -66,14 +71,14 @@ input{width:100%;padding:12px;border-radius:10px;border:none;margin:8px 0;backgr
   </div>
 </div>
 
-<!-- 4. MAIN APP -->
+<!-- MAIN APP -->
 <div class="app" id="mainApp">
   <div class="header">
     <div style="display:flex;align-items:center;gap:10px">
       <div class="logo">K</div>
-      <div><h3>KellyBank</h3><small id="bvnStatus" class="badge">BVN ✓</small></div>
+      <div><h3>KellyBank</h3><small class="badge">BVN ✓ Verified • Auto-lock: 60s</small></div>
     </div>
-    <button onclick="lockApp()" style="background:none;border:none;color:#fff;font-size:20px">🔒</button>
+    <button onclick="lockApp()" style="background:none;border:none;color:#fff;font-size:22px">🔒</button>
   </div>
 
   <div class="balance-card">
@@ -85,23 +90,21 @@ input{width:100%;padding:12px;border-radius:10px;border:none;margin:8px 0;backgr
   <div class="actions">
     <button class="action-btn" onclick="openBox('transferBox')">💸<br>Transfer</button>
     <button class="action-btn" onclick="shareApp()">📤<br>Share</button>
-    <button class="action-btn" onclick="openBox('receipt')">🧾<br>History</button>
+    <button class="action-btn" onclick="openBox('receipt')">🧾<br>Receipt</button>
   </div>
 
-  <!-- TRANSFER BOX WITH REMARK + TRANSFER PIN -->
   <div id="transferBox" class="box">
     <h4>Send Money</h4>
     <input id="sendTo" placeholder="Recipient Account / KellyTag">
     <input id="sendAmount" type="number" placeholder="Amount ₦">
-    <input id="sendRemark" placeholder="Remark e.g. Rent, Food, Thanks">
-    <hr style="margin:12px 0;border:1px solid #333">
+    <input id="sendRemark" placeholder="Remark e.g. For food, Rent, Thanks">
+    <hr style="margin:12px 0;border:0.5px solid #444">
     <p style="font-size:12px;color:#ff6a00">Enter Transfer PIN to confirm</p>
     <input id="transferPinInput" type="password" placeholder="Transfer PIN (4-digit)" maxlength="4">
     <button class="btn-primary" onclick="doTransfer()">Send Now</button>
     <button style="background:none;border:none;color:#888;width:100%;margin-top:8px" onclick="closeBoxes()">Cancel</button>
   </div>
 
-  <!-- RECEIPT -->
   <div id="receipt" class="receipt">
     <h3 style="text-align:center">KellyBank Receipt</h3>
     <hr style="margin:10px 0">
@@ -109,7 +112,6 @@ input{width:100%;padding:12px;border-radius:10px;border:none;margin:8px 0;backgr
     <p id="rTo">To: -</p>
     <p id="rAmount">Amount: -</p>
     <p id="rRemark">Remark: -</p>
-    <p id="rPin">Transfer PIN: ****</p>
     <p id="rDate">Date: -</p>
     <p style="margin-top:10px;color:green;font-weight:bold">Status: SUCCESS ✓</p>
     <button class="btn-primary" onclick="shareReceipt()">Share Receipt 📤</button>
@@ -118,19 +120,24 @@ input{width:100%;padding:12px;border-radius:10px;border:none;margin:8px 0;backgr
 </div>
 
 <script>
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 
-// --- STORAGE ---
 let balance = parseFloat(localStorage.getItem("kelly_balance") || "250000");
 let bvnData = JSON.parse(localStorage.getItem("kelly_bvn") || "null");
 let loginPin = localStorage.getItem("kelly_login_pin");
 let transferPin = localStorage.getItem("kelly_transfer_pin");
 let pinInput = "";
-let setupStep = "login"; // login, transfer, confirmLogin, confirmTransfer
 let tempPin = "";
+let setupStep = "login";
 
-// --- INIT ---
+// --- AUTO LOGOUT VARIABLES ---
+let logoutTimer;
+let countdownTimer;
+let idleSeconds = 60; // Change to 30 for 30 seconds, 120 for 2 minutes
+
 window.onload = ()=>{
+  buildPads();
+  updateBalanceUI();
   if(!bvnData){
     document.getElementById('bvnScreen').style.display='flex';
     document.getElementById('pinScreen').style.display='none';
@@ -139,16 +146,6 @@ window.onload = ()=>{
   } else {
     showLogin();
   }
-  buildPads();
-  updateBalanceUI();
-}
-
-function buildPads(){
-  let html = "";
-  for(let i=1;i<=9;i++) html+=`<button class="num-btn" onclick="handleNum('${i}')">${i}</button>`;
-  html+=`<button class="num-btn" onclick="clearPin()">C</button><button class="num-btn" onclick="handleNum('0')">0</button><button class="num-btn" onclick="handleOk()">✓</button>`;
-  document.getElementById('loginPad').innerHTML=html;
-  document.getElementById('setupPad').innerHTML=html;
 }
 
 function updateBalanceUI(){
@@ -156,140 +153,159 @@ function updateBalanceUI(){
   if(bvnData){
     document.getElementById('bvnNameDisplay').innerText=bvnData.name;
     document.getElementById('userDisplay').innerText=bvnData.name;
-    document.getElementById('rFrom').innerText=bvnData.name+" ("+bvnData.bvn.slice(-4)+")";
+    document.getElementById('rFrom').innerText=bvnData.name;
   }
 }
 
-// --- BVN ---
+function buildPads(){
+  let html = "";
+  for(let i=1;i<=9;i++) html+=`<button class="num-btn" onclick="handleNum('${i}')">${i}</button>`;
+  html+=`<button class="num-btn del" onclick="deleteOne()">⌫</button>`;
+  html+=`<button class="num-btn" onclick="handleNum('0')">0</button>`;
+  html+=`<button class="num-btn ok" onclick="handleOk()">✓</button>`;
+  document.getElementById('loginPad').innerHTML=html;
+  document.getElementById('setupPad').innerHTML=html;
+}
+
+function handleNum(n){ if(pinInput.length<4){ pinInput+=n; updateAllDots(); } }
+function deleteOne(){ if(pinInput.length>0){ pinInput = pinInput.slice(0,-1); updateAllDots(); } }
+function clearPin(){ pinInput=""; updateAllDots(); }
+function updateAllDots(){
+  document.querySelectorAll('#pinDots .dot').forEach((d,i)=>d.classList.toggle('filled', i<pinInput.length));
+  document.querySelectorAll('#setupDots .dot').forEach((d,i)=>d.classList.toggle('filled', i<pinInput.length));
+}
+
 function verifyBVN(){
   let bvn = document.getElementById('bvnInput').value.trim();
   let name = document.getElementById('bvnName').value.trim();
   let msg = document.getElementById('bvnMsg');
   if(bvn.length!==11){ msg.innerText="BVN must be 11 digits"; msg.style.color="red"; return; }
   if(name.length<3){ msg.innerText="Enter full name"; msg.style.color="red"; return; }
-  // Fake verification - in real app call NIBSS API
   msg.innerText="Verifying BVN..."; msg.style.color="#ff6a00";
   setTimeout(()=>{
     bvnData={bvn, name, verified:true};
     localStorage.setItem("kelly_bvn", JSON.stringify(bvnData));
     document.getElementById('bvnScreen').style.display='none';
     startSetup();
-  },1200);
+  },1000);
 }
 
-// --- SETUP PIN ---
 function startSetup(){
   document.getElementById('bvnScreen').style.display='none';
   document.getElementById('pinScreen').style.display='none';
   document.getElementById('setupPinScreen').style.display='flex';
   setupStep = !loginPin ? "login" : "transfer";
   tempPin=""; pinInput="";
-  document.getElementById('setupTitle').innerText = setupStep==="login" ? "Create Login PIN (4-digit)" : "Create Transfer PIN (4-digit)";
-  updateSetupDots();
+  document.getElementById('setupTitle').innerText = setupStep==="login" ? "Create Login PIN" : "Create Transfer PIN";
+  updateAllDots();
 }
 
-function handleNum(n){
-  let screen = document.getElementById('setupPinScreen').style.display==='flex' ? 'setup' : 'login';
-  if(pinInput.length<4){ pinInput+=n; screen==='setup'?updateSetupDots():updateDots(); }
-}
-function clearPin(){ pinInput=""; updateDots(); updateSetupDots(); }
-function updateDots(){
-  document.querySelectorAll('#pinDots .dot').forEach((d,i)=>d.classList.toggle('filled', i<pinInput.length));
-}
-function updateSetupDots(){
-  document.querySelectorAll('#setupDots .dot').forEach((d,i)=>d.classList.toggle('filled', i<pinInput.length));
-}
 function handleOk(){
   let isSetup = document.getElementById('setupPinScreen').style.display==='flex';
   if(isSetup){
     if(pinInput.length!==4){ alert("Enter 4 digits"); return; }
     if(setupStep==="login" && !tempPin){
-      tempPin=pinInput; pinInput=""; updateSetupDots();
+      tempPin=pinInput; pinInput=""; updateAllDots();
       document.getElementById('setupTitle').innerText="Confirm Login PIN"; return;
     }
     if(setupStep==="login" && tempPin){
-      if(pinInput!==tempPin){ alert("PINs don't match"); pinInput=""; tempPin=""; updateSetupDots(); document.getElementById('setupTitle').innerText="Create Login PIN"; return; }
-      localStorage.setItem("kelly_login_pin", pinInput);
-      loginPin=pinInput; tempPin=""; pinInput=""; 
-      if(!transferPin){ setupStep="transfer"; document.getElementById('setupTitle').innerText="Create Transfer PIN"; updateSetupDots(); return; }
+      if(pinInput!==tempPin){ alert("PINs don't match"); pinInput=""; tempPin=""; updateAllDots(); document.getElementById('setupTitle').innerText="Create Login PIN"; return; }
+      localStorage.setItem("kelly_login_pin", pinInput); loginPin=pinInput; tempPin=""; pinInput="";
+      if(!transferPin){ setupStep="transfer"; document.getElementById('setupTitle').innerText="Create Transfer PIN"; updateAllDots(); return; }
       else { document.getElementById('setupPinScreen').style.display='none'; showLogin(); return; }
     }
     if(setupStep==="transfer" && !tempPin){
-      tempPin=pinInput; pinInput=""; updateSetupDots();
+      tempPin=pinInput; pinInput=""; updateAllDots();
       document.getElementById('setupTitle').innerText="Confirm Transfer PIN"; return;
     }
     if(setupStep==="transfer" && tempPin){
-      if(pinInput!==tempPin){ alert("PINs don't match"); pinInput=""; tempPin=""; updateSetupDots(); document.getElementById('setupTitle').innerText="Create Transfer PIN"; return; }
-      localStorage.setItem("kelly_transfer_pin", pinInput);
-      transferPin=pinInput;
+      if(pinInput!==tempPin){ alert("PINs don't match"); pinInput=""; tempPin=""; updateAllDots(); document.getElementById('setupTitle').innerText="Create Transfer PIN"; return; }
+      localStorage.setItem("kelly_transfer_pin", pinInput); transferPin=pinInput;
       document.getElementById('setupPinScreen').style.display='none'; showLogin();
     }
-  } else {
-    submitPin();
-  }
+  } else { submitPin(); }
 }
 
 function showLogin(){
   document.getElementById('pinScreen').style.display='flex';
   document.getElementById('mainApp').style.display='none';
-  pinInput=""; updateDots();
+  pinInput=""; updateAllDots();
+  stopIdleTimer(); // Stop timer on login screen
 }
 
 function submitPin(){
   if(pinInput===loginPin){
     document.getElementById('pinScreen').style.display='none';
     document.getElementById('mainApp').style.display='block';
-    pinInput=""; updateDots();
-  } else {
-    alert("Wrong Login PIN"); clearPin();
-  }
+    pinInput=""; updateAllDots();
+    startIdleTimer(); // START AUTO-LOGOUT
+  } else { alert("Wrong Login PIN"); clearPin(); }
 }
-function lockApp(){ showLogin(); }
 
-function openBox(id){ closeBoxes(); document.getElementById(id).style.display='block'; }
+function lockApp(){ showLogin(); }
+function openBox(id){ closeBoxes(); document.getElementById(id).style.display='block'; resetIdleTimer(); }
 function closeBoxes(){ document.getElementById('transferBox').style.display='none'; document.getElementById('receipt').style.display='none'; }
 
-// --- TRANSFER WITH REMARK + TRANSFER PIN ---
 function doTransfer(){
   let to = document.getElementById('sendTo').value.trim();
   let amt = parseFloat(document.getElementById('sendAmount').value);
   let remark = document.getElementById('sendRemark').value.trim() || "No remark";
   let tPin = document.getElementById('transferPinInput').value.trim();
-
   if(!to || !amt){ alert("Fill account and amount"); return; }
   if(tPin.length!==4){ alert("Enter Transfer PIN"); return; }
   if(tPin!==transferPin){ alert("Wrong Transfer PIN!"); return; }
   if(amt>balance){ alert("Insufficient balance"); return; }
-
-  balance-=amt;
-  localStorage.setItem("kelly_balance", balance);
-  updateBalanceUI();
-
+  balance-=amt; localStorage.setItem("kelly_balance", balance); updateBalanceUI();
   document.getElementById('rTo').innerText="To: "+to;
   document.getElementById('rAmount').innerText="Amount: ₦"+amt.toLocaleString();
   document.getElementById('rRemark').innerText="Remark: "+remark;
   document.getElementById('rDate').innerText="Date: "+new Date().toLocaleString();
-  document.getElementById('rPin').innerText="Transfer PIN: **** (Verified)";
-
-  closeBoxes();
-  document.getElementById('receipt').style.display='block';
-  
-  // Clear fields
+  closeBoxes(); document.getElementById('receipt').style.display='block';
   document.getElementById('sendTo').value=""; document.getElementById('sendAmount').value=""; document.getElementById('sendRemark').value=""; document.getElementById('transferPinInput').value="";
-  localStorage.setItem("last_tx", JSON.stringify({to, amt, remark, date:new Date().toISOString()}));
+  resetIdleTimer();
 }
 
-async function shareApp(){
-  let url=window.location.href;
-  if(navigator.share){ await navigator.share({title:'KellyBank', text:'Join KellyBank - fast & secure', url}); }
-  else { alert(url); }
+async function shareApp(){ if(navigator.share){ await navigator.share({title:'KellyBank', text:'Join KellyBank', url:window.location.href}); } }
+async function shareReceipt(){ let text=document.getElementById('receipt').innerText; if(navigator.share){ await navigator.share({title:'KellyBank Receipt', text}); } }
+function resetApp(){ if(confirm("Reset KellyBank? Clears BVN & PINs")){ localStorage.clear(); location.reload(); } }
+
+// --- AUTO LOGOUT LOGIC ---
+function startIdleTimer(){
+  stopIdleTimer();
+  let remaining = idleSeconds;
+  document.getElementById('idleWarning').style.display='block';
+  
+  countdownTimer = setInterval(()=>{
+    remaining--;
+    document.getElementById('countdown').innerText = remaining;
+    if(remaining <= 10){
+      document.getElementById('idleWarning').style.background = 'red';
+    }
+  },1000);
+
+  logoutTimer = setTimeout(()=>{
+    alert("KellyBank locked due to inactivity (60s)");
+    lockApp();
+  }, idleSeconds * 1000);
 }
-async function shareReceipt(){
-  let text=document.getElementById('receipt').innerText;
-  if(navigator.share){ await navigator.share({title:'KellyBank Receipt', text}); }
-  else { navigator.clipboard.writeText(text); alert("Receipt copied!"); }
+
+function resetIdleTimer(){
+  if(document.getElementById('mainApp').style.display==='block'){
+    startIdleTimer();
+  }
 }
-function resetApp(){ if(confirm("Reset KellyBank? This clears BVN & PINs")){ localStorage.clear(); location.reload(); } }
+
+function stopIdleTimer(){
+  clearTimeout(logoutTimer);
+  clearInterval(countdownTimer);
+  document.getElementById('idleWarning').style.display='none';
+  document.getElementById('idleWarning').style.background = '#ff6a00';
+}
+
+// Reset timer on any activity
+['click','touchstart','keydown','mousemove'].forEach(e=>{
+  document.addEventListener(e, resetIdleTimer);
+});
 </script>
 </body>
 </html>
