@@ -8,170 +8,288 @@
 <meta name="theme-color" content="#ff6a00">
 <link rel="icon" href="logo.png">
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:Inter, sans-serif}
-  body{background:#0f0f0f;color:#fff;min-height:100vh;padding:15px}
-  .app{max-width:400px;margin:auto;background:#1a1a1a;border-radius:25px;padding:20px;border:1px solid #333}
-  .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-  .logo{width:40px;height:40px;background:#ff6a00;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900}
-  .balance-card{background:linear-gradient(135deg,#ff6a00,#ff8c42);border-radius:20px;padding:20px;margin-bottom:20px}
-  .balance-card h2{font-size:14px;opacity:0.9}
-  .balance-card h1{font-size:32px;margin:10px 0}
-  .actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px}
-  .action-btn{background:#2a2a2a;border:none;color:#fff;padding:15px;border-radius:15px;cursor:pointer}
-  .action-btn:hover{background:#333}
-  .pin-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;display:flex;align-items:center;justify-content:center;z-index:100}
-  .pin-box{background:#1a1a1a;padding:30px;border-radius:20px;text-align:center;width:90%;max-width:350px}
-  .pin-dots{display:flex;gap:10px;justify-content:center;margin:20px 0}
-  .dot{width:15px;height:15px;border-radius:50%;border:2px solid #ff6a00}
-  .dot.filled{background:#ff6a00}
-  .numpad{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-  .num-btn{background:#2a2a2a;border:none;color:#fff;font-size:20px;padding:20px;border-radius:15px;cursor:pointer}
-  .receipt{background:#fff;color:#000;padding:20px;border-radius:15px;margin-top:20px;display:none}
-  .btn-primary{background:#ff6a00;color:#fff;border:none;padding:12px 20px;border-radius:10px;width:100%;cursor:pointer;font-weight:700;margin-top:10px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
+body{background:#0f0f0f;color:#fff;min-height:100vh;padding:15px}
+.app{max-width:400px;margin:auto;background:#1a1a1a;border-radius:25px;padding:20px;border:1px solid #333;display:none}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.logo{width:42px;height:42px;background:#ff6a00;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px}
+.balance-card{background:linear-gradient(135deg,#ff6a00,#ff8c42);border-radius:20px;padding:20px;margin-bottom:18px}
+.balance-card h1{font-size:30px;margin:8px 0}
+.actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px}
+.action-btn{background:#2a2a2a;border:none;color:#fff;padding:14px;border-radius:14px;cursor:pointer;font-size:13px}
+.box{background:#2a2a2a;padding:15px;border-radius:15px;margin-bottom:15px;display:none}
+input{width:100%;padding:12px;border-radius:10px;border:none;margin:8px 0;background:#1a1a1a;color:#fff;border:1px solid #333}
+.btn-primary{background:#ff6a00;color:#fff;border:none;padding:13px;border-radius:12px;width:100%;cursor:pointer;font-weight:800;margin-top:10px}
+.pin-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;display:flex;align-items:center;justify-content:center;z-index:100;padding:15px}
+.pin-box{background:#1a1a1a;padding:25px;border-radius:20px;text-align:center;width:100%;max-width:360px;border:1px solid #333}
+.pin-dots{display:flex;gap:10px;justify-content:center;margin:18px 0}
+.dot{width:14px;height:14px;border-radius:50%;border:2px solid #ff6a00}
+.dot.filled{background:#ff6a00}
+.numpad{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.num-btn{background:#2a2a2a;border:none;color:#fff;font-size:20px;padding:18px;border-radius:12px;cursor:pointer}
+.receipt{background:#fff;color:#000;padding:18px;border-radius:15px;margin-top:15px;display:none}
+.badge{font-size:11px;padding:4px 8px;border-radius:20px;background:#2a2a2a;color:#ff6a00}
+.verified{color:#00ff88}
 </style>
 </head>
 <body>
 
-<!-- PIN SCREEN - Lesson 11 -->
-<div id="pinScreen" class="pin-screen">
+<!-- 1. BVN VERIFICATION SCREEN -->
+<div id="bvnScreen" class="pin-screen" style="display:none">
   <div class="pin-box">
-    <h2>Enter KellyBank PIN</h2>
-    <div class="pin-dots" id="pinDots">
-      <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-    </div>
-    <div class="numpad">
-      <button class="num-btn" onclick="enterPin('1')">1</button>
-      <button class="num-btn" onclick="enterPin('2')">2</button>
-      <button class="num-btn" onclick="enterPin('3')">3</button>
-      <button class="num-btn" onclick="enterPin('4')">4</button>
-      <button class="num-btn" onclick="enterPin('5')">5</button>
-      <button class="num-btn" onclick="enterPin('6')">6</button>
-      <button class="num-btn" onclick="enterPin('7')">7</button>
-      <button class="num-btn" onclick="enterPin('8')">8</button>
-      <button class="num-btn" onclick="enterPin('9')">9</button>
-      <button class="num-btn" onclick="clearPin()">C</button>
-      <button class="num-btn" onclick="enterPin('0')">0</button>
-      <button class="num-btn" onclick="submitPin()">✓</button>
-    </div>
-    <p style="margin-top:15px;font-size:12px;color:#888">Default PIN: 1234</p>
+    <h2>Verify Your BVN</h2>
+    <p style="font-size:13px;color:#888;margin:10px 0">CBN requires BVN for KellyBank</p>
+    <input id="bvnInput" type="number" placeholder="Enter 11-digit BVN" maxlength="11">
+    <input id="bvnName" placeholder="Full Name as on BVN">
+    <button class="btn-primary" onclick="verifyBVN()">Verify BVN</button>
+    <p id="bvnMsg" style="margin-top:10px;font-size:12px"></p>
   </div>
 </div>
 
-<div class="app" id="mainApp" style="display:none">
+<!-- 2. SETUP PIN SCREENS -->
+<div id="setupPinScreen" class="pin-screen" style="display:none">
+  <div class="pin-box">
+    <h2 id="setupTitle">Create Login PIN</h2>
+    <div class="pin-dots" id="setupDots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="numpad" id="setupPad"></div>
+  </div>
+</div>
+
+<!-- 3. LOGIN PIN SCREEN -->
+<div id="pinScreen" class="pin-screen">
+  <div class="pin-box">
+    <h2>Welcome Back</h2>
+    <small id="userDisplay" style="color:#888"></small>
+    <div class="pin-dots" id="pinDots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="numpad" id="loginPad"></div>
+    <p style="margin-top:12px;font-size:11px;color:#666" onclick="resetApp()">Reset App? Click here</p>
+  </div>
+</div>
+
+<!-- 4. MAIN APP -->
+<div class="app" id="mainApp">
   <div class="header">
     <div style="display:flex;align-items:center;gap:10px">
       <div class="logo">K</div>
-      <div><h3>KellyBank</h3><small style="color:#888">CEO Account</small></div>
+      <div><h3>KellyBank</h3><small id="bvnStatus" class="badge">BVN ✓</small></div>
     </div>
-    <button onclick="lockApp()" style="background:none;border:none;color:#fff">🔒</button>
+    <button onclick="lockApp()" style="background:none;border:none;color:#fff;font-size:20px">🔒</button>
   </div>
 
   <div class="balance-card">
-    <h2>Available Balance</h2>
-    <h1 id="balance">₦250,000.00</h1>
-    <small id="acctNo">KellyBank • 9012 3456 7890</small>
+    <h2 style="font-size:12px;opacity:0.9">Available Balance • <span id="acctNo">9012 3456 78</span></h2>
+    <h1 id="balance">₦0.00</h1>
+    <small id="bvnNameDisplay">-</small>
   </div>
 
   <div class="actions">
-    <button class="action-btn" onclick="showTransfer()">💸<br>Transfer</button>
+    <button class="action-btn" onclick="openBox('transferBox')">💸<br>Transfer</button>
     <button class="action-btn" onclick="shareApp()">📤<br>Share</button>
-    <button class="action-btn" onclick="showReceipt()">🧾<br>Receipt</button>
+    <button class="action-btn" onclick="openBox('receipt')">🧾<br>History</button>
   </div>
 
-  <!-- Transfer -->
-  <div id="transferBox" style="display:none;background:#2a2a2a;padding:15px;border-radius:15px">
+  <!-- TRANSFER BOX WITH REMARK + TRANSFER PIN -->
+  <div id="transferBox" class="box">
     <h4>Send Money</h4>
-    <input id="sendTo" placeholder="Account Number" style="width:100%;padding:10px;border-radius:8px;border:none;margin:10px 0">
-    <input id="sendAmount" type="number" placeholder="Amount" style="width:100%;padding:10px;border-radius:8px;border:none">
+    <input id="sendTo" placeholder="Recipient Account / KellyTag">
+    <input id="sendAmount" type="number" placeholder="Amount ₦">
+    <input id="sendRemark" placeholder="Remark e.g. Rent, Food, Thanks">
+    <hr style="margin:12px 0;border:1px solid #333">
+    <p style="font-size:12px;color:#ff6a00">Enter Transfer PIN to confirm</p>
+    <input id="transferPinInput" type="password" placeholder="Transfer PIN (4-digit)" maxlength="4">
     <button class="btn-primary" onclick="doTransfer()">Send Now</button>
+    <button style="background:none;border:none;color:#888;width:100%;margin-top:8px" onclick="closeBoxes()">Cancel</button>
   </div>
 
-  <!-- Receipt with Share - Lesson 11 -->
+  <!-- RECEIPT -->
   <div id="receipt" class="receipt">
     <h3 style="text-align:center">KellyBank Receipt</h3>
     <hr style="margin:10px 0">
-    <p>From: KellyBank 9012 3456 7890</p>
+    <p>From: <span id="rFrom">KellyBank</span></p>
     <p id="rTo">To: -</p>
     <p id="rAmount">Amount: -</p>
+    <p id="rRemark">Remark: -</p>
+    <p id="rPin">Transfer PIN: ****</p>
     <p id="rDate">Date: -</p>
-    <p style="margin-top:10px;color:green;font-weight:bold">Status: SUCCESS</p>
+    <p style="margin-top:10px;color:green;font-weight:bold">Status: SUCCESS ✓</p>
     <button class="btn-primary" onclick="shareReceipt()">Share Receipt 📤</button>
+    <button style="background:#eee;color:#000;border:none;padding:10px;border-radius:10px;width:100%;margin-top:8px" onclick="closeBoxes()">Close</button>
   </div>
 </div>
 
 <script>
-// PWA
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}
 
-// PIN LOGIC - Lesson 11
+// --- STORAGE ---
+let balance = parseFloat(localStorage.getItem("kelly_balance") || "250000");
+let bvnData = JSON.parse(localStorage.getItem("kelly_bvn") || "null");
+let loginPin = localStorage.getItem("kelly_login_pin");
+let transferPin = localStorage.getItem("kelly_transfer_pin");
 let pinInput = "";
-let savedPin = localStorage.getItem("kelly_pin") || "1234";
-let isLogged = false;
+let setupStep = "login"; // login, transfer, confirmLogin, confirmTransfer
+let tempPin = "";
 
-function enterPin(n){
-  if(pinInput.length < 4){ pinInput += n; updateDots(); }
+// --- INIT ---
+window.onload = ()=>{
+  if(!bvnData){
+    document.getElementById('bvnScreen').style.display='flex';
+    document.getElementById('pinScreen').style.display='none';
+  } else if(!loginPin || !transferPin){
+    startSetup();
+  } else {
+    showLogin();
+  }
+  buildPads();
+  updateBalanceUI();
 }
-function clearPin(){ pinInput=""; updateDots(); }
+
+function buildPads(){
+  let html = "";
+  for(let i=1;i<=9;i++) html+=`<button class="num-btn" onclick="handleNum('${i}')">${i}</button>`;
+  html+=`<button class="num-btn" onclick="clearPin()">C</button><button class="num-btn" onclick="handleNum('0')">0</button><button class="num-btn" onclick="handleOk()">✓</button>`;
+  document.getElementById('loginPad').innerHTML=html;
+  document.getElementById('setupPad').innerHTML=html;
+}
+
+function updateBalanceUI(){
+  document.getElementById('balance').innerText="₦"+balance.toLocaleString()+".00";
+  if(bvnData){
+    document.getElementById('bvnNameDisplay').innerText=bvnData.name;
+    document.getElementById('userDisplay').innerText=bvnData.name;
+    document.getElementById('rFrom').innerText=bvnData.name+" ("+bvnData.bvn.slice(-4)+")";
+  }
+}
+
+// --- BVN ---
+function verifyBVN(){
+  let bvn = document.getElementById('bvnInput').value.trim();
+  let name = document.getElementById('bvnName').value.trim();
+  let msg = document.getElementById('bvnMsg');
+  if(bvn.length!==11){ msg.innerText="BVN must be 11 digits"; msg.style.color="red"; return; }
+  if(name.length<3){ msg.innerText="Enter full name"; msg.style.color="red"; return; }
+  // Fake verification - in real app call NIBSS API
+  msg.innerText="Verifying BVN..."; msg.style.color="#ff6a00";
+  setTimeout(()=>{
+    bvnData={bvn, name, verified:true};
+    localStorage.setItem("kelly_bvn", JSON.stringify(bvnData));
+    document.getElementById('bvnScreen').style.display='none';
+    startSetup();
+  },1200);
+}
+
+// --- SETUP PIN ---
+function startSetup(){
+  document.getElementById('bvnScreen').style.display='none';
+  document.getElementById('pinScreen').style.display='none';
+  document.getElementById('setupPinScreen').style.display='flex';
+  setupStep = !loginPin ? "login" : "transfer";
+  tempPin=""; pinInput="";
+  document.getElementById('setupTitle').innerText = setupStep==="login" ? "Create Login PIN (4-digit)" : "Create Transfer PIN (4-digit)";
+  updateSetupDots();
+}
+
+function handleNum(n){
+  let screen = document.getElementById('setupPinScreen').style.display==='flex' ? 'setup' : 'login';
+  if(pinInput.length<4){ pinInput+=n; screen==='setup'?updateSetupDots():updateDots(); }
+}
+function clearPin(){ pinInput=""; updateDots(); updateSetupDots(); }
 function updateDots(){
-  document.querySelectorAll('.dot').forEach((d,i)=>{
-    d.classList.toggle('filled', i < pinInput.length);
-  });
+  document.querySelectorAll('#pinDots .dot').forEach((d,i)=>d.classList.toggle('filled', i<pinInput.length));
 }
+function updateSetupDots(){
+  document.querySelectorAll('#setupDots .dot').forEach((d,i)=>d.classList.toggle('filled', i<pinInput.length));
+}
+function handleOk(){
+  let isSetup = document.getElementById('setupPinScreen').style.display==='flex';
+  if(isSetup){
+    if(pinInput.length!==4){ alert("Enter 4 digits"); return; }
+    if(setupStep==="login" && !tempPin){
+      tempPin=pinInput; pinInput=""; updateSetupDots();
+      document.getElementById('setupTitle').innerText="Confirm Login PIN"; return;
+    }
+    if(setupStep==="login" && tempPin){
+      if(pinInput!==tempPin){ alert("PINs don't match"); pinInput=""; tempPin=""; updateSetupDots(); document.getElementById('setupTitle').innerText="Create Login PIN"; return; }
+      localStorage.setItem("kelly_login_pin", pinInput);
+      loginPin=pinInput; tempPin=""; pinInput=""; 
+      if(!transferPin){ setupStep="transfer"; document.getElementById('setupTitle').innerText="Create Transfer PIN"; updateSetupDots(); return; }
+      else { document.getElementById('setupPinScreen').style.display='none'; showLogin(); return; }
+    }
+    if(setupStep==="transfer" && !tempPin){
+      tempPin=pinInput; pinInput=""; updateSetupDots();
+      document.getElementById('setupTitle').innerText="Confirm Transfer PIN"; return;
+    }
+    if(setupStep==="transfer" && tempPin){
+      if(pinInput!==tempPin){ alert("PINs don't match"); pinInput=""; tempPin=""; updateSetupDots(); document.getElementById('setupTitle').innerText="Create Transfer PIN"; return; }
+      localStorage.setItem("kelly_transfer_pin", pinInput);
+      transferPin=pinInput;
+      document.getElementById('setupPinScreen').style.display='none'; showLogin();
+    }
+  } else {
+    submitPin();
+  }
+}
+
+function showLogin(){
+  document.getElementById('pinScreen').style.display='flex';
+  document.getElementById('mainApp').style.display='none';
+  pinInput=""; updateDots();
+}
+
 function submitPin(){
-  if(pinInput === savedPin){
+  if(pinInput===loginPin){
     document.getElementById('pinScreen').style.display='none';
     document.getElementById('mainApp').style.display='block';
     pinInput=""; updateDots();
   } else {
-    alert("Wrong PIN! Try 1234"); clearPin();
+    alert("Wrong Login PIN"); clearPin();
   }
 }
-function lockApp(){
-  document.getElementById('pinScreen').style.display='flex';
-  document.getElementById('mainApp').style.display='none';
-}
+function lockApp(){ showLogin(); }
 
-// Balance
-let balance = parseFloat(localStorage.getItem("kelly_balance") || "250000");
-document.getElementById('balance').innerText = "₦" + balance.toLocaleString() + ".00";
+function openBox(id){ closeBoxes(); document.getElementById(id).style.display='block'; }
+function closeBoxes(){ document.getElementById('transferBox').style.display='none'; document.getElementById('receipt').style.display='none'; }
 
-function showTransfer(){ document.getElementById('transferBox').style.display='block'; }
-
+// --- TRANSFER WITH REMARK + TRANSFER PIN ---
 function doTransfer(){
-  let to = document.getElementById('sendTo').value;
+  let to = document.getElementById('sendTo').value.trim();
   let amt = parseFloat(document.getElementById('sendAmount').value);
-  if(!to || !amt){ alert("Fill all"); return; }
-  if(amt > balance){ alert("Insufficient"); return; }
-  balance -= amt;
+  let remark = document.getElementById('sendRemark').value.trim() || "No remark";
+  let tPin = document.getElementById('transferPinInput').value.trim();
+
+  if(!to || !amt){ alert("Fill account and amount"); return; }
+  if(tPin.length!==4){ alert("Enter Transfer PIN"); return; }
+  if(tPin!==transferPin){ alert("Wrong Transfer PIN!"); return; }
+  if(amt>balance){ alert("Insufficient balance"); return; }
+
+  balance-=amt;
   localStorage.setItem("kelly_balance", balance);
-  document.getElementById('balance').innerText = "₦" + balance.toLocaleString() + ".00";
-  
-  // Fill receipt
-  document.getElementById('rTo').innerText = "To: " + to;
-  document.getElementById('rAmount').innerText = "Amount: ₦" + amt.toLocaleString();
-  document.getElementById('rDate').innerText = "Date: " + new Date().toLocaleString();
+  updateBalanceUI();
+
+  document.getElementById('rTo').innerText="To: "+to;
+  document.getElementById('rAmount').innerText="Amount: ₦"+amt.toLocaleString();
+  document.getElementById('rRemark').innerText="Remark: "+remark;
+  document.getElementById('rDate').innerText="Date: "+new Date().toLocaleString();
+  document.getElementById('rPin').innerText="Transfer PIN: **** (Verified)";
+
+  closeBoxes();
   document.getElementById('receipt').style.display='block';
-  document.getElementById('transferBox').style.display='none';
+  
+  // Clear fields
+  document.getElementById('sendTo').value=""; document.getElementById('sendAmount').value=""; document.getElementById('sendRemark').value=""; document.getElementById('transferPinInput').value="";
+  localStorage.setItem("last_tx", JSON.stringify({to, amt, remark, date:new Date().toISOString()}));
 }
 
-function showReceipt(){ document.getElementById('receipt').style.display='block'; }
-
-// SHARE - Lesson 11
 async function shareApp(){
-  if(navigator.share){
-    await navigator.share({title:'KellyBank', text:'Use KellyBank for fast transfers', url: window.location.href});
-  } else {
-    alert("Link copied: " + window.location.href);
-  }
+  let url=window.location.href;
+  if(navigator.share){ await navigator.share({title:'KellyBank', text:'Join KellyBank - fast & secure', url}); }
+  else { alert(url); }
 }
 async function shareReceipt(){
-  let text = document.getElementById('receipt').innerText;
-  if(navigator.share){
-    await navigator.share({title:'KellyBank Receipt', text: text});
-  } else {
-    navigator.clipboard.writeText(text); alert("Receipt copied!");
-  }
+  let text=document.getElementById('receipt').innerText;
+  if(navigator.share){ await navigator.share({title:'KellyBank Receipt', text}); }
+  else { navigator.clipboard.writeText(text); alert("Receipt copied!"); }
 }
+function resetApp(){ if(confirm("Reset KellyBank? This clears BVN & PINs")){ localStorage.clear(); location.reload(); } }
 </script>
 </body>
 </html>
