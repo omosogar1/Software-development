@@ -12,7 +12,7 @@ body{background:#121212;color:#fff;min-height:100vh}
 .app{max-width:420px;margin:0 auto;background:#121212;min-height:100vh;padding-bottom:80px;display:none;position:relative}
 .header-top{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:#121212}
 .logo-area{display:flex;align-items:center;gap:10px}
-.logo-circle{width:38px;height:38px;border-radius:50%;border:1.5px solid #ffcc00;display:flex;align-items:center;justify-content:center;background:#1a1a1a}
+.logo-img-header{width:38px;height:38px;border-radius:50%;border:1.5px solid #ffcc00;object-fit:cover;background:#000}
 .balance-card{background:#1e1e1e;border-radius:15px;padding:18px;margin:10px 15px;display:flex;justify-content:space-between;align-items:center;border:1px solid #2a2a2a}
 .add-money{background:#ffcc00;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:800;font-size:11px;cursor:pointer}
 .quick-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:15px}
@@ -30,8 +30,8 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 .btn-secondary{background:#1e1e1e;color:#fff;border:1px solid #333;padding:15px;border-radius:12px;width:100%;cursor:pointer;margin-top:10px}
 .screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#121212;z-index:100;padding:20px;overflow-y:auto;display:none}
 .screen.active{display:flex;flex-direction:column}
-.screen-inner{max-width:420px;width:100%;margin:0 auto;padding-top:20px}
-.logo-big{width:80px;height:80px;background:#ffcc00;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:36px;color:#000;margin:0 auto 15px auto}
+.screen-inner{max-width:420px;width:100%;margin:0 auto;padding-top:20px;text-align:center}
+.logo-img-big{width:90px;height:90px;border-radius:50%;border:2px solid #ffcc00;object-fit:cover;margin:0 auto 15px auto;display:block;background:#000}
 .title{font-size:24px;font-weight:800;text-align:center;margin-bottom:8px;color:#ffcc00}
 .subtitle{font-size:14px;color:#888;text-align:center;margin-bottom:20px}
 .pin-dots{display:flex;gap:12px;justify-content:center;margin:20px 0}
@@ -40,8 +40,8 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 .numpad{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:15px}
 .num-btn{background:#1e1e1e;border:1px solid #2a2a2a;color:#fff;font-size:22px;padding:18px;border-radius:14px;cursor:pointer}
 .num-btn.del{background:#2a1a1a}
-.num-btn.ok{background:#ffcc00;color:#000}
-.box{background:#1e1e1e;padding:15px;border-radius:15px;margin-bottom:15px;display:none;border:1px solid #2a2a2a}
+.num-btn.ok{background:#ffcc00;color:#000;font-weight:800}
+.box{background:#1e1e1e;padding:15px;border-radius:15px;margin-bottom:15px;display:none;border:1px solid #2a2a2a;text-align:left}
 #idleWarning{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#ffcc00;color:#000;padding:8px 15px;border-radius:20px;font-size:12px;display:none;z-index:200;font-weight:700}
 </style>
 </head>
@@ -49,24 +49,26 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 
 <div id="idleWarning">Auto-lock V26.9 <span id="countdown">60</span>s</div>
 
+<!-- WELCOME SCREEN - NO BVN -->
 <div id="welcomeScreen" class="screen active">
   <div class="screen-inner">
-    <div class="logo-big">K</div>
+    <img src="logo.png?v=26.9" class="logo-img-big" alt="Kelly Bank Logo">
     <div class="title">Kelly Bank V26.9</div>
     <div class="subtitle">Original Design Restored</div>
     <div style="margin-top:30px">
       <button class="btn-primary" onclick="goToLogin()">Login</button>
       <button class="btn-secondary" onclick="goToRegister()">Create New Account</button>
-      <p style="text-align:center;color:#555;font-size:11px;margin-top:20px">V26.9 • Original UI • Tier Inside</p>
+      <p style="text-align:center;color:#555;font-size:11px;margin-top:20px">V26.9 • Original Logo • Tier Inside • 60s Lock</p>
     </div>
   </div>
 </div>
 
+<!-- REGISTER - NO BVN -->
 <div id="registerScreen" class="screen">
   <div class="screen-inner">
-    <div class="logo-big">K</div>
+    <img src="logo.png?v=26.9" class="logo-img-big" alt="Kelly Bank Logo">
     <div class="title">Create Account</div>
-    <div class="subtitle">V26.9 - Tier 1</div>
+    <div class="subtitle">Tier 1 - No BVN needed</div>
     <input id="regName" placeholder="Full Name e.g Kelly Osaro">
     <input id="regPhone" type="tel" placeholder="Phone Number">
     <button class="btn-primary" onclick="startPinSetup()">Continue</button>
@@ -74,31 +76,35 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
   </div>
 </div>
 
+<!-- PIN SETUP WITH DELETE KEY -->
 <div id="setupPinScreen" class="screen">
   <div class="screen-inner">
-    <div class="logo-big">K</div>
+    <img src="logo.png?v=26.9" class="logo-img-big" alt="Kelly Bank Logo">
     <div class="title" id="setupTitle">Create Login PIN</div>
-    <div class="subtitle" id="setupSub">V26.9 - 4 digits with ⌫ delete</div>
+    <div class="subtitle" id="setupSub">V26.9 - With ⌫ delete key</div>
     <div class="pin-dots" id="setupDots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="numpad" id="setupPad"></div>
+    <p style="text-align:center;color:#666;font-size:11px;margin-top:10px">⌫ = Delete one digit</p>
   </div>
 </div>
 
+<!-- LOGIN WITH DELETE KEY -->
 <div id="pinScreen" class="screen">
   <div class="screen-inner">
-    <div class="logo-big">K</div>
+    <img src="logo.png?v=26.9" class="logo-img-big" alt="Kelly Bank Logo">
     <div class="title">Login V26.9</div>
     <div class="subtitle" id="userDisplay">Enter PIN</div>
     <div class="pin-dots" id="pinDots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="numpad" id="loginPad"></div>
-    <p style="text-align:center;color:#888;font-size:12px;margin-top:15px" onclick="showScreen('welcomeScreen')">← Back</p>
+    <p style="text-align:center;color:#888;font-size:12px;margin-top:15px;cursor:pointer" onclick="showScreen('welcomeScreen')">← Back to Welcome</p>
   </div>
 </div>
 
+<!-- MAIN APP - ORIGINAL DESIGN -->
 <div class="app" id="mainApp">
   <div class="header-top">
     <div class="logo-area">
-      <div class="logo-circle">🛡️</div>
+      <img src="logo.png?v=26.9" class="logo-img-header" alt="Kelly Bank">
       <span style="color:#ffcc00;font-weight:700">Kelly Bank</span>
     </div>
     <span onclick="lockApp()" style="color:#ffcc00;font-size:12px;cursor:pointer">Logout</span>
@@ -127,12 +133,12 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
     <div class="trans-item"><div><b style="font-size:12px">BEDC Electricity</b><br><small style="color:#666">Meter 5419*</small></div><b style="font-size:12px">₦10000</b></div>
     <div class="trans-item"><div><b style="font-size:12px">Access Bank</b><br><small style="color:#666">00876 21</small></div><b style="font-size:12px">₦25000</b></div>
     <div class="trans-item"><div><b style="font-size:12px">9TBank - Salary</b><br><small style="color:#0f0">Incoming • Credit</small></div><b style="font-size:12px;color:#0f0">+₦75000</b></div>
-    <div class="trans-item" id="dynamicTrans"></div>
+    <div id="dynamicTrans"></div>
   </div>
 
   <div id="tierBox" class="box">
     <h4 style="color:#ffcc00">Account Tiers V26.9 - BVN Inside</h4>
-    <div class="tier-box"><b>Tier 1 ✓ Active</b><br><small>₦50,000 • No BVN</small></div>
+    <div class="tier-box"><b>Tier 1 ✓ Active</b><br><small>₦50,000 • No BVN needed</small></div>
     <div class="tier-box">
       <b>Tier 2 <span id="tier2Status">- Locked</span></b><br><small>₦200,000 • BVN Required</small>
       <div id="bvnUpgradeForm" style="margin-top:10px">
@@ -142,18 +148,18 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
       </div>
     </div>
     <div class="tier-box" style="opacity:0.5"><b>Tier 3 - Locked</b><br><small>₦5M • NIN + BVN</small></div>
-    <button style="background:none;border:none;color:#888;width:100%;margin-top:8px" onclick="closeBoxes()">Close</button>
+    <button style="background:none;border:none;color:#888;width:100%;margin-top:8px;cursor:pointer" onclick="closeBoxes()">Close</button>
   </div>
 
   <div id="transferBox" class="box">
     <h4 style="color:#ffcc00">Transfer V26.9</h4>
     <input id="sendTo" placeholder="Recipient Account">
     <input id="sendAmount" type="number" placeholder="Amount ₦">
-    <input id="sendRemark" placeholder="Remark">
+    <input id="sendRemark" placeholder="Remark e.g Food">
     <p style="font-size:11px;color:#ffcc00;margin-top:8px">Transfer PIN (4-digit)</p>
     <input id="transferPinInput" type="password" placeholder="Transfer PIN" maxlength="4">
     <button class="btn-primary" onclick="doTransfer()">Send Now</button>
-    <button style="background:none;border:none;color:#888;width:100%;margin-top:8px" onclick="closeBoxes()">Cancel</button>
+    <button style="background:none;border:none;color:#888;width:100%;margin-top:8px;cursor:pointer" onclick="closeBoxes()">Cancel</button>
   </div>
 
   <div id="receipt" class="box" style="background:#fff;color:#000">
@@ -182,17 +188,23 @@ let transferPin = localStorage.getItem("kelly_transfer_pin_v269");
 let pinInput = ""; let tempPin = ""; let setupStep = "login"; let showBal = false;
 let logoutTimer; let countdownTimer; let idleSeconds = 60;
 let tier = localStorage.getItem("kelly_tier_v269") || "1";
+
 window.onload = ()=>{
   buildPads(); updateBalanceUI();
   if(userData && loginPin){ showScreen('pinScreen'); } else { showScreen('welcomeScreen'); }
+  if(new URLSearchParams(window.location.search).has('clear')){ localStorage.clear(); location.href=location.pathname+'?v=26.9'; }
 }
-function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); document.getElementById('mainApp').style.display='none'; }
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('mainApp').style.display='none';
+}
 function goToLogin(){ if(!userData || !loginPin){ alert("No account. Create account first"); showScreen('registerScreen'); return; } showScreen('pinScreen'); }
 function goToRegister(){ showScreen('registerScreen'); }
 function toggleBalance(){ showBal=!showBal; updateBalanceUI(); }
 function updateBalanceUI(){
-  document.getElementById('balance').innerText = showBal ? "₦"+balance.toLocaleString() : "••••••••";
-  if(userData){ document.getElementById('welcomeName').innerText="Welcome "+userData.name; document.getElementById('rFrom').innerText="From: "+userData.name; document.getElementById('userDisplay').innerText="Hello "+userData.name; }
+  document.getElementById('balance').innerText = showBal ? balance.toLocaleString() : "••••••••";
+  if(userData){ document.getElementById('welcomeName').innerText="Welcome "+userData.name; document.getElementById('rFrom').innerText="From: "+userData.name; document.getElementById('userDisplay').innerText="Hello "+userData.name+" - Enter PIN"; }
   document.getElementById('tierBadge').innerText = tier==="1" ? "Tier 1 • ₦50k Limit" : "Tier 2 • ₦200k Limit";
   if(tier==="2"){ document.getElementById('tier2Status').innerText="✓ Verified"; document.getElementById('tier2Status').style.color="#0f0"; document.getElementById('bvnUpgradeForm').style.display='none'; }
 }
@@ -249,7 +261,7 @@ function doTransfer(){
   if(tPin!==transferPin){ alert("Wrong Transfer PIN"); return; } if(amt>balance){ alert("Insufficient"); return; }
   balance-=amt; localStorage.setItem("kelly_balance_v269", balance); updateBalanceUI();
   document.getElementById('rTo').innerText="To: "+to; document.getElementById('rAmount').innerText="Amount: ₦"+amt.toLocaleString(); document.getElementById('rRemark').innerText="Remark: "+remark; document.getElementById('rDate').innerText="Date: "+new Date().toLocaleString();
-  document.getElementById('dynamicTrans').innerHTML = `<div><b style="font-size:12px">${to}</b><br><small style="color:#666">${remark}</small></div><b style="font-size:12px">₦${amt.toLocaleString()}</b>`;
+  document.getElementById('dynamicTrans').innerHTML = `<div class="trans-item"><div><b style="font-size:12px">${to}</b><br><small style="color:#666">${remark}</small></div><b style="font-size:12px">₦${amt.toLocaleString()}</b></div>`;
   closeBoxes(); document.getElementById('receipt').style.display='block';
   document.getElementById('sendTo').value=""; document.getElementById('sendAmount').value=""; document.getElementById('sendRemark').value=""; document.getElementById('transferPinInput').value=""; resetIdleTimer();
 }
