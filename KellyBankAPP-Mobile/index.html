@@ -18,11 +18,12 @@ body{background:#121212;color:#fff;min-height:100vh}
 .box{background:#1e1e1e;padding:15px;border-radius:15px;margin-bottom:15px;display:none;border:1px solid #2a2a2a}
 input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e;color:#fff;border:1px solid #333;font-size:16px}
 .btn-primary{background:#ff6a00;color:#fff;border:none;padding:15px;border-radius:12px;width:100%;cursor:pointer;font-weight:800;margin-top:10px;font-size:15px}
+.btn-secondary{background:#1e1e1e;color:#fff;border:1px solid #333;padding:15px;border-radius:12px;width:100%;cursor:pointer;font-weight:700;margin-top:10px;font-size:15px}
 .screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#121212;z-index:100;padding:20px;overflow-y:auto;display:none}
 .screen.active{display:flex;flex-direction:column}
 .screen-inner{max-width:400px;width:100%;margin:0 auto;padding-top:30px}
-.logo-big{width:70px;height:70px;background:#ff6a00;border-radius:20px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:32px;margin:0 auto 20px auto}
-.title{font-size:24px;font-weight:800;text-align:center;margin-bottom:8px}
+.logo-big{width:80px;height:80px;background:#ff6a00;border-radius:22px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:36px;margin:0 auto 20px auto}
+.title{font-size:26px;font-weight:800;text-align:center;margin-bottom:8px}
 .subtitle{font-size:14px;color:#888;text-align:center;margin-bottom:25px}
 .pin-dots{display:flex;gap:12px;justify-content:center;margin:20px 0}
 .dot{width:16px;height:16px;border-radius:50%;border:2px solid #333}
@@ -40,39 +41,61 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 
 <div id="idleWarning">Auto-lock V26 in <span id="countdown">60</span>s</div>
 
-<div id="bvnScreen" class="screen">
+<!-- WELCOME SCREEN - FIRST TIME -->
+<div id="welcomeScreen" class="screen active">
   <div class="screen-inner">
     <div class="logo-big">K</div>
     <div class="title">KellyBank V26</div>
-    <div class="subtitle">Verify BVN once - Secure banking</div>
-    <input id="bvnInput" type="number" placeholder="Enter 11-digit BVN">
-    <input id="bvnName" placeholder="Full Name as on BVN">
-    <button class="btn-primary" onclick="verifyBVN()">Verify BVN & Continue</button>
-    <p id="bvnMsg" style="margin-top:12px;font-size:13px;text-align:center"></p>
+    <div class="subtitle">Your Money, Your Bank - Secure & Fast</div>
+    <div style="margin-top:40px">
+      <button class="btn-primary" onclick="goToLogin()">Login to Account</button>
+      <button class="btn-secondary" onclick="goToRegister()">Create New Account</button>
+      <p style="margin-top:20px;font-size:11px;color:#555;text-align:center">V26 • CBN Secured • Auto-lock 60s</p>
+    </div>
   </div>
 </div>
 
+<!-- REGISTER SCREEN - BVN IS INSIDE HERE -->
+<div id="registerScreen" class="screen">
+  <div class="screen-inner">
+    <div class="logo-big">K</div>
+    <div class="title">Create Account V26</div>
+    <div class="subtitle">BVN verification required</div>
+    <input id="regName" placeholder="Full Name">
+    <input id="regPhone" type="number" placeholder="Phone Number">
+    <input id="bvnInput" type="number" placeholder="11-digit BVN">
+    <button class="btn-primary" onclick="verifyBVNAndNext()">Verify BVN & Continue</button>
+    <p id="bvnMsg" style="margin-top:12px;font-size:13px;text-align:center"></p>
+    <button class="btn-secondary" onclick="showScreen('welcomeScreen')">Back to Login</button>
+  </div>
+</div>
+
+<!-- SETUP PIN SCREEN -->
 <div id="setupPinScreen" class="screen">
   <div class="screen-inner">
     <div class="logo-big">K</div>
-    <div class="title" id="setupTitle">Create Login PIN</div>
-    <div class="subtitle" id="setupSub">V26 - This unlocks your app</div>
+    <div class="title" id="setupTitle">Create Login PIN V26</div>
+    <div class="subtitle" id="setupSub">4-digit PIN to unlock app</div>
     <div class="pin-dots" id="setupDots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="numpad" id="setupPad"></div>
+    <p style="text-align:center;color:#666;font-size:11px;margin-top:10px">⌫ Delete</p>
   </div>
 </div>
 
+<!-- LOGIN PIN SCREEN -->
 <div id="pinScreen" class="screen">
   <div class="screen-inner">
     <div class="logo-big">K</div>
-    <div class="title">KellyBank V26</div>
-    <div class="subtitle" id="userDisplay">Enter PIN</div>
+    <div class="title">Welcome Back</div>
+    <div class="subtitle" id="userDisplay">Enter PIN to Login V26</div>
     <div class="pin-dots" id="pinDots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="numpad" id="loginPad"></div>
-    <p style="margin-top:20px;font-size:12px;color:#666;text-align:center" onclick="resetApp()">Reset App V26</p>
+    <p style="margin-top:15px;text-align:center;color:#888;font-size:12px" onclick="showScreen('welcomeScreen')">← Back to Welcome</p>
+    <p style="margin-top:10px;text-align:center;color:#666;font-size:11px" onclick="resetApp()">Reset App</p>
   </div>
 </div>
 
+<!-- MAIN APP -->
 <div class="app" id="mainApp">
   <div class="header">
     <div style="display:flex;align-items:center;gap:10px">
@@ -84,7 +107,7 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
   <div class="balance-card">
     <h2 style="font-size:12px;opacity:0.9">Available Balance V26</h2>
     <h1 id="balance">₦0.00</h1>
-    <small id="bvnNameDisplay">-</small> • <small id="acctNo">9012 3456 78</small>
+    <small id="bvnNameDisplay">-</small>
   </div>
   <div class="actions">
     <button class="action-btn" onclick="openBox('transferBox')">💸<br>Transfer</button>
@@ -92,12 +115,12 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
     <button class="action-btn" onclick="openBox('receipt')">🧾<br>Receipt</button>
   </div>
   <div id="transferBox" class="box">
-    <h4>Send Money V26</h4>
-    <input id="sendTo" placeholder="Recipient">
+    <h4>Transfer V26</h4>
+    <input id="sendTo" placeholder="Recipient Account">
     <input id="sendAmount" type="number" placeholder="Amount ₦">
     <input id="sendRemark" placeholder="Remark">
     <p style="font-size:12px;color:#ff6a00;margin-top:8px">Transfer PIN</p>
-    <input id="transferPinInput" type="password" placeholder="Transfer PIN" maxlength="4">
+    <input id="transferPinInput" type="password" placeholder="4-digit Transfer PIN" maxlength="4">
     <button class="btn-primary" onclick="doTransfer()">Send Now</button>
     <button style="background:none;border:none;color:#888;width:100%;margin-top:8px" onclick="closeBoxes()">Cancel</button>
   </div>
@@ -113,29 +136,38 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 
 <script>
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?v=26'); }
-let balance = parseFloat(localStorage.getItem("kelly_balance_v26") || localStorage.getItem("kelly_balance") || "250000");
-let bvnData = JSON.parse(localStorage.getItem("kelly_bvn_v26") || localStorage.getItem("kelly_bvn") || "null");
-let loginPin = localStorage.getItem("kelly_login_pin_v26") || localStorage.getItem("kelly_login_pin");
-let transferPin = localStorage.getItem("kelly_transfer_pin_v26") || localStorage.getItem("kelly_transfer_pin");
+let balance = parseFloat(localStorage.getItem("kelly_balance_v26") || "250000");
+let bvnData = JSON.parse(localStorage.getItem("kelly_bvn_v26") || "null");
+let loginPin = localStorage.getItem("kelly_login_pin_v26");
+let transferPin = localStorage.getItem("kelly_transfer_pin_v26");
 let pinInput = ""; let tempPin = ""; let setupStep = "login";
 let logoutTimer; let countdownTimer; let idleSeconds = 60;
+let regTemp = {};
 
 window.onload = ()=>{
   buildPads(); updateBalanceUI();
-  if(!bvnData){ showScreen('bvnScreen'); }
-  else if(!loginPin || !transferPin){ startSetup(); }
-  else { showScreen('pinScreen'); }
+  // If already has account, skip welcome and show PIN directly
+  if(bvnData && loginPin){
+    showScreen('pinScreen');
+  } else {
+    showScreen('welcomeScreen');
+  }
 }
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if(id==='pinScreen') document.getElementById('mainApp').style.display='none';
+  document.getElementById('mainApp').style.display='none';
 }
+function goToLogin(){
+  if(!bvnData || !loginPin){ alert("No account found. Please Create New Account first."); showScreen('registerScreen'); return; }
+  showScreen('pinScreen');
+}
+function goToRegister(){ showScreen('registerScreen'); }
 function updateBalanceUI(){
   document.getElementById('balance').innerText="₦"+balance.toLocaleString()+".00";
   if(bvnData){
     document.getElementById('bvnNameDisplay').innerText=bvnData.name;
-    document.getElementById('userDisplay').innerText="Hello "+bvnData.name+" - V26";
+    document.getElementById('userDisplay').innerText="Hello "+bvnData.name+" - Enter PIN";
     document.getElementById('rFrom').innerText="From: "+bvnData.name;
   }
 }
@@ -152,22 +184,26 @@ function updateAllDots(){
   document.querySelectorAll('#pinDots .dot').forEach((d,i)=>d.classList.toggle('filled', i<pinInput.length));
   document.querySelectorAll('#setupDots .dot').forEach((d,i)=>d.classList.toggle('filled', i<pinInput.length));
 }
-function verifyBVN(){
+function verifyBVNAndNext(){
+  let name=document.getElementById('regName').value.trim();
+  let phone=document.getElementById('regPhone').value.trim();
   let bvn=document.getElementById('bvnInput').value.trim();
-  let name=document.getElementById('bvnName').value.trim();
   let msg=document.getElementById('bvnMsg');
-  if(bvn.length!==11){ msg.innerText="BVN must be 11 digits"; msg.style.color="red"; return; }
   if(name.length<3){ msg.innerText="Enter full name"; msg.style.color="red"; return; }
-  msg.innerText="Verifying V26..."; msg.style.color="#ff6a00";
+  if(phone.length<10){ msg.innerText="Enter valid phone"; msg.style.color="red"; return; }
+  if(bvn.length!==11){ msg.innerText="BVN must be 11 digits"; msg.style.color="red"; return; }
+  msg.innerText="Verifying BVN V26..."; msg.style.color="#ff6a00";
   setTimeout(()=>{
-    bvnData={bvn,name,verified:true}; localStorage.setItem("kelly_bvn_v26", JSON.stringify(bvnData));
+    regTemp={name,phone,bvn};
+    bvnData={bvn,name,phone,verified:true};
+    localStorage.setItem("kelly_bvn_v26", JSON.stringify(bvnData));
     startSetup();
-  },600);
+  },800);
 }
 function startSetup(){
-  setupStep=!loginPin?"login":"transfer"; tempPin=""; pinInput="";
-  document.getElementById('setupTitle').innerText=setupStep==="login"?"Create Login PIN V26":"Create Transfer PIN V26";
-  document.getElementById('setupSub').innerText=setupStep==="login"?"Unlocks V26":"Confirms transfers";
+  setupStep="login"; tempPin=""; pinInput="";
+  document.getElementById('setupTitle').innerText="Create Login PIN V26";
+  document.getElementById('setupSub').innerText="Unlocks your app";
   updateAllDots(); showScreen('setupPinScreen');
 }
 function handleOk(){
@@ -178,25 +214,25 @@ function handleOk(){
     if(setupStep==="login" && tempPin){
       if(pinInput!==tempPin){ alert("No match"); pinInput=""; tempPin=""; updateAllDots(); document.getElementById('setupTitle').innerText="Create Login PIN V26"; return; }
       localStorage.setItem("kelly_login_pin_v26", pinInput); loginPin=pinInput; tempPin=""; pinInput="";
-      if(!transferPin){ setupStep="transfer"; document.getElementById('setupTitle').innerText="Create Transfer PIN V26"; document.getElementById('setupSub').innerText="Confirms transfers"; updateAllDots(); return; }
-      else { showScreen('pinScreen'); return; }
+      setupStep="transfer"; document.getElementById('setupTitle').innerText="Create Transfer PIN V26"; document.getElementById('setupSub').innerText="Confirms transfers"; updateAllDots(); return;
     }
     if(setupStep==="transfer" && !tempPin){ tempPin=pinInput; pinInput=""; updateAllDots(); document.getElementById('setupTitle').innerText="Confirm Transfer PIN V26"; return; }
     if(setupStep==="transfer" && tempPin){
       if(pinInput!==tempPin){ alert("No match"); pinInput=""; tempPin=""; updateAllDots(); document.getElementById('setupTitle').innerText="Create Transfer PIN V26"; return; }
-      localStorage.setItem("kelly_transfer_pin_v26", pinInput); transferPin=pinInput; showScreen('pinScreen');
+      localStorage.setItem("kelly_transfer_pin_v26", pinInput); transferPin=pinInput;
+      alert("Account Created Successfully V26! Please Login");
+      showScreen('pinScreen');
     }
   } else { submitPin(); }
 }
-function showLogin(){ showScreen('pinScreen'); pinInput=""; updateAllDots(); stopIdleTimer(); }
 function submitPin(){
   if(pinInput===loginPin){
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.getElementById('mainApp').style.display='block';
-    pinInput=""; updateAllDots(); startIdleTimer();
+    pinInput=""; updateAllDots(); updateBalanceUI(); startIdleTimer();
   } else { alert("Wrong PIN"); pinInput=""; updateAllDots(); }
 }
-function lockApp(){ showLogin(); }
+function lockApp(){ showScreen('pinScreen'); pinInput=""; updateAllDots(); stopIdleTimer(); }
 function openBox(id){ closeBoxes(); document.getElementById(id).style.display='block'; resetIdleTimer(); }
 function closeBoxes(){ document.getElementById('transferBox').style.display='none'; document.getElementById('receipt').style.display='none'; }
 function doTransfer(){
@@ -222,7 +258,7 @@ function resetApp(){ if(confirm("Reset V26?")){ localStorage.clear(); location.r
 function startIdleTimer(){
   stopIdleTimer(); let remaining=idleSeconds; document.getElementById('idleWarning').style.display='block';
   countdownTimer=setInterval(()=>{ remaining--; document.getElementById('countdown').innerText=remaining; if(remaining<=10) document.getElementById('idleWarning').style.background='red'; },1000);
-  logoutTimer=setTimeout(()=>{ alert("V26 Locked - Inactivity 60s"); lockApp(); }, idleSeconds*1000);
+  logoutTimer=setTimeout(()=>{ alert("V26 Locked - Inactivity"); lockApp(); }, idleSeconds*1000);
 }
 function resetIdleTimer(){ if(document.getElementById('mainApp').style.display==='block'){ startIdleTimer(); } }
 function stopIdleTimer(){ clearTimeout(logoutTimer); clearInterval(countdownTimer); document.getElementById('idleWarning').style.display='none'; document.getElementById('idleWarning').style.background='#ff6a00'; }
