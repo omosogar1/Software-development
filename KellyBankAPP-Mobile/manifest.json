@@ -1,25 +1,9 @@
 {
-  "name": "Kelly Bank - Black Diamond v17",
-  "short_name": "Kelly Bank",
-  "description": "The bank of the free - Black Diamond Edition",
-  "start_url": "./index.html?v=17",
+  "name": "Kelly Bank",
+  "short_name": "KellyBank",
+  "start_url": "./index.html?v=25",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#0A2A7A",
-  "scope": "./",
-  "orientation": "portrait",
-  "icons": [
-    {
-      "src": "icon.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
+  "background_color": "#0d0d0d",
+  "theme_color": "#ffcc00",
+  "version": "25"
 }
