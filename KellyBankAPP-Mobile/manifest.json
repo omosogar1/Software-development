@@ -1,11 +1,11 @@
 {
-  "name": "KellyBank V26.9",
-  "short_name": "KellyBank V26.9",
-  "description": "KellyBank V26.9 - Login First, BVN Inside for Tier, Auto-lock 60s, Delete Key",
-  "start_url": "./index.html?v=26.9",
+  "name": "Kelly Bank V26.9",
+  "short_name": "Kelly Bank",
+  "description": "Kelly Bank V26.9 - Original Design Restored, Login First, BVN Inside Tier",
+  "start_url": "./index.html?v=26.9-original",
   "display": "standalone",
   "background_color": "#121212",
-  "theme_color": "#ff6a00",
+  "theme_color": "#ffcc00",
   "orientation": "portrait",
   "icons": [
     {
