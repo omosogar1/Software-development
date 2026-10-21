@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KellyBank</title>
+<title>KellyBank V26</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#ff6a00">
 <style>
-/* FIX FONT - No more funny font */
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif !important}
 body{background:#121212;color:#fff;min-height:100vh}
 .app{max-width:400px;margin:0 auto;background:#121212;min-height:100vh;padding:20px;display:none}
@@ -19,19 +18,17 @@ body{background:#121212;color:#fff;min-height:100vh}
 .box{background:#1e1e1e;padding:15px;border-radius:15px;margin-bottom:15px;display:none;border:1px solid #2a2a2a}
 input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e;color:#fff;border:1px solid #333;font-size:16px}
 .btn-primary{background:#ff6a00;color:#fff;border:none;padding:15px;border-radius:12px;width:100%;cursor:pointer;font-weight:800;margin-top:10px;font-size:15px}
-
-/* NEW LOGIN SCREENS - TOP ALIGNED, PROFESSIONAL */
 .screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#121212;z-index:100;padding:20px;overflow-y:auto;display:none}
-.screen.active{display:block}
-.screen-inner{max-width:400px;margin:0 auto;padding-top:40px}
+.screen.active{display:flex;flex-direction:column}
+.screen-inner{max-width:400px;width:100%;margin:0 auto;padding-top:30px}
 .logo-big{width:70px;height:70px;background:#ff6a00;border-radius:20px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:32px;margin:0 auto 20px auto}
 .title{font-size:24px;font-weight:800;text-align:center;margin-bottom:8px}
-.subtitle{font-size:14px;color:#888;text-align:center;margin-bottom:30px}
-.pin-dots{display:flex;gap:12px;justify-content:center;margin:25px 0}
+.subtitle{font-size:14px;color:#888;text-align:center;margin-bottom:25px}
+.pin-dots{display:flex;gap:12px;justify-content:center;margin:20px 0}
 .dot{width:16px;height:16px;border-radius:50%;border:2px solid #333}
 .dot.filled{background:#ff6a00;border-color:#ff6a00}
-.numpad{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:20px}
-.num-btn{background:#1e1e1e;border:1px solid #2a2a2a;color:#fff;font-size:22px;padding:20px;border-radius:14px;cursor:pointer}
+.numpad{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:15px}
+.num-btn{background:#1e1e1e;border:1px solid #2a2a2a;color:#fff;font-size:22px;padding:18px;border-radius:14px;cursor:pointer}
 .num-btn.del{background:#2a1a1a}
 .num-btn.ok{background:#ff6a00;border-color:#ff6a00}
 .receipt{background:#fff;color:#000;padding:18px;border-radius:15px;margin-top:15px;display:none}
@@ -41,102 +38,85 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 </head>
 <body>
 
-<div id="idleWarning">Auto-lock in <span id="countdown">60</span>s</div>
+<div id="idleWarning">Auto-lock V26 in <span id="countdown">60</span>s</div>
 
-<!-- BVN SCREEN - NOW TOP ALIGNED -->
 <div id="bvnScreen" class="screen">
   <div class="screen-inner">
     <div class="logo-big">K</div>
-    <div class="title">Welcome to KellyBank</div>
-    <div class="subtitle">Secure banking with BVN verification</div>
-    
-    <p style="font-size:13px;color:#aaa;margin-bottom:10px">BVN Verification</p>
-    <input id="bvnInput" type="number" placeholder="Enter 11-digit BVN" inputmode="numeric">
-    <input id="bvnName" placeholder="Full Name (as on BVN)">
+    <div class="title">KellyBank V26</div>
+    <div class="subtitle">Verify BVN once - Secure banking</div>
+    <input id="bvnInput" type="number" placeholder="Enter 11-digit BVN">
+    <input id="bvnName" placeholder="Full Name as on BVN">
     <button class="btn-primary" onclick="verifyBVN()">Verify BVN & Continue</button>
     <p id="bvnMsg" style="margin-top:12px;font-size:13px;text-align:center"></p>
-    <p style="margin-top:30px;font-size:11px;color:#555;text-align:center">Your BVN is secure and encrypted. CBN compliant.</p>
   </div>
 </div>
 
-<!-- SETUP PIN SCREEN - TOP ALIGNED -->
 <div id="setupPinScreen" class="screen">
   <div class="screen-inner">
     <div class="logo-big">K</div>
     <div class="title" id="setupTitle">Create Login PIN</div>
-    <div class="subtitle" id="setupSub">This PIN will unlock your app</div>
+    <div class="subtitle" id="setupSub">V26 - This unlocks your app</div>
     <div class="pin-dots" id="setupDots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="numpad" id="setupPad"></div>
-    <p style="margin-top:15px;font-size:11px;color:#666;text-align:center">⌫ Delete | Long press to clear all</p>
   </div>
 </div>
 
-<!-- LOGIN PIN SCREEN - TOP ALIGNED -->
 <div id="pinScreen" class="screen">
   <div class="screen-inner">
     <div class="logo-big">K</div>
-    <div class="title">Welcome Back</div>
-    <div class="subtitle" id="userDisplay">Enter your PIN to continue</div>
+    <div class="title">KellyBank V26</div>
+    <div class="subtitle" id="userDisplay">Enter PIN</div>
     <div class="pin-dots" id="pinDots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="numpad" id="loginPad"></div>
-    <p style="margin-top:20px;font-size:12px;color:#666;text-align:center" onclick="resetApp()">Forgot PIN? Reset App</p>
+    <p style="margin-top:20px;font-size:12px;color:#666;text-align:center" onclick="resetApp()">Reset App V26</p>
   </div>
 </div>
 
-<!-- MAIN APP -->
 <div class="app" id="mainApp">
   <div class="header">
     <div style="display:flex;align-items:center;gap:10px">
       <div class="logo">K</div>
-      <div><h3>KellyBank</h3><small class="badge">BVN ✓ • 60s Auto-lock</small></div>
+      <div><h3>KellyBank V26</h3><small class="badge">BVN ✓ • Auto-lock 60s</small></div>
     </div>
     <button onclick="lockApp()" style="background:none;border:none;color:#fff;font-size:22px">🔒</button>
   </div>
-
   <div class="balance-card">
-    <h2 style="font-size:12px;opacity:0.9">Available Balance</h2>
+    <h2 style="font-size:12px;opacity:0.9">Available Balance V26</h2>
     <h1 id="balance">₦0.00</h1>
     <small id="bvnNameDisplay">-</small> • <small id="acctNo">9012 3456 78</small>
   </div>
-
   <div class="actions">
     <button class="action-btn" onclick="openBox('transferBox')">💸<br>Transfer</button>
     <button class="action-btn" onclick="shareApp()">📤<br>Share</button>
     <button class="action-btn" onclick="openBox('receipt')">🧾<br>Receipt</button>
   </div>
-
   <div id="transferBox" class="box">
-    <h4>Send Money</h4>
-    <input id="sendTo" placeholder="Recipient Account / KellyTag">
+    <h4>Send Money V26</h4>
+    <input id="sendTo" placeholder="Recipient">
     <input id="sendAmount" type="number" placeholder="Amount ₦">
-    <input id="sendRemark" placeholder="Remark e.g. Food, Rent, Thanks">
-    <hr style="margin:12px 0;border:0.5px solid #333">
-    <p style="font-size:12px;color:#ff6a00">Enter Transfer PIN</p>
-    <input id="transferPinInput" type="password" placeholder="Transfer PIN (4-digit)" maxlength="4">
+    <input id="sendRemark" placeholder="Remark">
+    <p style="font-size:12px;color:#ff6a00;margin-top:8px">Transfer PIN</p>
+    <input id="transferPinInput" type="password" placeholder="Transfer PIN" maxlength="4">
     <button class="btn-primary" onclick="doTransfer()">Send Now</button>
     <button style="background:none;border:none;color:#888;width:100%;margin-top:8px" onclick="closeBoxes()">Cancel</button>
   </div>
-
   <div id="receipt" class="receipt">
-    <h3 style="text-align:center">KellyBank Receipt</h3>
+    <h3 style="text-align:center">KellyBank V26 Receipt</h3>
     <hr style="margin:10px 0">
-    <p>From: <span id="rFrom">KellyBank</span></p>
-    <p id="rTo">To: -</p>
-    <p id="rAmount">Amount: -</p>
-    <p id="rRemark">Remark: -</p>
-    <p id="rDate">Date: -</p>
-    <p style="margin-top:10px;color:green;font-weight:bold">SUCCESS ✓</p>
+    <p id="rFrom">From: -</p><p id="rTo">To: -</p><p id="rAmount">Amount: -</p><p id="rRemark">Remark: -</p><p id="rDate">Date: -</p>
+    <p style="color:green;font-weight:bold">SUCCESS V26 ✓</p>
     <button class="btn-primary" onclick="shareReceipt()">Share Receipt</button>
     <button style="background:#eee;color:#000;border:none;padding:10px;border-radius:10px;width:100%;margin-top:8px" onclick="closeBoxes()">Close</button>
   </div>
 </div>
 
 <script>
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
-let balance = parseFloat(localStorage.getItem("kelly_balance") || "250000");
-let bvnData = JSON.parse(localStorage.getItem("kelly_bvn") || "null");
-let loginPin = localStorage.getItem("kelly_login_pin");
-let transferPin = localStorage.getItem("kelly_transfer_pin");
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?v=26'); }
+let balance = parseFloat(localStorage.getItem("kelly_balance_v26") || localStorage.getItem("kelly_balance") || "250000");
+let bvnData = JSON.parse(localStorage.getItem("kelly_bvn_v26") || localStorage.getItem("kelly_bvn") || "null");
+let loginPin = localStorage.getItem("kelly_login_pin_v26") || localStorage.getItem("kelly_login_pin");
+let transferPin = localStorage.getItem("kelly_transfer_pin_v26") || localStorage.getItem("kelly_transfer_pin");
 let pinInput = ""; let tempPin = ""; let setupStep = "login";
 let logoutTimer; let countdownTimer; let idleSeconds = 60;
 
@@ -155,8 +135,8 @@ function updateBalanceUI(){
   document.getElementById('balance').innerText="₦"+balance.toLocaleString()+".00";
   if(bvnData){
     document.getElementById('bvnNameDisplay').innerText=bvnData.name;
-    document.getElementById('userDisplay').innerText="Hello "+bvnData.name+", enter PIN";
-    document.getElementById('rFrom').innerText=bvnData.name;
+    document.getElementById('userDisplay').innerText="Hello "+bvnData.name+" - V26";
+    document.getElementById('rFrom').innerText="From: "+bvnData.name;
   }
 }
 function buildPads(){
@@ -168,7 +148,6 @@ function buildPads(){
 }
 function handleNum(n){ if(pinInput.length<4){ pinInput+=n; updateAllDots(); } }
 function deleteOne(){ if(pinInput.length>0){ pinInput=pinInput.slice(0,-1); updateAllDots(); } }
-function clearPin(){ pinInput=""; updateAllDots(); }
 function updateAllDots(){
   document.querySelectorAll('#pinDots .dot').forEach((d,i)=>d.classList.toggle('filled', i<pinInput.length));
   document.querySelectorAll('#setupDots .dot').forEach((d,i)=>d.classList.toggle('filled', i<pinInput.length));
@@ -179,33 +158,33 @@ function verifyBVN(){
   let msg=document.getElementById('bvnMsg');
   if(bvn.length!==11){ msg.innerText="BVN must be 11 digits"; msg.style.color="red"; return; }
   if(name.length<3){ msg.innerText="Enter full name"; msg.style.color="red"; return; }
-  msg.innerText="Verifying..."; msg.style.color="#ff6a00";
+  msg.innerText="Verifying V26..."; msg.style.color="#ff6a00";
   setTimeout(()=>{
-    bvnData={bvn,name,verified:true}; localStorage.setItem("kelly_bvn", JSON.stringify(bvnData));
+    bvnData={bvn,name,verified:true}; localStorage.setItem("kelly_bvn_v26", JSON.stringify(bvnData));
     startSetup();
-  },800);
+  },600);
 }
 function startSetup(){
   setupStep=!loginPin?"login":"transfer"; tempPin=""; pinInput="";
-  document.getElementById('setupTitle').innerText=setupStep==="login"?"Create Login PIN":"Create Transfer PIN";
-  document.getElementById('setupSub').innerText=setupStep==="login"?"This unlocks your app":"This confirms transfers";
+  document.getElementById('setupTitle').innerText=setupStep==="login"?"Create Login PIN V26":"Create Transfer PIN V26";
+  document.getElementById('setupSub').innerText=setupStep==="login"?"Unlocks V26":"Confirms transfers";
   updateAllDots(); showScreen('setupPinScreen');
 }
 function handleOk(){
   let isSetup=document.getElementById('setupPinScreen').classList.contains('active');
   if(isSetup){
     if(pinInput.length!==4){ alert("Enter 4 digits"); return; }
-    if(setupStep==="login" && !tempPin){ tempPin=pinInput; pinInput=""; updateAllDots(); document.getElementById('setupTitle').innerText="Confirm Login PIN"; return; }
+    if(setupStep==="login" && !tempPin){ tempPin=pinInput; pinInput=""; updateAllDots(); document.getElementById('setupTitle').innerText="Confirm Login PIN V26"; return; }
     if(setupStep==="login" && tempPin){
-      if(pinInput!==tempPin){ alert("No match"); pinInput=""; tempPin=""; updateAllDots(); document.getElementById('setupTitle').innerText="Create Login PIN"; return; }
-      localStorage.setItem("kelly_login_pin", pinInput); loginPin=pinInput; tempPin=""; pinInput="";
-      if(!transferPin){ setupStep="transfer"; document.getElementById('setupTitle').innerText="Create Transfer PIN"; document.getElementById('setupSub').innerText="This confirms transfers"; updateAllDots(); return; }
+      if(pinInput!==tempPin){ alert("No match"); pinInput=""; tempPin=""; updateAllDots(); document.getElementById('setupTitle').innerText="Create Login PIN V26"; return; }
+      localStorage.setItem("kelly_login_pin_v26", pinInput); loginPin=pinInput; tempPin=""; pinInput="";
+      if(!transferPin){ setupStep="transfer"; document.getElementById('setupTitle').innerText="Create Transfer PIN V26"; document.getElementById('setupSub').innerText="Confirms transfers"; updateAllDots(); return; }
       else { showScreen('pinScreen'); return; }
     }
-    if(setupStep==="transfer" && !tempPin){ tempPin=pinInput; pinInput=""; updateAllDots(); document.getElementById('setupTitle').innerText="Confirm Transfer PIN"; return; }
+    if(setupStep==="transfer" && !tempPin){ tempPin=pinInput; pinInput=""; updateAllDots(); document.getElementById('setupTitle').innerText="Confirm Transfer PIN V26"; return; }
     if(setupStep==="transfer" && tempPin){
-      if(pinInput!==tempPin){ alert("No match"); pinInput=""; tempPin=""; updateAllDots(); document.getElementById('setupTitle').innerText="Create Transfer PIN"; return; }
-      localStorage.setItem("kelly_transfer_pin", pinInput); transferPin=pinInput; showScreen('pinScreen');
+      if(pinInput!==tempPin){ alert("No match"); pinInput=""; tempPin=""; updateAllDots(); document.getElementById('setupTitle').innerText="Create Transfer PIN V26"; return; }
+      localStorage.setItem("kelly_transfer_pin_v26", pinInput); transferPin=pinInput; showScreen('pinScreen');
     }
   } else { submitPin(); }
 }
@@ -215,7 +194,7 @@ function submitPin(){
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.getElementById('mainApp').style.display='block';
     pinInput=""; updateAllDots(); startIdleTimer();
-  } else { alert("Wrong PIN"); clearPin(); }
+  } else { alert("Wrong PIN"); pinInput=""; updateAllDots(); }
 }
 function lockApp(){ showLogin(); }
 function openBox(id){ closeBoxes(); document.getElementById(id).style.display='block'; resetIdleTimer(); }
@@ -228,7 +207,7 @@ function doTransfer(){
   if(!to||!amt){ alert("Fill account and amount"); return; }
   if(tPin!==transferPin){ alert("Wrong Transfer PIN"); return; }
   if(amt>balance){ alert("Insufficient"); return; }
-  balance-=amt; localStorage.setItem("kelly_balance", balance); updateBalanceUI();
+  balance-=amt; localStorage.setItem("kelly_balance_v26", balance); updateBalanceUI();
   document.getElementById('rTo').innerText="To: "+to;
   document.getElementById('rAmount').innerText="Amount: ₦"+amt.toLocaleString();
   document.getElementById('rRemark').innerText="Remark: "+remark;
@@ -237,15 +216,13 @@ function doTransfer(){
   document.getElementById('sendTo').value=""; document.getElementById('sendAmount').value=""; document.getElementById('sendRemark').value=""; document.getElementById('transferPinInput').value="";
   resetIdleTimer();
 }
-async function shareApp(){ if(navigator.share){ await navigator.share({title:'KellyBank', url:location.href}); } }
-async function shareReceipt(){ let t=document.getElementById('receipt').innerText; if(navigator.share){ await navigator.share({title:'Receipt', text:t}); } }
-function resetApp(){ if(confirm("Reset KellyBank?")){ localStorage.clear(); location.reload(); } }
-
-// AUTO-LOGOUT 60s
+async function shareApp(){ if(navigator.share){ await navigator.share({title:'KellyBank V26', url:location.href}); } }
+async function shareReceipt(){ let t=document.getElementById('receipt').innerText; if(navigator.share){ await navigator.share({title:'V26 Receipt', text:t}); } }
+function resetApp(){ if(confirm("Reset V26?")){ localStorage.clear(); location.reload(); } }
 function startIdleTimer(){
   stopIdleTimer(); let remaining=idleSeconds; document.getElementById('idleWarning').style.display='block';
   countdownTimer=setInterval(()=>{ remaining--; document.getElementById('countdown').innerText=remaining; if(remaining<=10) document.getElementById('idleWarning').style.background='red'; },1000);
-  logoutTimer=setTimeout(()=>{ alert("Locked due to inactivity"); lockApp(); }, idleSeconds*1000);
+  logoutTimer=setTimeout(()=>{ alert("V26 Locked - Inactivity 60s"); lockApp(); }, idleSeconds*1000);
 }
 function resetIdleTimer(){ if(document.getElementById('mainApp').style.display==='block'){ startIdleTimer(); } }
 function stopIdleTimer(){ clearTimeout(logoutTimer); clearInterval(countdownTimer); document.getElementById('idleWarning').style.display='none'; document.getElementById('idleWarning').style.background='#ff6a00'; }
