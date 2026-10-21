@@ -3,26 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly Bank v25 - FINAL FIX</title>
+<title>Kelly Bank v26 - Modal Transfer</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 body{background:#0d0d0d;color:#fff;padding-bottom:90px}
-.top{padding:14px;display:flex;justify-content:space-between;align-items:center}
+.top{padding:14px;display:flex;justify-content:space-between}
 .balance-card{margin:10px;background:#1c1c1c;border:1px solid #333;border-radius:20px;padding:20px}
 .balance-card h1{color:#ffcc00;font-size:32px}
-.balance-card p{color:#888;font-size:12px;margin-top:6px}
 .small-btns{margin-top:12px;display:flex;gap:8px}
 .small-btns div{border:1px solid #ffcc00;color:#ffcc00;padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
 .act{background:#1e1e1e;border-radius:16px;padding:20px;text-align:center;border:1px solid #222;cursor:pointer}
-.act span{font-size:12px;color:#ffcc00;display:block;margin-top:8px}
-.transfer{margin:12px;background:#111;border:1px solid #ffcc00;border-radius:16px;padding:16px}
-.transfer h3{color:#fff;margin-bottom:12px}
-.transfer select{width:100%;padding:14px;background:#000;color:#fff;border:2px solid #ffcc00;border-radius:10px;margin-bottom:10px}
-.transfer input{width:100%;padding:14px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:10px;margin-bottom:10px}
-.send{width:100%;padding:15px;background:#ffcc00;border:none;border-radius:12px;font-weight:900;font-size:18px;color:#000;cursor:pointer}
+.act span{color:#ffcc00;display:block;margin-top:8px;font-size:12px}
+#transferModal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);display:none;justify-content:center;align-items:flex-end;z-index:9999}
+.modal-content{width:100%;max-width:500px;background:#111;border:2px solid #ffcc00;border-radius:20px 20px 0 0;padding:20px;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-content h3{color:#ffcc00;margin-bottom:15px;display:flex;justify-content:space-between}
+.modal-content select{width:100%;padding:14px;background:#000;color:#fff;border:2px solid #ffcc00;border-radius:10px;margin-bottom:10px}
+.modal-content input{width:100%;padding:14px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:10px;margin-bottom:10px}
+.send{width:100%;padding:15px;background:#ffcc00;border:none;border-radius:12px;font-weight:900;font-size:18px;color:#000}
+.close{color:#fff;cursor:pointer;font-size:20px}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#111;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #222}
-.bnav{font-size:10px;color:#777;text-align:center;cursor:pointer}
+.bnav{font-size:10px;color:#777;text-align:center}
 .bnav.active{color:#ffcc00}
 </style>
 </head>
@@ -30,33 +32,34 @@ body{background:#0d0d0d;color:#fff;padding-bottom:90px}
 <div class="top"><b style="color:#ffcc00;font-size:20px">Kelly Bank</b><span>🔔</span></div>
 <div class="balance-card">
 <h1 id="mainBal">₦125,000.00</h1>
-<p>Account 1234 **** 7890 • Kelly Savings</p>
-<div class="small-btns">
-<div onclick="freeze()">🔒 Freeze</div>
-<div onclick="addMoney()">+ Add Money</div>
-</div>
+<p style="font-size:12px;color:#888">Account 1234 **** 7890 • Kelly Savings</p>
+<div class="small-btns"><div onclick="alert('Card frozen')">🔒 Freeze</div><div onclick="addMoney()">+ Add Money</div></div>
 </div>
 <div class="actions">
-<div class="act" onclick="document.getElementById('transferSec').scrollIntoView({behavior:'smooth'})"><div style="font-size:24px">↔️</div><span>Transfer</span></div>
-<div class="act" onclick="alert('Airtime coming')"><div style="font-size:24px">📶</div><span>Airtime</span></div>
-<div class="act" onclick="alert('Bills coming')"><div style="font-size:24px">🧾</div><span>Bills</span></div>
-<div class="act" onclick="alert('No history yet')"><div style="font-size:24px">🕒</div><span>History</span></div>
+<div class="act" onclick="openTransfer()"><div style="font-size:24px">💸</div><span>Transfer</span></div>
+<div class="act" onclick="alert('Airtime coming')"><div style="font-size:24px">📱</div><span>Airtime</span></div>
+<div class="act" onclick="alert('Bills coming')"><div style="font-size:24px">💡</div><span>Bills</span></div>
+<div class="act" onclick="alert('History empty')"><div style="font-size:24px">📄</div><span>History</span></div>
 </div>
-<div id="transferSec" class="transfer">
-<h3>Transfer to Bank</h3>
+<!-- HIDDEN MODAL - ONLY SHOWS ON CLICK -->
+<div id="transferModal">
+<div class="modal-content">
+<h3>Transfer to Bank <span class="close" onclick="closeTransfer()">✕</span></h3>
 <select id="bank"><option value="">-- Select Bank --</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Zenith Bank</option><option>Union Bank</option><option>Wema Bank</option><option>Fidelity Bank</option><option>FCMB</option><option>Ecobank</option><option>Sterling Bank</option><option>OPay</option><option>Moniepoint</option><option>Kuda</option><option>PalmPay</option></select>
-<input id="acct" type="tel" maxlength="10" placeholder="10-digit account">
+<input id="acct" type="tel" maxlength="10" placeholder="10-digit account number">
 <input id="amt" type="number" placeholder="Amount">
-<input id="rem" type="text" placeholder="Remark e.g. Rent">
+<input id="rem" type="text" placeholder="Remark">
 <button class="send" onclick="send()">Send Now</button>
 <div style="margin-top:10px;font-size:11px;color:#888;text-align:center">Balance: <span id="bal2">₦125,000.00</span></div>
+</div>
 </div>
 <div class="bottom">
 <div class="bnav active">🏠<br>Home</div><div class="bnav">💳<br>Card</div><div class="bnav">🎁<br>Reward</div><div class="bnav">💰<br>Loan</div><div class="bnav">👤<br>Profile</div>
 </div>
 <script>
 let bal=125000;
-function freeze(){alert('Card frozen/unfrozen');}
+function openTransfer(){document.getElementById('transferModal').style.display='flex';}
+function closeTransfer(){document.getElementById('transferModal').style.display='none';}
 function addMoney(){let a=prompt('Add amount:');if(a){bal+=parseFloat(a);upd();}}
 function upd(){document.getElementById('mainBal').innerText='₦'+bal.toLocaleString()+'.00';document.getElementById('bal2').innerText='₦'+bal.toLocaleString()+'.00';}
 function send(){
@@ -64,10 +67,12 @@ const bank=document.getElementById('bank').value;
 const acct=document.getElementById('acct').value;
 const amt=parseFloat(document.getElementById('amt').value);
 if(!bank){alert('Select bank');return;}
-if(acct.length!=10){alert('10 digits account needed');return;}
+if(acct.length!=10){alert('10 digits needed');return;}
 if(!amt||amt<=0){alert('Enter amount');return;}
 if(amt>bal){alert('Insufficient balance');return;}
-bal-=amt;upd();alert('SUCCESS!\nBank: '+bank+'\nAcct: '+acct+'\nAmount: ₦'+amt.toLocaleString());
+bal-=amt;upd();
+alert('SUCCESS! Sent ₦'+amt.toLocaleString()+' to '+bank+' - '+acct);
+closeTransfer();
 document.getElementById('bank').value='';document.getElementById('acct').value='';document.getElementById('amt').value='';document.getElementById('rem').value='';
 }
 </script>
