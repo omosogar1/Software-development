@@ -1,24 +1,14 @@
 {
   "name": "Kelly Bank V26.9",
   "short_name": "Kelly Bank",
-  "description": "Kelly Bank V26.9 - Original Gold Logo, Login First, BVN Inside Tier",
+  "description": "Kelly Bank V26.9 - Original Gold Logo Exact, Login First, BVN Inside Tier",
   "start_url": "./index.html?v=26.9-original",
   "display": "standalone",
   "background_color": "#121212",
   "theme_color": "#ffcc00",
   "orientation": "portrait",
   "icons": [
-    {
-      "src": "logo.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "logo.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "logo.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }
