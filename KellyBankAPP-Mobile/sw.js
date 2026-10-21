@@ -1,4 +1,4 @@
-const CACHE_NAME = "kellybank-v26-9-original";
+const CACHE_NAME = "kellybank-v26-9-original-gold";
 const FILES_TO_CACHE = [
   "./",
   "./index.html?v=26.9-original",
@@ -7,7 +7,7 @@ const FILES_TO_CACHE = [
 ];
 
 self.addEventListener("install", (event) => {
-  console.log("Kelly Bank V26.9 Original Installing");
+  console.log("Kelly Bank V26.9 Gold Logo Installing");
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE))
   );
