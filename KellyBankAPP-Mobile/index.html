@@ -3,48 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly Bank v22 - FINAL</title>
+<title>Kelly Bank v23 - FULL APP</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#0d0d0d;color:#fff;padding-bottom:90px}
-.top-gold{margin:10px;background:linear-gradient(90deg,#ffcc00,#ff9900);border-radius:16px;padding:12px;display:flex;gap:8px;color:#000;font-size:12px;font-weight:bold}
+.top-bar{padding:12px 15px;display:flex;justify-content:space-between;align-items:center}
+.top-gold{margin:10px;background:linear-gradient(90deg,#ffcc00,#ff9900);border-radius:16px;padding:14px;display:flex;justify-content:space-between;align-items:center;color:#000;font-weight:bold}
+.main-card{margin:10px;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);border-radius:20px;padding:18px;border:1px solid #333}
+.main-card .bal-label{font-size:11px;color:#aaa}
+.main-card .bal-amount{font-size:28px;font-weight:900;color:#ffcc00;margin:6px 0}
 .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px}
-.act{background:#1e1e1e;border-radius:12px;padding:12px;text-align:center;cursor:pointer;border:1px solid #222}
-.act span{font-size:10px;display:block;margin-top:4px}
+.act{background:#1e1e1e;border-radius:14px;padding:14px;text-align:center;cursor:pointer;border:1px solid #222}
+.act div{font-size:20px}
+.act span{font-size:10px;display:block;margin-top:5px;color:#ccc}
 .transfer-box{margin:12px;background:#151515;border:1px solid #2a2a2a;border-radius:16px;padding:16px}
 .transfer-box h3{font-size:14px;margin-bottom:12px;color:#ffcc00}
-.transfer-box select{width:100%;padding:15px;margin-bottom:12px;background:#000;color:#fff;border:2px solid #ffcc00;border-radius:12px;font-size:14px;outline:none}
-.transfer-box input{width:100%;padding:14px;margin-bottom:10px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:10px;outline:none;font-size:14px}
-.transfer-box input:focus{border-color:#ffcc00}
-.send-btn{width:100%;padding:15px;background:linear-gradient(90deg,#ffcc00,#ff9900);border:none;border-radius:12px;font-weight:900;cursor:pointer;font-size:16px;color:#000}
+.transfer-box select{width:100%;padding:15px;margin-bottom:12px;background:#000;color:#fff;border:2px solid #ffcc00;border-radius:12px;font-size:14px}
+.transfer-box input{width:100%;padding:14px;margin-bottom:10px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:10px;font-size:14px}
+.send-btn{width:100%;padding:15px;background:linear-gradient(90deg,#ffcc00,#ff9900);border:none;border-radius:12px;font-weight:900;font-size:16px;color:#000;cursor:pointer}
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#111;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #222}
 .nav{font-size:9px;text-align:center;color:#777}
 .nav.active{color:#ffcc00}
-#status{margin-top:12px;font-size:12px;text-align:center;color:#00ff88}
 </style>
 </head>
 <body>
-
-<div class="top-gold">
-  <div style="background:#000;color:#ffcc00;padding:5px 10px;border-radius:20px">Freeze</div>
-  <div style="background:#000;color:#fff;padding:5px 10px;border-radius:20px">+ Add Money</div>
+<div class="top-bar">
+  <div style="font-weight:900">Kelly Bank 💳</div>
+  <div style="font-size:18px">🔔</div>
 </div>
-
+<div class="top-gold">
+  <div>👤 Kelly Osaro</div>
+  <div style="display:flex;gap:8px">
+    <div style="background:#000;color:#ffcc00;padding:5px 10px;border-radius:20px;font-size:11px">Freeze</div>
+    <div style="background:#000;color:#fff;padding:5px 10px;border-radius:20px;font-size:11px">+ Add Money</div>
+  </div>
+</div>
+<div class="main-card">
+  <div class="bal-label">Available Balance 👁️</div>
+  <div class="bal-amount" id="mainBal">₦125,000.00</div>
+  <div style="font-size:11px;color:#888">Account: 1234 **** 7890 • Kelly Savings</div>
+</div>
 <div class="actions">
   <div class="act" onclick="document.getElementById('transfer').scrollIntoView({behavior:'smooth'})"><div>💸</div><span>Transfer</span></div>
   <div class="act"><div>📱</div><span>Airtime</span></div>
   <div class="act"><div>💡</div><span>Bills</span></div>
   <div class="act"><div>📄</div><span>History</span></div>
 </div>
-
 <div id="transfer" class="transfer-box">
-  <h3>Transfer</h3>
+  <h3>Transfer to Bank</h3>
   <select id="bankSelect">
     <option value="">-- Select Bank --</option>
     <option value="Access Bank">Access Bank</option>
-    <option value="GTBank">GTBank (Guaranty Trust)</option>
-    <option value="First Bank">First Bank of Nigeria</option>
-    <option value="UBA">UBA - United Bank for Africa</option>
+    <option value="GTBank">GTBank</option>
+    <option value="First Bank">First Bank</option>
+    <option value="UBA">UBA</option>
     <option value="Zenith Bank">Zenith Bank</option>
     <option value="Union Bank">Union Bank</option>
     <option value="Wema Bank">Wema Bank</option>
@@ -54,17 +66,16 @@ body{background:#0d0d0d;color:#fff;padding-bottom:90px}
     <option value="Sterling Bank">Sterling Bank</option>
     <option value="OPay">OPay</option>
     <option value="Moniepoint">Moniepoint</option>
-    <option value="Kuda">Kuda Microfinance</option>
+    <option value="Kuda">Kuda</option>
     <option value="PalmPay">PalmPay</option>
   </select>
   <input id="account" type="tel" maxlength="10" placeholder="10-digit account">
   <input id="amount" type="number" placeholder="Amount">
   <input id="remark" type="text" placeholder="Remark">
   <button class="send-btn" id="sendBtn">Send Now</button>
-  <div style="margin-top:10px;font-size:11px;color:#888">Balance: <span id="balText">₦125,000.00</span> • Fee: ₦0</div>
-  <div id="status"></div>
+  <div style="margin-top:10px;font-size:11px;color:#888;text-align:center">Balance: <span id="balText">₦125,000.00</span> • Fee: ₦0</div>
+  <div id="status" style="margin-top:8px;font-size:12px;text-align:center;color:#00ff88"></div>
 </div>
-
 <div class="bottom-nav">
   <div class="nav active">🏠<br>Home</div>
   <div class="nav">💳<br>Card</div>
@@ -72,34 +83,24 @@ body{background:#0d0d0d;color:#fff;padding-bottom:90px}
   <div class="nav">💰<br>Loan</div>
   <div class="nav">👤<br>Profile</div>
 </div>
-
 <script>
 let balance = 125000;
-const balText = document.getElementById('balText');
-const status = document.getElementById('status');
-
 document.getElementById('sendBtn').addEventListener('click', function(){
   const bank = document.getElementById('bankSelect').value;
   const account = document.getElementById('account').value.trim();
   const amount = parseFloat(document.getElementById('amount').value);
   const remark = document.getElementById('remark').value;
-
-  if(!bank){ alert('Please select bank'); return; }
-  if(account.length !== 10 || isNaN(account)){ alert('Account number must be 10 digits'); return; }
-  if(!amount || amount <=0){ alert('Enter valid amount'); return; }
-  if(amount > balance){ alert('Insufficient balance. Balance is ₦'+balance.toLocaleString()); return; }
-
-  balance -= amount;
-  balText.innerText = '₦'+balance.toLocaleString()+'.00';
-  status.innerText = '✓ Success: ₦'+amount.toLocaleString()+' to '+bank;
-  alert('SUCCESS!\nBank: '+bank+'\nAccount: '+account+'\nAmount: ₦'+amount.toLocaleString()+'\nRemark: '+remark);
-
-  document.getElementById('bankSelect').value='';
-  document.getElementById('account').value='';
-  document.getElementById('amount').value='';
-  document.getElementById('remark').value='';
+  if(!bank){alert('Please select bank');return;}
+  if(account.length!==10){alert('Account must be 10 digits');return;}
+  if(!amount||amount<=0){alert('Enter valid amount');return;}
+  if(amount>balance){alert('Insufficient balance');return;}
+  balance-=amount;
+  document.getElementById('balText').innerText='₦'+balance.toLocaleString()+'.00';
+  document.getElementById('mainBal').innerText='₦'+balance.toLocaleString()+'.00';
+  document.getElementById('status').innerText='✓ Sent ₦'+amount.toLocaleString()+' to '+bank;
+  alert('SUCCESS!\nBank: '+bank+'\nAccount: '+account+'\nAmount: ₦'+amount.toLocaleString());
+  document.getElementById('bankSelect').value='';document.getElementById('account').value='';document.getElementById('amount').value='';document.getElementById('remark').value='';
 });
 </script>
-
 </body>
 </html>
