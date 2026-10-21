@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly Bank V26.9</title>
+<title>Kelly Bank V26.9 Fixed</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#121212">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Roboto,Arial,sans-serif !important}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Roboto,Arial,sans-serif}
 body{background:#121212;color:#fff;min-height:100vh}
-.app{max-width:420px;margin:0 auto;background:#121212;min-height:100vh;padding-bottom:80px;display:none;position:relative}
-.header-top{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:#121212}
+.app{max-width:420px;margin:0 auto;background:#121212;min-height:100vh;padding-bottom:80px;display:none}
+.header-top{display:flex;justify-content:space-between;align-items:center;padding:15px 20px}
 .logo-area{display:flex;align-items:center;gap:10px}
 .logo-img-header{width:38px;height:38px;border-radius:50%;border:1.5px solid #ffcc00;object-fit:cover;background:#000}
 .balance-card{background:#1e1e1e;border-radius:15px;padding:18px;margin:10px 15px;display:flex;justify-content:space-between;align-items:center;border:1px solid #2a2a2a}
@@ -20,14 +20,13 @@ body{background:#121212;color:#fff;min-height:100vh}
 .q-btn small{color:#ffcc00;display:block;margin-top:5px;font-size:11px}
 .trans-box{background:#1e1e1e;border-radius:15px;margin:15px;padding:15px;border:1px solid #2a2a2a}
 .trans-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:0.5px solid #2a2a2a}
-.trans-item:last-child{border:none}
 .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:#1a1a1a;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #2a2a2a;z-index:50}
 .nav-item{text-align:center;font-size:10px;color:#666;cursor:pointer}
 .nav-item.active{color:#ffcc00;background:#2a2a2a;padding:5px 15px;border-radius:10px}
 .tier-box{background:#1e1e1e;border:1px solid #333;border-left:4px solid #ffcc00;padding:12px;border-radius:10px;margin:10px 0}
 input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e;color:#fff;border:1px solid #333;font-size:16px}
-.btn-primary{background:#ffcc00;color:#000;border:none;padding:15px;border-radius:12px;width:100%;cursor:pointer;font-weight:800;margin-top:10px}
-.btn-secondary{background:#1e1e1e;color:#fff;border:1px solid #333;padding:15px;border-radius:12px;width:100%;cursor:pointer;margin-top:10px}
+.btn-primary{background:#ffcc00;color:#000;border:none;padding:15px;border-radius:12px;width:100%;cursor:pointer;font-weight:800;margin-top:10px;display:block}
+.btn-secondary{background:#1e1e1e;color:#fff;border:1px solid #333;padding:15px;border-radius:12px;width:100%;cursor:pointer;margin-top:10px;display:block}
 .screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#121212;z-index:100;padding:20px;overflow-y:auto;display:none}
 .screen.active{display:flex;flex-direction:column}
 .screen-inner{max-width:420px;width:100%;margin:0 auto;padding-top:20px;text-align:center}
@@ -38,37 +37,36 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 .dot{width:16px;height:16px;border-radius:50%;border:2px solid #333}
 .dot.filled{background:#ffcc00;border-color:#ffcc00}
 .numpad{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:15px}
-.num-btn{background:#1e1e1e;border:1px solid #2a2a2a;color:#fff;font-size:22px;padding:18px;border-radius:14px;cursor:pointer}
+.num-btn{background:#1e1e1e;border:1px solid #2a2a2a;color:#fff;font-size:22px;padding:18px;border-radius:14px;cursor:pointer;user-select:none}
+.num-btn:active{transform:scale(0.95)}
 .num-btn.del{background:#2a1a1a}
 .num-btn.ok{background:#ffcc00;color:#000;font-weight:800}
-.box{background:#1e1e1e;padding:15px;border-radius:15px;margin-bottom:15px;display:none;border:1px solid #2a2a2a;text-align:left}
+.box{background:#1e1e1e;padding:15px;border-radius:15px;margin:15px;display:none;border:1px solid #2a2a2a;text-align:left}
 #idleWarning{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#ffcc00;color:#000;padding:8px 15px;border-radius:20px;font-size:12px;display:none;z-index:200;font-weight:700}
 </style>
 </head>
 <body>
 
-<div id="idleWarning">Auto-lock V26.9 <span id="countdown">60</span>s</div>
+<div id="idleWarning">Auto-lock <span id="countdown">60</span>s</div>
 
-<!-- WELCOME SCREEN - NO BVN -->
+<!-- WELCOME -->
 <div id="welcomeScreen" class="screen active">
   <div class="screen-inner">
-    <img src="logo.png?v=26.9" class="logo-img-big" alt="Kelly Bank Logo">
+    <img src="logo.png" class="logo-img-big" alt="Kelly Bank Logo">
     <div class="title">Kelly Bank V26.9</div>
-    <div class="subtitle">Original Design Restored</div>
-    <div style="margin-top:30px">
-      <button class="btn-primary" onclick="goToLogin()">Login</button>
-      <button class="btn-secondary" onclick="goToRegister()">Create New Account</button>
-      <p style="text-align:center;color:#555;font-size:11px;margin-top:20px">V26.9 • Original Logo • Tier Inside • 60s Lock</p>
-    </div>
+    <div class="subtitle">Original Design - Fixed Buttons</div>
+    <button class="btn-primary" onclick="goToLogin()">Login</button>
+    <button class="btn-secondary" onclick="goToRegister()">Create New Account</button>
+    <p style="color:#555;font-size:11px;margin-top:20px">V26.9 • Your Exact Gold Logo • Tier Inside</p>
   </div>
 </div>
 
-<!-- REGISTER - NO BVN -->
+<!-- REGISTER -->
 <div id="registerScreen" class="screen">
   <div class="screen-inner">
-    <img src="logo.png?v=26.9" class="logo-img-big" alt="Kelly Bank Logo">
+    <img src="logo.png" class="logo-img-big" alt="Logo">
     <div class="title">Create Account</div>
-    <div class="subtitle">Tier 1 - No BVN needed</div>
+    <div class="subtitle">Tier 1 - No BVN</div>
     <input id="regName" placeholder="Full Name e.g Kelly Osaro">
     <input id="regPhone" type="tel" placeholder="Phone Number">
     <button class="btn-primary" onclick="startPinSetup()">Continue</button>
@@ -76,35 +74,34 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
   </div>
 </div>
 
-<!-- PIN SETUP WITH DELETE KEY -->
+<!-- SETUP PIN -->
 <div id="setupPinScreen" class="screen">
   <div class="screen-inner">
-    <img src="logo.png?v=26.9" class="logo-img-big" alt="Kelly Bank Logo">
+    <img src="logo.png" class="logo-img-big" alt="Logo">
     <div class="title" id="setupTitle">Create Login PIN</div>
-    <div class="subtitle" id="setupSub">V26.9 - With ⌫ delete key</div>
+    <div class="subtitle">With ⌫ delete key</div>
     <div class="pin-dots" id="setupDots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="numpad" id="setupPad"></div>
-    <p style="text-align:center;color:#666;font-size:11px;margin-top:10px">⌫ = Delete one digit</p>
   </div>
 </div>
 
-<!-- LOGIN WITH DELETE KEY -->
+<!-- LOGIN -->
 <div id="pinScreen" class="screen">
   <div class="screen-inner">
-    <img src="logo.png?v=26.9" class="logo-img-big" alt="Kelly Bank Logo">
+    <img src="logo.png" class="logo-img-big" alt="Logo">
     <div class="title">Login V26.9</div>
     <div class="subtitle" id="userDisplay">Enter PIN</div>
     <div class="pin-dots" id="pinDots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="numpad" id="loginPad"></div>
-    <p style="text-align:center;color:#888;font-size:12px;margin-top:15px;cursor:pointer" onclick="showScreen('welcomeScreen')">← Back to Welcome</p>
+    <p style="color:#888;font-size:12px;margin-top:15px;cursor:pointer" onclick="showScreen('welcomeScreen')">← Back</p>
   </div>
 </div>
 
-<!-- MAIN APP - ORIGINAL DESIGN -->
+<!-- MAIN APP -->
 <div class="app" id="mainApp">
   <div class="header-top">
     <div class="logo-area">
-      <img src="logo.png?v=26.9" class="logo-img-header" alt="Kelly Bank">
+      <img src="logo.png" class="logo-img-header" alt="Logo">
       <span style="color:#ffcc00;font-weight:700">Kelly Bank</span>
     </div>
     <span onclick="lockApp()" style="color:#ffcc00;font-size:12px;cursor:pointer">Logout</span>
@@ -112,167 +109,190 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 
   <div class="balance-card">
     <div>
-      <small style="color:#888;font-size:10px;letter-spacing:1px">AVAILABLE BALANCE <span onclick="toggleBalance()" style="cursor:pointer">🙈</span></small>
+      <small style="color:#888;font-size:10px">AVAILABLE BALANCE <span onclick="toggleBalance()" style="cursor:pointer">🙈</span></small>
       <h2 style="margin:5px 0"><span style="color:#ffcc00">₦</span> <span id="balance">••••••••</span></h2>
-      <small id="welcomeName" style="color:#888">Welcome Kelly Osaro</small><br>
-      <small id="tierBadge" style="background:#333;padding:2px 6px;border-radius:8px;font-size:9px">Tier 1 • ₦50k Limit</small>
+      <small id="welcomeName" style="color:#888">Welcome</small><br>
+      <small id="tierBadge" style="background:#333;padding:2px 6px;border-radius:8px;font-size:9px">Tier 1 • ₦50k</small>
     </div>
     <button class="add-money" onclick="openBox('tierBox')">+ ADD MONEY</button>
   </div>
 
   <div class="quick-actions">
     <div class="q-btn" onclick="openBox('transferBox')"><div>💸</div><small>Transfer</small></div>
-    <div class="q-btn" onclick="alert('Airtime V26.9 - Coming soon')"><div>📱</div><small>Airtime</small></div>
-    <div class="q-btn" onclick="alert('Bills V26.9 - Coming soon')"><div>💡</div><small>Bills</small></div>
+    <div class="q-btn" onclick="alert('Airtime V26.9 coming')"><div>📱</div><small>Airtime</small></div>
+    <div class="q-btn" onclick="alert('Bills V26.9 coming')"><div>💡</div><small>Bills</small></div>
   </div>
 
   <div class="trans-box">
     <h4 style="color:#ffcc00;font-size:13px;margin-bottom:10px">Transaction History</h4>
-    <div class="trans-item"><div><b style="font-size:12px">MTN Airtime</b><br><small style="color:#666">0803 123</small></div><b style="font-size:12px">₦1000</b></div>
-    <div class="trans-item"><div><b style="font-size:12px">WAEC PIN</b><br><small style="color:#666">Card Purchase</small></div><b style="font-size:12px">₦3500</b></div>
-    <div class="trans-item"><div><b style="font-size:12px">BEDC Electricity</b><br><small style="color:#666">Meter 5419*</small></div><b style="font-size:12px">₦10000</b></div>
-    <div class="trans-item"><div><b style="font-size:12px">Access Bank</b><br><small style="color:#666">00876 21</small></div><b style="font-size:12px">₦25000</b></div>
-    <div class="trans-item"><div><b style="font-size:12px">9TBank - Salary</b><br><small style="color:#0f0">Incoming • Credit</small></div><b style="font-size:12px;color:#0f0">+₦75000</b></div>
+    <div class="trans-item"><div><b style="font-size:12px">MTN Airtime</b><br><small style="color:#666">0803</small></div><b style="font-size:12px">₦1000</b></div>
+    <div class="trans-item"><div><b style="font-size:12px">9TBank - Salary</b><br><small style="color:#0f0">Credit</small></div><b style="color:#0f0">+₦75000</b></div>
     <div id="dynamicTrans"></div>
   </div>
 
   <div id="tierBox" class="box">
-    <h4 style="color:#ffcc00">Account Tiers V26.9 - BVN Inside</h4>
-    <div class="tier-box"><b>Tier 1 ✓ Active</b><br><small>₦50,000 • No BVN needed</small></div>
+    <h4 style="color:#ffcc00">Tiers - BVN Inside V26.9</h4>
+    <div class="tier-box"><b>Tier 1 ✓</b><br><small>₦50k • No BVN</small></div>
     <div class="tier-box">
-      <b>Tier 2 <span id="tier2Status">- Locked</span></b><br><small>₦200,000 • BVN Required</small>
+      <b>Tier 2 <span id="tier2Status">- Locked</span></b><br><small>₦200k • BVN Required</small>
       <div id="bvnUpgradeForm" style="margin-top:10px">
-        <input id="bvnInput" type="number" placeholder="Enter 11-digit BVN">
-        <button class="btn-primary" onclick="verifyBVNForTier2()">Verify BVN for Tier 2</button>
+        <input id="bvnInput" type="number" placeholder="11-digit BVN">
+        <button class="btn-primary" onclick="verifyBVN()">Verify BVN for Tier 2</button>
         <p id="bvnMsg" style="font-size:12px;margin-top:5px"></p>
       </div>
     </div>
-    <div class="tier-box" style="opacity:0.5"><b>Tier 3 - Locked</b><br><small>₦5M • NIN + BVN</small></div>
-    <button style="background:none;border:none;color:#888;width:100%;margin-top:8px;cursor:pointer" onclick="closeBoxes()">Close</button>
+    <button class="btn-secondary" onclick="closeBoxes()">Close</button>
   </div>
 
   <div id="transferBox" class="box">
     <h4 style="color:#ffcc00">Transfer V26.9</h4>
     <input id="sendTo" placeholder="Recipient Account">
     <input id="sendAmount" type="number" placeholder="Amount ₦">
-    <input id="sendRemark" placeholder="Remark e.g Food">
-    <p style="font-size:11px;color:#ffcc00;margin-top:8px">Transfer PIN (4-digit)</p>
+    <input id="sendRemark" placeholder="Remark">
     <input id="transferPinInput" type="password" placeholder="Transfer PIN" maxlength="4">
     <button class="btn-primary" onclick="doTransfer()">Send Now</button>
-    <button style="background:none;border:none;color:#888;width:100%;margin-top:8px;cursor:pointer" onclick="closeBoxes()">Cancel</button>
+    <button class="btn-secondary" onclick="closeBoxes()">Cancel</button>
   </div>
 
   <div id="receipt" class="box" style="background:#fff;color:#000">
-    <h3 style="text-align:center">Kelly Bank V26.9 Receipt</h3><hr style="margin:10px 0">
+    <h3 style="text-align:center">Kelly Bank Receipt V26.9</h3><hr>
     <p id="rFrom">From: -</p><p id="rTo">To: -</p><p id="rAmount">Amount: -</p><p id="rRemark">Remark: -</p><p id="rDate">Date: -</p>
-    <p style="color:green;font-weight:bold">SUCCESS V26.9 ✓</p>
+    <p style="color:green;font-weight:bold">SUCCESS ✓</p>
     <button class="btn-primary" onclick="closeBoxes()">Close</button>
   </div>
 
   <div class="bottom-nav">
     <div class="nav-item active"><div>🏠</div>Home</div>
-    <div class="nav-item" onclick="alert('Card V26.9')"><div>💳</div>Card</div>
-    <div class="nav-item" onclick="alert('Reward V26.9')"><div>🎁</div>Reward</div>
     <div class="nav-item" onclick="openBox('tierBox')"><div>💰</div>Loan</div>
     <div class="nav-item" onclick="openBox('tierBox')"><div>👤</div>Me</div>
   </div>
 </div>
 
 <script>
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?v=26.9'); }
+// V26.9 - BUTTONS FIXED
 let balance = parseFloat(localStorage.getItem("kelly_balance_v269") || "250000");
-let bvnData = JSON.parse(localStorage.getItem("kelly_bvn_v269") || "null");
 let userData = JSON.parse(localStorage.getItem("kelly_user_v269") || "null");
 let loginPin = localStorage.getItem("kelly_login_pin_v269");
 let transferPin = localStorage.getItem("kelly_transfer_pin_v269");
-let pinInput = ""; let tempPin = ""; let setupStep = "login"; let showBal = false;
-let logoutTimer; let countdownTimer; let idleSeconds = 60;
 let tier = localStorage.getItem("kelly_tier_v269") || "1";
+let pinInput = ""; let tempPin = ""; let setupStep = "login"; let showBal = false;
+let logoutTimer; let countdownTimer;
 
-window.onload = ()=>{
+function init(){
   buildPads(); updateBalanceUI();
+  const params = new URLSearchParams(window.location.search);
+  if(params.has('clear')){ localStorage.clear(); location.href = location.pathname; return; }
   if(userData && loginPin){ showScreen('pinScreen'); } else { showScreen('welcomeScreen'); }
-  if(new URLSearchParams(window.location.search).has('clear')){ localStorage.clear(); location.href=location.pathname+'?v=26.9'; }
 }
+window.addEventListener('DOMContentLoaded', init);
+
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  let el = document.getElementById(id);
+  if(el){ el.classList.add('active'); }
   document.getElementById('mainApp').style.display='none';
+  pinInput=""; updateAllDots();
 }
-function goToLogin(){ if(!userData || !loginPin){ alert("No account. Create account first"); showScreen('registerScreen'); return; } showScreen('pinScreen'); }
+
+function goToLogin(){
+  if(!userData || !loginPin){ alert("No account yet. Create account first"); showScreen('registerScreen'); return; }
+  showScreen('pinScreen');
+}
 function goToRegister(){ showScreen('registerScreen'); }
-function toggleBalance(){ showBal=!showBal; updateBalanceUI(); }
-function updateBalanceUI(){
-  document.getElementById('balance').innerText = showBal ? balance.toLocaleString() : "••••••••";
-  if(userData){ document.getElementById('welcomeName').innerText="Welcome "+userData.name; document.getElementById('rFrom').innerText="From: "+userData.name; document.getElementById('userDisplay').innerText="Hello "+userData.name+" - Enter PIN"; }
-  document.getElementById('tierBadge').innerText = tier==="1" ? "Tier 1 • ₦50k Limit" : "Tier 2 • ₦200k Limit";
-  if(tier==="2"){ document.getElementById('tier2Status').innerText="✓ Verified"; document.getElementById('tier2Status').style.color="#0f0"; document.getElementById('bvnUpgradeForm').style.display='none'; }
-}
+
 function buildPads(){
-  let html=""; for(let i=1;i<=9;i++) html+=`<button class="num-btn" onclick="handleNum('${i}')">${i}</button>`;
+  let html=""; 
+  for(let i=1;i<=9;i++) html+=`<button class="num-btn" onclick="handleNum('${i}')">${i}</button>`;
   html+=`<button class="num-btn del" onclick="deleteOne()">⌫</button><button class="num-btn" onclick="handleNum('0')">0</button><button class="num-btn ok" onclick="handleOk()">✓</button>`;
-  document.getElementById('loginPad').innerHTML=html; document.getElementById('setupPad').innerHTML=html;
+  document.getElementById('loginPad').innerHTML=html;
+  document.getElementById('setupPad').innerHTML=html;
 }
 function handleNum(n){ if(pinInput.length<4){ pinInput+=n; updateAllDots(); } }
 function deleteOne(){ if(pinInput.length>0){ pinInput=pinInput.slice(0,-1); updateAllDots(); } }
 function updateAllDots(){
-  document.querySelectorAll('#pinDots .dot').forEach((d,i)=>d.classList.toggle('filled', i<pinInput.length));
-  document.querySelectorAll('#setupDots .dot').forEach((d,i)=>d.classList.toggle('filled', i<pinInput.length));
+  document.querySelectorAll('#pinDots .dot').forEach((d,i)=>{ if(d) d.classList.toggle('filled', i<pinInput.length); });
+  document.querySelectorAll('#setupDots .dot').forEach((d,i)=>{ if(d) d.classList.toggle('filled', i<pinInput.length); });
 }
 function startPinSetup(){
   let name=document.getElementById('regName').value.trim(); let phone=document.getElementById('regPhone').value.trim();
-  if(name.length<3){ alert("Enter full name"); return; } if(phone.length<10){ alert("Enter phone"); return; }
+  if(name.length<3){ alert("Enter full name"); return; }
+  if(phone.length<10){ alert("Enter valid phone"); return; }
   userData={name,phone}; localStorage.setItem("kelly_user_v269", JSON.stringify(userData));
-  setupStep="login"; tempPin=""; pinInput=""; document.getElementById('setupTitle').innerText="Create Login PIN V26.9"; updateAllDots(); showScreen('setupPinScreen');
+  setupStep="login"; tempPin=""; pinInput=""; 
+  document.getElementById('setupTitle').innerText="Create Login PIN";
+  showScreen('setupPinScreen'); updateAllDots();
 }
 function handleOk(){
-  let isSetup=document.getElementById('setupPinScreen').classList.contains('active');
+  let isSetup = document.getElementById('setupPinScreen').classList.contains('active');
   if(isSetup){
     if(pinInput.length!==4){ alert("Enter 4 digits"); return; }
-    if(setupStep==="login" && !tempPin){ tempPin=pinInput; pinInput=""; updateAllDots(); document.getElementById('setupTitle').innerText="Confirm Login PIN V26.9"; return; }
+    if(setupStep==="login" && !tempPin){ tempPin=pinInput; pinInput=""; updateAllDots(); document.getElementById('setupTitle').innerText="Confirm Login PIN"; return; }
     if(setupStep==="login" && tempPin){
-      if(pinInput!==tempPin){ alert("No match"); pinInput=""; tempPin=""; updateAllDots(); document.getElementById('setupTitle').innerText="Create Login PIN V26.9"; return; }
-      localStorage.setItem("kelly_login_pin_v269", pinInput); loginPin=pinInput; tempPin=""; pinInput=""; setupStep="transfer"; document.getElementById('setupTitle').innerText="Create Transfer PIN V26.9"; updateAllDots(); return;
+      if(pinInput!==tempPin){ alert("PINs no match"); pinInput=""; tempPin=""; document.getElementById('setupTitle').innerText="Create Login PIN"; updateAllDots(); return; }
+      localStorage.setItem("kelly_login_pin_v269", pinInput); loginPin=pinInput; tempPin=""; pinInput=""; setupStep="transfer"; document.getElementById('setupTitle').innerText="Create Transfer PIN"; updateAllDots(); return;
     }
-    if(setupStep==="transfer" && !tempPin){ tempPin=pinInput; pinInput=""; updateAllDots(); document.getElementById('setupTitle').innerText="Confirm Transfer PIN V26.9"; return; }
+    if(setupStep==="transfer" && !tempPin){ tempPin=pinInput; pinInput=""; updateAllDots(); document.getElementById('setupTitle').innerText="Confirm Transfer PIN"; return; }
     if(setupStep==="transfer" && tempPin){
       if(pinInput!==tempPin){ alert("No match"); pinInput=""; tempPin=""; return; }
-      localStorage.setItem("kelly_transfer_pin_v269", pinInput); transferPin=pinInput; alert("Account Created V26.9!"); showScreen('pinScreen');
+      localStorage.setItem("kelly_transfer_pin_v269", pinInput); transferPin=pinInput;
+      alert("Account Created! Now Login"); showScreen('pinScreen'); return;
     }
-  } else { submitPin(); }
+  } else {
+    // Login
+    if(pinInput===loginPin){
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      document.getElementById('mainApp').style.display='block';
+      pinInput=""; updateAllDots(); updateBalanceUI(); startIdleTimer();
+    } else { alert("Wrong PIN"); pinInput=""; updateAllDots(); }
+  }
 }
-function submitPin(){
-  if(pinInput===loginPin){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById('mainApp').style.display='block'; pinInput=""; updateAllDots(); updateBalanceUI(); startIdleTimer(); }
-  else { alert("Wrong PIN"); pinInput=""; updateAllDots(); }
+
+function toggleBalance(){ showBal=!showBal; updateBalanceUI(); }
+function updateBalanceUI(){
+  let balEl = document.getElementById('balance');
+  if(balEl) balEl.innerText = showBal ? balance.toLocaleString() : "••••••••";
+  if(userData){
+    let wn = document.getElementById('welcomeName'); if(wn) wn.innerText="Welcome "+userData.name;
+    let rf = document.getElementById('rFrom'); if(rf) rf.innerText="From: "+userData.name;
+    let ud = document.getElementById('userDisplay'); if(ud) ud.innerText="Hello "+userData.name+" - Enter PIN";
+  }
+  let tb = document.getElementById('tierBadge'); if(tb) tb.innerText = tier==="1" ? "Tier 1 • ₦50k" : "Tier 2 • ₦200k";
+  if(tier==="2"){
+    let s = document.getElementById('tier2Status'); if(s){ s.innerText="✓ Verified"; s.style.color="#0f0"; }
+    let f = document.getElementById('bvnUpgradeForm'); if(f) f.style.display='none';
+  }
 }
-function verifyBVNForTier2(){
+function verifyBVN(){
   let bvn=document.getElementById('bvnInput').value.trim(); let msg=document.getElementById('bvnMsg');
   if(bvn.length!==11){ msg.innerText="BVN must be 11 digits"; msg.style.color="red"; return; }
   msg.innerText="Verifying..."; msg.style.color="#ffcc00";
-  setTimeout(()=>{ bvnData={bvn,verified:true}; localStorage.setItem("kelly_bvn_v269", JSON.stringify(bvnData)); tier="2"; localStorage.setItem("kelly_tier_v269", "2"); msg.innerText="Tier 2 Verified V26.9!"; msg.style.color="green"; updateBalanceUI(); },800);
+  setTimeout(()=>{ tier="2"; localStorage.setItem("kelly_tier_v269","2"); localStorage.setItem("kelly_bvn_v269", JSON.stringify({bvn,verified:true})); msg.innerText="Tier 2 Verified!"; msg.style.color="green"; updateBalanceUI(); },800);
 }
-function lockApp(){ showScreen('pinScreen'); pinInput=""; updateAllDots(); stopIdleTimer(); }
-function openBox(id){ closeBoxes(); document.getElementById(id).style.display='block'; resetIdleTimer(); }
-function closeBoxes(){ document.querySelectorAll('#mainApp .box').forEach(b=>b.style.display='none'); }
+function lockApp(){ showScreen('pinScreen'); stopIdleTimer(); }
+function openBox(id){ closeBoxes(); let el=document.getElementById(id); if(el) el.style.display='block'; }
+function closeBoxes(){ document.querySelectorAll('.box').forEach(b=>b.style.display='none'); }
 function doTransfer(){
   let to=document.getElementById('sendTo').value.trim(); let amt=parseFloat(document.getElementById('sendAmount').value); let remark=document.getElementById('sendRemark').value.trim()||"No remark"; let tPin=document.getElementById('transferPinInput').value.trim();
-  let limit = tier==="1" ? 50000 : 200000;
-  if(!to||!amt){ alert("Fill fields"); return; } if(amt>limit){ alert("Tier "+tier+" limit ₦"+limit.toLocaleString()+". Upgrade inside"); openBox('tierBox'); return; }
-  if(tPin!==transferPin){ alert("Wrong Transfer PIN"); return; } if(amt>balance){ alert("Insufficient"); return; }
+  let limit = tier==="1"?50000:200000;
+  if(!to||!amt){ alert("Fill all fields"); return; }
+  if(amt>limit){ alert("Tier limit ₦"+limit+" - Upgrade to Tier 2"); openBox('tierBox'); return; }
+  if(tPin!==transferPin){ alert("Wrong Transfer PIN"); return; }
+  if(amt>balance){ alert("Insufficient"); return; }
   balance-=amt; localStorage.setItem("kelly_balance_v269", balance); updateBalanceUI();
   document.getElementById('rTo').innerText="To: "+to; document.getElementById('rAmount').innerText="Amount: ₦"+amt.toLocaleString(); document.getElementById('rRemark').innerText="Remark: "+remark; document.getElementById('rDate').innerText="Date: "+new Date().toLocaleString();
-  document.getElementById('dynamicTrans').innerHTML = `<div class="trans-item"><div><b style="font-size:12px">${to}</b><br><small style="color:#666">${remark}</small></div><b style="font-size:12px">₦${amt.toLocaleString()}</b></div>`;
+  document.getElementById('dynamicTrans').innerHTML=`<div class="trans-item"><div><b>${to}</b><br><small>${remark}</small></div><b>₦${amt.toLocaleString()}</b></div>`+document.getElementById('dynamicTrans').innerHTML;
   closeBoxes(); document.getElementById('receipt').style.display='block';
-  document.getElementById('sendTo').value=""; document.getElementById('sendAmount').value=""; document.getElementById('sendRemark').value=""; document.getElementById('transferPinInput').value=""; resetIdleTimer();
+  document.getElementById('sendTo').value=""; document.getElementById('sendAmount').value=""; document.getElementById('sendRemark').value=""; document.getElementById('transferPinInput').value="";
 }
 function startIdleTimer(){
-  stopIdleTimer(); let remaining=idleSeconds; document.getElementById('idleWarning').style.display='block';
-  countdownTimer=setInterval(()=>{ remaining--; document.getElementById('countdown').innerText=remaining; if(remaining<=10) document.getElementById('idleWarning').style.background='red'; },1000);
-  logoutTimer=setTimeout(()=>{ alert("V26.9 Locked - Inactivity"); lockApp(); }, idleSeconds*1000);
+  stopIdleTimer(); let remaining=60;
+  let warn=document.getElementById('idleWarning'); if(warn) warn.style.display='block';
+  countdownTimer=setInterval(()=>{ remaining--; let cd=document.getElementById('countdown'); if(cd) cd.innerText=remaining; },1000);
+  logoutTimer=setTimeout(()=>{ alert("Auto-lock V26.9"); lockApp(); },60000);
 }
-function resetIdleTimer(){ if(document.getElementById('mainApp').style.display==='block'){ startIdleTimer(); } }
-function stopIdleTimer(){ clearTimeout(logoutTimer); clearInterval(countdownTimer); document.getElementById('idleWarning').style.display='none'; document.getElementById('idleWarning').style.background='#ffcc00'; }
-['click','touchstart'].forEach(e=>{ document.addEventListener(e, resetIdleTimer); });
+function stopIdleTimer(){ clearTimeout(logoutTimer); clearInterval(countdownTimer); let w=document.getElementById('idleWarning'); if(w) w.style.display='none'; }
+
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
 </html>
