@@ -60,7 +60,7 @@ body{background:#0d0d0d;color:#fff}
 <div id="appScreen">
 <div class="top"><div class="top-left"><img src="logo.png?v=26"> Kelly Bank</div><div onclick="logout()" style="color:#ffcc00;font-size:12px;cursor:pointer">Logout</div></div>
 
-<!-- HOME PAGE -->
+<!-- HOME -->
 <div id="page-home" class="page active">
 <div class="card"><h1 id="mainBal">₦125,000.00</h1><p id="welcomeUser">Savings</p><div class="small"><div onclick="freezeCard()">🔒 Freeze</div><div onclick="addMoney()">+ Add Money</div></div></div>
 <div class="actions">
@@ -72,30 +72,68 @@ body{background:#0d0d0d;color:#fff}
 <div class="history-wrap" id="historyBox"><h3>Recent Transactions <span onclick="clearHistory()" style="color:#888;font-size:11px;cursor:pointer">Clear</span></h3><div id="txnList"></div></div>
 </div>
 
-<!-- CARD PAGE -->
+<!-- CARD - REAL CARD SHOW -->
 <div id="page-card" class="page">
-<div class="bigBox"><h3>💳 My Card</h3><div style="background:linear-gradient(135deg,#ffcc00,#b89600);color:#000;border-radius:16px;padding:20px;margin:15px 0;text-align:left"><div style="font-size:12px">Kelly Bank • Savings</div><div style="font-size:20px;margin:15px 0;letter-spacing:3px">1234 5678 9012 3456</div><div style="display:flex;justify-content:space-between;font-size:12px"><span>KELLY OSARO</span><span>12/29</span></div></div><p style="color:#888;font-size:12px">Freeze card to block transactions</p><button class="send" style="margin-top:12px" onclick="freezeCard()">Toggle Freeze</button></div>
+<div class="bigBox">
+<h3>💳 My Card</h3>
+<p style="color:#888;font-size:11px;margin-bottom:12px">Tap card to see CVV • Real card design</p>
+
+<div id="realCard" onclick="flipCard()" style="width:100%;max-width:340px;height:200px;margin:0 auto;position:relative;transform-style:preserve-3d;transition:transform 0.6s;cursor:pointer">
+  <div style="position:absolute;width:100%;height:100%;backface-visibility:hidden;background:linear-gradient(135deg,#ffcc00 0%,#b89600 50%,#8a6d00 100%);border-radius:18px;padding:18px;color:#000;box-shadow:0 10px 30px rgba(255,204,0,0.3);">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;align-items:center;gap:8px;font-weight:900;font-size:16px"><img src="logo.png?v=26" style="width:28px;height:28px;border-radius:50%;background:#000"> Kelly Bank</div>
+      <div style="font-size:12px;font-weight:700">DEBIT</div>
+    </div>
+    <div style="margin:18px 0 10px;width:42px;height:32px;background:linear-gradient(135deg,#ffe57f,#ffb300);border-radius:6px;border:1px solid #0003"></div>
+    <div style="font-size:20px;letter-spacing:3px;font-weight:700;margin:10px 0">1234 5678 9012 3456</div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:15px">
+      <div><div style="opacity:0.7">CARD HOLDER</div><div style="font-weight:900">KELLY OSARO</div></div>
+      <div><div style="opacity:0.7">VALID THRU</div><div style="font-weight:900">12/29</div></div>
+    </div>
+  </div>
+  <div style="position:absolute;width:100%;height:100%;backface-visibility:hidden;transform:rotateY(180deg);background:linear-gradient(135deg,#1a1a1a,#2a2a2a);border-radius:18px;padding:0;color:#fff;overflow:hidden;border:1px solid #333">
+    <div style="height:40px;background:#000;margin-top:20px"></div>
+    <div style="padding:15px;display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+      <div style="background:#fff;color:#000;padding:6px 20px;border-radius:4px;font-size:14px;letter-spacing:2px">•••</div>
+      <div style="text-align:right"><div style="font-size:10px;color:#888">CVV</div><div style="font-size:18px;font-weight:900;color:#ffcc00">847</div></div>
+    </div>
+    <div style="padding:0 15px;font-size:9px;color:#888;margin-top:10px">This card is property of Kelly Bank. Tap to flip back.</div>
+  </div>
 </div>
 
-<!-- REWARD PAGE -->
+<div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+<button onclick="flipCard()" style="padding:8px 14px;background:#1a1a1a;border:1px solid #ffcc00;color:#ffcc00;border-radius:20px;font-size:12px;cursor:pointer">👁️ Show CVV</button>
+<button onclick="freezeCard()" style="padding:8px 14px;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:20px;font-size:12px;cursor:pointer">🔒 Freeze</button>
+<button onclick="copyCard()" style="padding:8px 14px;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:20px;font-size:12px;cursor:pointer">📋 Copy Number</button>
+</div>
+
+<div style="background:#1a1a1a;border-radius:12px;padding:12px;margin-top:16px;text-align:left;font-size:12px">
+<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #222"><span style="color:#888">Number</span><span>1234 5678 9012 3456</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #222"><span style="color:#888">Expiry</span><span>12/29</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0"><span style="color:#888">CVV</span><span onclick="flipCard()" style="color:#ffcc00;cursor:pointer">Tap card to view ***</span></div>
+</div>
+</div>
+</div>
+
+<!-- REWARD -->
 <div id="page-reward" class="page">
-<div class="bigBox"><h3>🎁 Rewards</h3><div style="font-size:40px;margin:15px">🏆</div><h2 style="color:#ffcc00">250 Points</h2><p style="color:#888;font-size:12px;margin:10px 0">Keep transacting to earn more</p><div style="background:#1a1a1a;border-radius:12px;padding:12px;text-align:left;font-size:12px;margin-top:15px"><div>✅ Transfer - 10 pts</div><div>✅ Airtime - 5 pts</div><div>✅ Bills - 15 pts</div></div></div>
+<div class="bigBox"><h3>🎁 Rewards</h3><div style="font-size:40px;margin:15px">🏆</div><h2 style="color:#ffcc00">250 Points</h2><p style="color:#888;font-size:12px;margin:10px 0">Keep transacting to earn more</p></div>
 </div>
 
-<!-- LOAN PAGE -->
+<!-- LOAN -->
 <div id="page-loan" class="page">
-<div class="bigBox"><h3>💰 Instant Loan</h3><p style="color:#888;font-size:12px">You are eligible</p><h1 style="color:#ffcc00;margin:15px 0">₦50,000</h1><p style="color:#888;font-size:12px">Repay in 30 days - 15% interest</p><button class="send" style="margin-top:15px" onclick="alert('Loan application submitted! You will receive ₦50,000 shortly')">Apply Now</button><div style="margin-top:15px;background:#1a1a1a;border-radius:10px;padding:12px;text-align:left;font-size:11px;color:#888"><div>• No collateral</div><div>• Instant disbursement</div><div>• Repay: ₦57,500</div></div></div>
+<div class="bigBox"><h3>💰 Instant Loan</h3><h1 style="color:#ffcc00;margin:15px 0">₦50,000</h1><p style="color:#888;font-size:12px">Repay ₦57,500 in 30 days</p><button class="send" style="margin-top:15px" onclick="alert('Loan application submitted!')">Apply Now</button></div>
 </div>
 
-<!-- ME PAGE -->
+<!-- ME -->
 <div id="page-me" class="page">
-<div class="bigBox"><img src="logo.png?v=26" style="width:80px;height:80px;border-radius:50%;border:2px solid #ffcc00"><h3 style="margin-top:10px">Kelly Osaro</h3><p style="color:#888;font-size:12px">kelly • Tier 3 Verified</p><div style="background:#1a1a1a;border-radius:12px;padding:12px;margin-top:15px;text-align:left;font-size:12px"><div style="padding:8px 0;border-bottom:1px solid #222">📱 Phone: 080****1234</div><div style="padding:8px 0;border-bottom:1px solid #222">🏦 Account: 1234567890</div><div style="padding:8px 0;border-bottom:1px solid #222">✉️ Email: kelly@email.com</div><div style="padding:8px 0">🔒 Change Password</div></div><button class="send" style="margin-top:15px;background:#222;color:#ffcc00;border:1px solid #ffcc00" onclick="logout()">Logout</button></div>
+<div class="bigBox"><img src="logo.png?v=26" style="width:80px;height:80px;border-radius:50%;border:2px solid #ffcc00"><h3 style="margin-top:10px">Kelly Osaro</h3><p style="color:#888;font-size:12px">kelly • Tier 3 Verified • 1234567890</p><button class="send" style="margin-top:15px;background:#222;color:#ffcc00;border:1px solid #ffcc00" onclick="logout()">Logout</button></div>
 </div>
 
 <!-- MODALS -->
 <div id="modal-transfer" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Transfer <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="bankSelect"><option value="">-- Select Bank --</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Wema Bank</option><option>OPay</option><option>Moniepoint</option><option>Kuda</option></select><input id="acct" maxlength="10" type="tel" placeholder="10-digit"><input id="amt" type="number" placeholder="Amount"><input id="rem" placeholder="Remark"><button class="send" onclick="sendMoney()">Send Now</button></div></div>
 <div id="modal-airtime" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Airtime <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="airNetwork"><option value="">-- Network --</option><option>MTN</option><option>GLO</option><option>Airtel</option><option>9mobile</option></select><input id="airPhone" type="tel" placeholder="Phone"><select id="airAmount"><option value="">-- Amount --</option><option value="100">₦100</option><option value="500">₦500</option><option value="1000">₦1,000</option><option value="2000">₦2,000</option><option value="5000">₦5,000</option></select><button class="send" onclick="buyAirtime()">Buy Airtime</button></div></div>
-<div id="modal-bills" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Bills <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="billType"><option value="">-- Bill --</option><option>BEDC</option><option>WAEC</option><option>JAMB</option><option>DSTV</option><option>GOTV</option><option>Data</option></select><input id="billRef" placeholder="Meter / Smartcard / Email"><select id="billAmount"><option value="">-- Amount --</option><option value="2000">₦2,000</option><option value="3500">₦3,500 - WAEC</option><option value="5000">₦5,000</option><option value="10000">₦10,000 - BEDC</option></select><button class="send" onclick="payBill()">Pay Bill</button></div></div>
+<div id="modal-bills" class="modal-bg" onclick="if(event.target==this)closeAll()"><div class="modal"><h3>Bills <span onclick="closeAll()" style="cursor:pointer">✕</span></h3><select id="billType"><option value="">-- Bill --</option><option>BEDC - Electricity</option><option>WAEC - Result Checker</option><option>JAMB</option><option>DSTV</option><option>GOTV</option><option>Data</option></select><input id="billRef" placeholder="Meter / Smartcard / Email"><select id="billAmount"><option value="">-- Amount --</option><option value="2000">₦2,000</option><option value="3500">₦3,500 - WAEC</option><option value="5000">₦5,000</option><option value="10000">₦10,000 - BEDC</option></select><button class="send" onclick="payBill()">Pay Bill</button></div></div>
 
 <div class="bottom">
 <div class="bnav active" id="nav-home" onclick="switchPage('home')">🏠<br>Home</div>
@@ -104,7 +142,6 @@ body{background:#0d0d0d;color:#fff}
 <div class="bnav" id="nav-loan" onclick="switchPage('loan')">💰<br>Loan</div>
 <div class="bnav" id="nav-me" onclick="switchPage('me')">👤<br>Me</div>
 </div>
-
 </div>
 
 <script>
@@ -118,22 +155,19 @@ let defaultTxns=[
  {bank:'GTBank - Salary',acct:'Incoming',amount:75000,remark:'Incoming',date:'Oct 17, 09:00 AM',type:'incoming'}
 ];
 let txns=JSON.parse(localStorage.getItem('kb_txns')||'null')||defaultTxns;
+let cardFlipped=false;
 function save(){ localStorage.setItem('kb_balance',balance); localStorage.setItem('kb_txns',JSON.stringify(txns)); localStorage.setItem('kb_logged','1'); }
 function updateBal(){ document.getElementById('mainBal').innerText='₦'+balance.toLocaleString()+'.00'; }
 function renderHistory(){ document.getElementById('txnList').innerHTML=txns.map(t=>`<div class="txn"><div><b>${t.bank}</b><br><span style="color:#888;font-size:11px">${t.acct} • ${t.date} • ${t.remark}</span></div><div style="font-weight:900" class="${t.type==='incoming'?'pos':'neg'}">${t.type==='incoming'?'+':'-'}₦${Number(t.amount).toLocaleString()}</div></div>`).join(''); }
 function login(){ let u=document.getElementById('username').value.trim().toLowerCase(), p=document.getElementById('password').value.trim(); if(u===defaultUser && p===defaultPass){ document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; document.getElementById('welcomeUser').innerText='Welcome '+u+' • Savings'; save(); updateBal(); renderHistory(); }else{ alert('Use kelly / 1234'); } }
 function forgot(){ let np=prompt('New password for kelly:'); if(np&&np.length>=4){ defaultPass=np; alert('New password: '+np); } }
 function logout(){ localStorage.removeItem('kb_logged'); location.reload(); }
-function switchPage(name){
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.querySelectorAll('.bnav').forEach(b=>b.classList.remove('active'));
- document.getElementById('page-'+name).classList.add('active');
- document.getElementById('nav-'+name).classList.add('active');
- window.scrollTo({top:0,behavior:'smooth'});
-}
+function switchPage(name){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.querySelectorAll('.bnav').forEach(b=>b.classList.remove('active')); document.getElementById('page-'+name).classList.add('active'); document.getElementById('nav-'+name).classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
 function openModal(n){ document.getElementById('modal-'+n).style.display='flex'; }
 function closeAll(){ document.querySelectorAll('.modal-bg').forEach(m=>m.style.display='none'); }
-function freezeCard(){ alert('Card Frozen/Unfrozen'); }
+function freezeCard(){ alert('Card '+(cardFlipped?'Unfrozen':'Frozen')+' ❄️'); }
+function flipCard(){ cardFlipped=!cardFlipped; document.getElementById('realCard').style.transform=cardFlipped?'rotateY(180deg)':'rotateY(0deg)'; }
+function copyCard(){ navigator.clipboard.writeText('1234567890123456'); alert('Copied: 1234 5678 9012 3456'); }
 function addMoney(){ let a=prompt('Add amount:'); if(a&&!isNaN(a)){ balance+=+a; txns.unshift({bank:'Deposit',acct:'Self',amount:a,remark:'Incoming',date:'Now',type:'incoming'}); save(); updateBal(); renderHistory(); } }
 function sendMoney(){ let b=document.getElementById('bankSelect').value, ac=document.getElementById('acct').value, am=+document.getElementById('amt').value; if(!b||ac.length!=10||!am||am>balance){alert('Check fields');return;} balance-=am; txns.unshift({bank:b,acct:ac,amount:am,remark:'Outgoing',date:'Now',type:'transfer'}); save(); updateBal(); renderHistory(); closeAll(); alert('Sent'); }
 function buyAirtime(){ let n=document.getElementById('airNetwork').value, ph=document.getElementById('airPhone').value, am=+document.getElementById('airAmount').value; if(!n||!ph||!am||am>balance){alert('Fill all');return;} balance-=am; txns.unshift({bank:n+' Airtime',acct:ph,amount:am,remark:'Airtime',date:'Now',type:'airtime'}); save(); updateBal(); renderHistory(); closeAll(); }
