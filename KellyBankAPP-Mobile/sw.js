@@ -1,4 +1,4 @@
-const CACHE_NAME = "kelly-bank-v25";
+const CACHE_NAME = "kelly-bank-v26";
 const urlsToCache = [
   "./",
   "./index.html?v=25",
