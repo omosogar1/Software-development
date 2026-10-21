@@ -1,57 +1,28 @@
-const CACHE_NAME = "kellybank-v8-autolock";
+const CACHE_NAME = "kellybank-v26";
 const FILES_TO_CACHE = [
   "./",
-  "./index.html",
-  "./manifest.json",
+  "./index.html?v=26",
+  "./manifest.json?v=26",
   "./logo.png"
 ];
 
-// Install - Cache files
 self.addEventListener("install", (event) => {
-  console.log("KellyBank SW: Installing v8");
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(FILES_TO_CACHE);
-    })
-  );
+  console.log("KellyBank V26 Installing");
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE)));
   self.skipWaiting();
 });
 
-// Activate - Clean old cache
 self.addEventListener("activate", (event) => {
-  console.log("KellyBank SW: Activating v8");
   event.waitUntil(
-    caches.keys().then((keyList) => {
-      return Promise.all(
-        keyList.map((key) => {
-          if (key !== CACHE_NAME) {
-            console.log("Deleting old cache:", key);
-            return caches.delete(key);
-          }
-        })
-      );
-    })
+    caches.keys().then((keyList) => Promise.all(keyList.map((key) => {
+      if (key !== CACHE_NAME) return caches.delete(key);
+    })))
   );
   self.clients.claim();
 });
 
-// Fetch - Offline support + BVN/PIN data stays in localStorage
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      // Return cached or fetch from network
-      return response || fetch(event.request).then((fetchRes) => {
-        // Cache new files
-        return caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, fetchRes.clone());
-          return fetchRes;
-        });
-      });
-    }).catch(() => {
-      // If offline and not in cache, return index
-      if (event.request.destination === 'document') {
-        return caches.match('./index.html');
-      }
-    })
+    caches.match(event.request).then((response) => response || fetch(event.request).catch(()=>caches.match("./index.html?v=26")))
   );
 });
