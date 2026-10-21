@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly Bank V26.9 No Pin in Creation</title>
+<title>Kelly Bank</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#121212">
 <style>
@@ -41,22 +41,21 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 <div id="welcomeScreen" class="screen active">
   <div class="screen-inner">
     <img src="logo.png" class="logo-img-big" alt="Logo">
-    <div class="title">Kelly Bank V26.9</div>
-    <div class="subtitle">No PIN in Creation - Password Only</div>
+    <div class="title">Kelly Bank</div>
+    <div class="subtitle">Secure Banking</div>
     <button class="btn-primary" onclick="goToLogin()">Login</button>
     <button class="btn-secondary" onclick="goToRegister()">Create New Account</button>
   </div>
 </div>
 
-<!-- REGISTER - NO PIN AT ALL -->
 <div id="registerScreen" class="screen">
   <div class="screen-inner">
     <img src="logo.png" class="logo-img-big" alt="Logo">
     <div class="title">Create Account</div>
-    <div class="subtitle">No PIN here - Password only</div>
-    <input id="regName" placeholder="Full Name e.g Kelly Osaro">
+    <div class="subtitle">Password only - No PIN here</div>
+    <input id="regName" placeholder="Full Name">
     <input id="regPhone" type="tel" placeholder="Phone Number">
-    <input id="regPassword" type="password" placeholder="Create Password (min 6 chars)">
+    <input id="regPassword" type="password" placeholder="Create Password">
     <input id="regConfirmPassword" type="password" placeholder="Confirm Password">
     <button class="btn-primary" onclick="doRegister()">Create Account</button>
     <button class="btn-secondary" onclick="showScreen('welcomeScreen')">Back</button>
@@ -64,7 +63,6 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
   </div>
 </div>
 
-<!-- LOGIN WITH PASSWORD -->
 <div id="loginScreen" class="screen">
   <div class="screen-inner">
     <img src="logo.png" class="logo-img-big" alt="Logo">
@@ -78,7 +76,6 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
   </div>
 </div>
 
-<!-- MAIN APP -->
 <div class="app" id="mainApp">
   <div class="header-top">
     <div class="logo-area">
@@ -93,31 +90,31 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
       <small style="color:#888;font-size:10px">AVAILABLE BALANCE <span onclick="toggleBalance()" style="cursor:pointer">🙈</span></small>
       <h2 style="margin:5px 0"><span style="color:#ffcc00">₦</span> <span id="balance">••••••••</span></h2>
       <small id="welcomeName" style="color:#888">Welcome</small><br>
-      <small id="tierBadge" style="background:#333;padding:2px 6px;border-radius:8px;font-size:9px">Tier 1 • ₦50k</small>
+      <small id="tierBadge" style="background:#333;padding:2px 6px;border-radius:8px;font-size:9px">Tier 1</small>
     </div>
     <button class="add-money" onclick="openBox('tierBox')">+ ADD MONEY</button>
   </div>
 
   <div class="quick-actions">
     <div class="q-btn" onclick="openBox('transferBox')"><div>💸</div><small>Transfer</small></div>
-    <div class="q-btn" onclick="alert('Airtime V26.9')"><div>📱</div><small>Airtime</small></div>
-    <div class="q-btn" onclick="alert('Bills V26.9')"><div>💡</div><small>Bills</small></div>
+    <div class="q-btn" onclick="alert('Airtime coming')"><div>📱</div><small>Airtime</small></div>
+    <div class="q-btn" onclick="alert('Bills coming')"><div>💡</div><small>Bills</small></div>
   </div>
 
   <div class="trans-box">
     <h4 style="color:#ffcc00;font-size:13px;margin-bottom:10px">Transaction History</h4>
     <div id="dynamicTrans"></div>
-    <div class="trans-item"><div><b style="font-size:12px">9TBank - Salary</b><br><small style="color:#0f0">Credit</small></div><b style="color:#0f0">+₦75000</b></div>
+    <div class="trans-item"><div><b style="font-size:12px">Salary</b><br><small style="color:#0f0">Credit</small></div><b style="color:#0f0">+₦75000</b></div>
   </div>
 
   <div id="tierBox" class="box">
-    <h4 style="color:#ffcc00">Account Settings V26.9</h4>
-    <div class="tier-box"><b>Tier 1 ✓ Active</b><br><small>₦50k • No BVN</small></div>
+    <h4 style="color:#ffcc00">Account Settings</h4>
+    <div class="tier-box"><b>Tier 1 ✓ Active</b><br><small>₦50,000 Limit • No BVN</small></div>
     <div class="tier-box">
-      <b>Tier 2 <span id="tier2Status">- Locked</span></b><br><small>₦200k • BVN Required</small>
+      <b>Tier 2 <span id="tier2Status">- Locked</span></b><br><small>₦200,000 • BVN Required</small>
       <div id="bvnUpgradeForm" style="margin-top:10px">
         <input id="bvnInput" type="number" placeholder="11-digit BVN">
-        <button class="btn-primary" onclick="verifyBVN()">Verify BVN for Tier 2</button>
+        <button class="btn-primary" onclick="verifyBVN()">Verify BVN</button>
         <p id="bvnMsg" style="font-size:12px;margin-top:5px"></p>
       </div>
     </div>
@@ -132,12 +129,11 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
     <button class="btn-secondary" onclick="closeBoxes()">Close</button>
   </div>
 
-  <!-- TRANSFER - PIN AFTER AMOUNT -->
   <div id="transferBox" class="box">
-    <h4 style="color:#ffcc00">Transfer - PIN After Amount</h4>
-    <input id="sendTo" placeholder="Recipient Account / Phone">
+    <h4 style="color:#ffcc00">Transfer</h4>
+    <input id="sendTo" placeholder="Recipient Account">
     <input id="sendAmount" type="number" placeholder="Amount ₦">
-    <input id="transferPinInput" type="password" maxlength="4" placeholder="Transfer PIN (4-digit) - After Amount">
+    <input id="transferPinInput" type="password" maxlength="4" placeholder="Transfer PIN - After Amount">
     <input id="sendRemark" placeholder="Remark (optional)">
     <button class="btn-primary" onclick="doTransfer()">Send Now</button>
     <button class="btn-secondary" onclick="closeBoxes()">Cancel</button>
@@ -163,14 +159,12 @@ let userData = JSON.parse(localStorage.getItem("kelly_user_v269") || "null");
 let tier = localStorage.getItem("kelly_tier_v269") || "1";
 let transferPin = localStorage.getItem("kelly_transfer_pin_v269") || null;
 let showBal = false;
-
 window.onload = ()=>{
   updateBalanceUI();
   const p = new URLSearchParams(window.location.search);
   if(p.has('clear')){ localStorage.clear(); location.href=location.pathname; return; }
   showScreen('welcomeScreen');
 };
-
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -178,7 +172,6 @@ function showScreen(id){
 }
 function goToLogin(){ showScreen('loginScreen'); }
 function goToRegister(){ showScreen('registerScreen'); }
-
 function doRegister(){
   let name=document.getElementById('regName').value.trim();
   let phone=document.getElementById('regPhone').value.trim();
@@ -195,7 +188,6 @@ function doRegister(){
   msg.innerText="Account Created! Go to Login"; msg.style.color="green";
   setTimeout(()=>showScreen('loginScreen'),1000);
 }
-
 function doLogin(){
   let phone=document.getElementById('loginPhone').value.trim();
   let pass=document.getElementById('loginPassword').value.trim();
@@ -209,7 +201,6 @@ function doLogin(){
   document.getElementById('mainApp').style.display='block';
   updateBalanceUI();
 }
-
 function toggleBalance(){ showBal=!showBal; updateBalanceUI(); }
 function updateBalanceUI(){
   let balEl=document.getElementById('balance');
@@ -218,7 +209,7 @@ function updateBalanceUI(){
     let wn=document.getElementById('welcomeName'); if(wn) wn.innerText="Welcome "+userData.name;
     let rf=document.getElementById('rFrom'); if(rf) rf.innerText="From: "+userData.name;
   }
-  let tb=document.getElementById('tierBadge'); if(tb) tb.innerText=tier==="1"?"Tier 1 • ₦50k":"Tier 2 • ₦200k";
+  let tb=document.getElementById('tierBadge'); if(tb) tb.innerText=tier==="1"?"Tier 1":"Tier 2";
   if(tier==="2"){
     let s=document.getElementById('tier2Status'); if(s){ s.innerText="✓ Verified"; s.style.color="#0f0"; }
     let f=document.getElementById('bvnUpgradeForm'); if(f) f.style.display='none';
@@ -227,17 +218,13 @@ function updateBalanceUI(){
   let ps=document.getElementById('pinStatus'); if(ps) ps.innerText=transferPin?"✓ Set":"- Not Set";
   if(ps && transferPin) ps.style.color="#0f0";
 }
-
 function setTransferPin(){
   let pin=document.getElementById('newTransferPin').value.trim();
   let msg=document.getElementById('pinMsg');
   if(pin.length!==4){ msg.innerText="PIN must be 4 digits"; msg.style.color="red"; return; }
   localStorage.setItem("kelly_transfer_pin_v269", pin);
-  transferPin=pin;
-  msg.innerText="Transfer PIN Set!"; msg.style.color="green";
-  updateBalanceUI();
+  transferPin=pin; msg.innerText="Transfer PIN Set!"; msg.style.color="green"; updateBalanceUI();
 }
-
 function verifyBVN(){
   let bvn=document.getElementById('bvnInput').value.trim(); let msg=document.getElementById('bvnMsg');
   if(bvn.length!==11){ msg.innerText="BVN must be 11 digits"; msg.style.color="red"; return; }
@@ -256,7 +243,7 @@ function doTransfer(){
   transferPin=localStorage.getItem("kelly_transfer_pin_v269") || null;
   if(!to||!amt){ alert("Fill recipient and amount"); return; }
   if(amt>limit){ alert("Tier limit ₦"+limit+" - Upgrade inside"); openBox('tierBox'); return; }
-  if(!transferPin){ alert("Set Transfer PIN first in Me/Loan section"); openBox('tierBox'); return; }
+  if(!transferPin){ alert("Set Transfer PIN first in Me/Loan"); openBox('tierBox'); return; }
   if(tpin!==transferPin){ alert("Wrong Transfer PIN"); return; }
   if(amt>balance){ alert("Insufficient"); return; }
   balance-=amt; localStorage.setItem("kelly_balance_v269", balance); updateBalanceUI();
