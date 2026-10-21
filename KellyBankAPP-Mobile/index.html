@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Kelly Bank App v26.5</title>
-<link rel="manifest" href="manifest.json?v=26.5">
+<title>Kelly Bank App v26.6</title>
+<link rel="manifest" href="manifest.json?v=26.6">
 <meta name="theme-color" content="#ffcc00">
 <link rel="icon" href="logo.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 :root{--bg:#0d0d0d;--card:#1c1c1c;--card2:#151515;--text:#fff;--muted:#888;--border:#2a2a2a;--yellow:#ffcc00}
-body{background:var(--bg);color:var(--text)}
+body{background:var(--bg);color:var(--text);overflow-x:hidden}
 #loginScreen{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;background:radial-gradient(circle at top,#222,var(--bg))}
 .loginBox{width:100%;max-width:380px;background:var(--card2);border:1px solid var(--border);border-radius:22px;padding:28px;text-align:center}
 .loginBox img{width:80px;height:80px;border-radius:50%;border:3px solid var(--yellow);background:#000}
@@ -53,8 +53,8 @@ body{background:var(--bg);color:var(--text)}
 
 <div id="loginScreen">
 <div class="loginBox">
-<img src="logo.png?v=26.5">
-<h2>Kelly Bank v26.5</h2>
+<img src="logo.png?v=26.6">
+<h2>Kelly Bank v26.6</h2>
 <p>Built by Omosogar1 • Secure Banking</p>
 <input id="username" placeholder="Username - kelly">
 <input id="password" type="password" placeholder="Password - 1234">
@@ -65,7 +65,7 @@ body{background:var(--bg);color:var(--text)}
 </div>
 
 <div id="appScreen">
-<div class="top"><div class="top-left"><img src="logo.png?v=26.5"> Kelly Bank</div><div style="color:var(--yellow);font-size:12px;cursor:pointer" onclick="logout()">Logout</div></div>
+<div class="top"><div class="top-left"><img src="logo.png?v=26.6"> Kelly Bank</div><div style="color:var(--yellow);font-size:12px;cursor:pointer" onclick="logout()">Logout</div></div>
 
 <div id="page-home" class="page active">
 <div class="card"><h1 id="mainBal">₦30,075,000.00</h1><p id="welcomeUser" style="font-size:12px;color:#aaa;margin-top:4px">Welcome Kelly Osaro</p></div>
@@ -77,20 +77,18 @@ body{background:var(--bg);color:var(--text)}
 <div class="history-wrap"><h3 style="color:var(--yellow);font-size:14px;margin-bottom:8px">Transaction History</h3><div id="txnList"></div></div>
 </div>
 
-<!-- CARD WITH UNIQUE COLOR + LOGO -->
+<!-- CARD - UNIQUE COLOR + LOGO, NO TIER TEXT -->
 <div id="page-card" class="page">
 <div class="bigBox">
 <h3 style="color:var(--yellow)">💳 My GOLD Card</h3>
 <div id="realCard" onclick="flipCard()" style="width:100%;max-width:340px;height:200px;margin:15px auto;position:relative;transform-style:preserve-3d;transition:0.6s;cursor:pointer">
-<!-- FRONT - UNIQUE GOLD BLACK GRADIENT + LOGO -->
 <div style="position:absolute;width:100%;height:100%;backface-visibility:hidden;background:linear-gradient(135deg,#ffcc00 0%,#b89600 25%,#000000 25%,#1a1a1a 100%);border-radius:18px;padding:18px;color:#fff;text-align:left;border:1px solid #ffcc00;overflow:hidden">
-<div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:8px"><img src="logo.png?v=26.5" style="width:32px;height:32px;border-radius:50%;border:2px solid #ffcc00;background:#000"><span style="font-weight:900;color:#ffcc00;font-size:13px">KELLY BANK</span></div><span style="font-size:20px">💳</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:8px"><img src="logo.png?v=26.6" style="width:32px;height:32px;border-radius:50%;border:2px solid #ffcc00;background:#000"><span style="font-weight:900;color:#ffcc00;font-size:13px">KELLY BANK</span></div><span style="font-size:20px">💳</span></div>
 <div style="margin-top:25px;font-size:12px;color:#ffcc00;letter-spacing:2px">GOLD PREMIUM</div>
-<div style="font-size:20px;letter-spacing:3px;font-weight:700;margin:8px 0 10px;color:#fff;text-shadow:0 1px 2px #000">1234 5678 9012 3456</div>
-<div style="display:flex;justify-content:space-between;align-items:end"><div><div id="cardHolder" style="font-weight:900;font-size:13px;color:#ffcc00">KELLY OSARO</div><div style="font-size:10px;margin-top:4px;color:#aaa">09/28 • TIER 3 VERIFIED</div></div><div style="font-size:10px;color:#ffcc00">OMOSOGAR1</div></div>
+<div style="font-size:20px;letter-spacing:3px;font-weight:700;margin:8px 0 10px;color:#fff">1234 5678 9012 3456</div>
+<div style="display:flex;justify-content:space-between;align-items:end"><div><div id="cardHolder" style="font-weight:900;font-size:13px;color:#ffcc00">KELLY OSARO</div><div style="font-size:10px;margin-top:4px;color:#aaa">09/28 • OMOSOGAR1</div></div><div style="font-size:10px;color:#ffcc00">DEBIT</div></div>
 </div>
-<!-- BACK -->
-<div style="position:absolute;width:100%;height:100%;backface-visibility:hidden;transform:rotateY(180deg);background:linear-gradient(135deg,#1a1a1a,#000);border-radius:18px;border:1px solid #333;text-align:left"><div style="height:40px;background:#000;margin-top:20px"></div><div style="padding:15px;color:#fff"><div style="display:flex;justify-content:space-between"><div style="background:#fff;color:#000;padding:5px 10px;width:120px;font-size:12px">••• ••• •••</div><img src="logo.png?v=26.5" style="width:24px;height:24px;border-radius:50%;border:1px solid #ffcc00"></div><div style="text-align:right;color:var(--yellow);margin-top:10px;font-size:12px">CVV 847 • GOLD</div></div></div>
+<div style="position:absolute;width:100%;height:100%;backface-visibility:hidden;transform:rotateY(180deg);background:linear-gradient(135deg,#1a1a1a,#000);border-radius:18px;border:1px solid #333;text-align:left"><div style="height:40px;background:#000;margin-top:20px"></div><div style="padding:15px;color:#fff"><div style="display:flex;justify-content:space-between"><div style="background:#fff;color:#000;padding:5px 10px;width:120px;font-size:12px">••• ••• •••</div><img src="logo.png?v=26.6" style="width:24px;height:24px;border-radius:50%;border:1px solid #ffcc00"></div><div style="text-align:right;color:var(--yellow);margin-top:10px;font-size:12px">CVV 847 • GOLD</div></div></div>
 </div>
 <p style="color:#555;font-size:11px">Tap card to flip • Unique Gold-Black design with bank logo</p>
 </div>
@@ -99,46 +97,24 @@ body{background:var(--bg);color:var(--text)}
 <div id="page-reward" class="page"><div class="bigBox"><h3>🎁 Rewards</h3><div style="font-size:50px">🏆</div><h2 style="color:var(--yellow)">250 Points</h2></div></div>
 <div id="page-loan" class="page"><div class="bigBox"><h3>💰 Instant Loan</h3><h1 style="color:var(--yellow);margin:15px 0">₦50,000</h1><button class="send" style="margin-top:15px" onclick="alert('Loan Applied!')">Apply Now</button></div></div>
 
-<!-- ME PAGE WITH TIER 1 TO TIER 3 VERIFICATION -->
 <div id="page-me" class="page">
 <div class="bigBox">
-<img src="logo.png?v=26.5" style="width:90px;height:90px;border-radius:50%;border:3px solid var(--yellow)">
+<img src="logo.png?v=26.6" style="width:90px;height:90px;border-radius:50%;border:3px solid var(--yellow)">
 <h3 id="meName" style="margin-top:10px">Kelly Osaro</h3>
 <p id="meUser" style="font-size:12px;color:var(--muted)">kelly • 3007500001</p>
 <div style="margin-top:12px;display:inline-block;padding:4px 12px;border-radius:20px;background:var(--yellow);color:#000;font-size:11px;font-weight:900" id="meTierBadge">TIER 3 VERIFIED</div>
-
 <div style="margin-top:15px;text-align:left;font-size:12px;border-top:1px solid var(--border);padding-top:10px">
-<div id="meAcct" style="padding:8px 0">🏦 3007500001 • Kelly Bank</div>
+<div id="meAcct" style="padding:8px 0">🏦 3007500001</div>
 <div id="mePhone" style="padding:8px 0;border-top:1px solid var(--border)">📱 08012345678</div>
 </div>
-
-<!-- TIER VERIFICATION SECTION -->
 <div class="tierBox">
 <h4 style="color:var(--yellow);font-size:13px;margin-bottom:10px">🔐 Account Verification - Tier 1 to Tier 3</h4>
-
-<div class="tierItem">
-<div><b style="font-size:12px">Tier 1 - Basic</b><br><span style="font-size:10px;color:#888">Phone verified • Limit ₦50k/day</span></div>
-<div class="tierBadge verified" id="badge1">VERIFIED</div>
-</div>
-
-<div class="tierItem">
-<div><b style="font-size:12px">Tier 2 - Intermediate</b><br><span style="font-size:10px;color:#888">NIN + Selfie • Limit ₦200k/day</span></div>
-<div class="tierBadge" id="badge2" onclick="verifyTier(2)" style="cursor:pointer">VERIFY</div>
-</div>
-
-<div class="tierItem">
-<div><b style="font-size:12px">Tier 3 - Premium</b><br><span style="font-size:10px;color:#888">BVN + ID Card • Limit ₦5M/day + Loan</span></div>
-<div class="tierBadge verified" id="badge3">VERIFIED</div>
-</div>
-
-<div style="margin-top:12px">
-<div style="height:6px;background:#222;border-radius:10px;overflow:hidden"><div id="tierProgress" style="height:100%;width:100%;background:linear-gradient(90deg,#ffcc00,#8a6d00)"></div></div>
-<div style="font-size:10px;color:#888;margin-top:6px;text-align:center" id="tierText">All Tiers Verified - Maximum Limit Unlocked ✅</div>
-</div>
-
+<div class="tierItem"><div><b style="font-size:12px">Tier 1 - Basic</b><br><span style="font-size:10px;color:#888">Phone verified • Limit ₦50k/day</span></div><div class="tierBadge verified" id="badge1">VERIFIED</div></div>
+<div class="tierItem"><div><b style="font-size:12px">Tier 2 - Intermediate</b><br><span style="font-size:10px;color:#888">NIN + Selfie • Limit ₦200k/day</span></div><div class="tierBadge" id="badge2" onclick="verifyTier(2)" style="cursor:pointer">VERIFY</div></div>
+<div class="tierItem"><div><b style="font-size:12px">Tier 3 - Premium</b><br><span style="font-size:10px;color:#888">BVN + ID Card • Limit ₦5M/day + Loan</span></div><div class="tierBadge verified" id="badge3">VERIFIED</div></div>
+<div style="margin-top:12px"><div style="height:6px;background:#222;border-radius:10px;overflow:hidden"><div id="tierProgress" style="height:100%;width:100%;background:linear-gradient(90deg,#ffcc00,#8a6d00)"></div></div><div style="font-size:10px;color:#888;margin-top:6px;text-align:center" id="tierText">All Tiers Verified ✅</div></div>
 <button class="send" style="margin-top:12px;padding:10px;font-size:12px" onclick="openModal('tier')">📄 Upgrade / Verify Tier</button>
 </div>
-
 <button class="loginBtn" style="background:#222;color:#888;border:1px solid #333;margin-top:15px" onclick="logout()">Logout</button>
 </div>
 </div>
@@ -157,14 +133,7 @@ body{background:var(--bg);color:var(--text)}
 <div id="modal-bills" class="modal-bg"><div class="modal"><h3>Bills <span onclick="closeAll()">✕</span></h3><select id="billType"><option>BEDC</option><option>WAEC</option><option>JAMB</option><option>DSTV</option></select><input id="billRef" placeholder="Meter / Ref"><select id="billAmount"><option value="2000">₦2,000</option><option value="3500">₦3,500</option><option value="10000">₦10,000</option></select><button class="send" onclick="payBill()">Pay Bill</button></div></div>
 <div id="modal-receipt" class="modal-bg"><div class="modal"><div style="background:#fff;color:#000;border-radius:16px;padding:20px"><h2>✅ Receipt</h2><div id="receiptDetails" style="margin:15px 0;text-align:left;font-size:13px;line-height:1.8"></div></div><button class="send" style="margin-top:12px;background:#000;color:#fff" onclick="closeAll()">Close</button></div></div>
 <div id="modal-register" class="modal-bg"><div class="modal"><h3>🆕 CREATE NEW ACCOUNT <span onclick="closeAll()">✕</span></h3><input id="regFullname" placeholder="Full Name"><input id="regUsername" placeholder="Username"><input id="regPhone" type="tel" placeholder="Phone"><input id="regPassword" type="password" placeholder="Password min 4"><button class="send" onclick="registerUser()">🎉 CREATE ACCOUNT</button></div></div>
-
-<!-- TIER VERIFICATION MODAL -->
-<div id="modal-tier" class="modal-bg"><div class="modal"><h3>🔐 Verify Tier <span onclick="closeAll()">✕</span></h3>
-<select id="tierSelect" onchange="changeTierForm()"><option value="2">Tier 2 - NIN Verification</option><option value="3">Tier 3 - BVN + ID</option></select>
-<div id="tier2Form"><input id="nin" placeholder="NIN - 11 digits"><input id="selfie" type="file" accept="image/*"><p style="font-size:10px;color:#888">Upload selfie with ID</p></div>
-<div id="tier3Form" style="display:none"><input id="bvn" placeholder="BVN - 11 digits"><select id="idType"><option>National ID</option><option>Driver's License</option><option>Passport</option><option>Voter's Card</option></select><input id="idNumber" placeholder="ID Number"><input id="idUpload" type="file" accept="image/*"></div>
-<button class="send" onclick="submitTier()">✅ Submit Verification</button>
-</div></div>
+<div id="modal-tier" class="modal-bg"><div class="modal"><h3>🔐 Verify Tier <span onclick="closeAll()">✕</span></h3><select id="tierSelect" onchange="changeTierForm()"><option value="2">Tier 2 - NIN</option><option value="3">Tier 3 - BVN + ID</option></select><div id="tier2Form"><input id="nin" placeholder="NIN - 11 digits"><input id="selfie" type="file" accept="image/*"></div><div id="tier3Form" style="display:none"><input id="bvn" placeholder="BVN - 11 digits"><select id="idType"><option>National ID</option><option>Driver's License</option><option>Passport</option></select><input id="idNumber" placeholder="ID Number"><input id="idUpload" type="file" accept="image/*"></div><button class="send" onclick="submitTier()">✅ Submit</button></div></div>
 
 <script>
 let users=JSON.parse(localStorage.getItem('kb_users')||'null')||[{fullname:'Kelly Osaro',username:'kelly',password:'1234',phone:'08012345678',acct:'3007500001',balance:30075000,tier:3}];
@@ -178,12 +147,12 @@ function saveAll(){localStorage.setItem('kb_txns',JSON.stringify(txns)); if(curr
 function updateBal(){document.getElementById('mainBal').innerText='₦'+Number(balance).toLocaleString()+'.00';}
 function renderHistory(){document.getElementById('txnList').innerHTML=txns.map((t,i)=>`<div class="txn" onclick="showReceipt(${i})"><div><b>${t.bank}</b><br><span style="color:#777">${t.acct}</span></div><div style="font-weight:900">-₦${Number(t.amount).toLocaleString()}</div></div>`).join('');}
 function refreshUI(){if(!currentUser)return; document.getElementById('welcomeUser').innerText='Welcome '+currentUser.fullname; document.getElementById('meName').innerText=currentUser.fullname; document.getElementById('meUser').innerText=currentUser.username+' • '+currentUser.acct; document.getElementById('meAcct').innerText='🏦 '+currentUser.acct; document.getElementById('mePhone').innerText='📱 '+currentUser.phone; document.getElementById('cardHolder').innerText=currentUser.fullname.toUpperCase(); let tier=currentUser.tier||3; document.getElementById('meTierBadge').innerText='TIER '+tier+' '+(tier==3?'VERIFIED':''); updateTierUI(tier); balance=currentUser.balance; updateBal();}
-function updateTierUI(tier){let b2=document.getElementById('badge2'),b3=document.getElementById('badge3'); if(tier>=2){b2.className='tierBadge verified'; b2.innerText='VERIFIED';} else {b2.className='tierBadge current'; b2.innerText='VERIFY';} if(tier>=3){b3.className='tierBadge verified'; b3.innerText='VERIFIED';} else {b3.className='tierBadge current'; b3.innerText='VERIFY';} document.getElementById('tierProgress').style.width=(tier/3*100)+'%'; document.getElementById('tierText').innerText=tier==3?'All Tiers Verified - Maximum Limit Unlocked ✅':'Tier '+tier+'/3 - Verify to unlock higher limits';}
+function updateTierUI(tier){let b2=document.getElementById('badge2'),b3=document.getElementById('badge3'); if(tier>=2){b2.className='tierBadge verified'; b2.innerText='VERIFIED';} else {b2.className='tierBadge current'; b2.innerText='VERIFY';} if(tier>=3){b3.className='tierBadge verified'; b3.innerText='VERIFIED';} else {b3.className='tierBadge current'; b3.innerText='VERIFY';} document.getElementById('tierProgress').style.width=(tier/3*100)+'%';}
 function login(){let u=document.getElementById('username').value.trim().toLowerCase(),p=document.getElementById('password').value.trim(); let f=users.find(x=>x.username.toLowerCase()===u && x.password===p); if(f){currentUser=f; document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; refreshUI(); renderHistory(); saveAll();}else{alert('Invalid login!');}}
 function openRegister(){document.getElementById('modal-register').style.display='flex';}
 function openModal(n){document.getElementById('modal-'+n).style.display='flex';}
 function closeAll(){document.querySelectorAll('.modal-bg').forEach(m=>m.style.display='none');}
-function registerUser(){let fn=document.getElementById('regFullname').value.trim(),un=document.getElementById('regUsername').value.trim().toLowerCase(),ph=document.getElementById('regPhone').value.trim(),pw=document.getElementById('regPassword').value.trim(); if(!fn||!un||!ph||!pw||pw.length<4){alert('Fill all min 4');return;} if(users.find(x=>x.username.toLowerCase()===un)){alert('Username exists');return;} let acct='30075'+Math.floor(10000+Math.random()*90000); let nu={fullname:fn,username:un,password:pw,phone:ph,acct:acct,balance:30075000,tier:1}; users.push(nu); currentUser=nu; saveUsers(); closeAll(); document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; refreshUI(); renderHistory(); saveAll(); alert('✅ CREATED '+un+' Acct '+acct+' Tier 1');}
+function registerUser(){let fn=document.getElementById('regFullname').value.trim(),un=document.getElementById('regUsername').value.trim().toLowerCase(),ph=document.getElementById('regPhone').value.trim(),pw=document.getElementById('regPassword').value.trim(); if(!fn||!un||!ph||!pw||pw.length<4){alert('Fill all min 4');return;} if(users.find(x=>x.username.toLowerCase()===un)){alert('Username exists');return;} let acct='30075'+Math.floor(10000+Math.random()*90000); let nu={fullname:fn,username:un,password:pw,phone:ph,acct:acct,balance:30075000,tier:1}; users.push(nu); currentUser=nu; saveUsers(); closeAll(); document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; refreshUI(); renderHistory(); saveAll(); alert('✅ CREATED '+un+' Acct '+acct);}
 function logout(){localStorage.removeItem('kb_logged');localStorage.removeItem('kb_current');location.reload();}
 function switchPage(n){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.bnav').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+n).classList.add('active');document.getElementById('nav-'+n).classList.add('active');}
 function flipCard(){cardFlipped=!cardFlipped;document.getElementById('realCard').style.transform=cardFlipped?'rotateY(180deg)':'rotateY(0deg)';}
@@ -193,9 +162,9 @@ function payBill(){let r=document.getElementById('billRef').value,am=+document.g
 function showReceipt(i){let t=txns[i]; document.getElementById('receiptDetails').innerHTML=`Type: ${t.bank}<br>Account: ${t.acct}<br>Amount: ₦${Number(t.amount).toLocaleString()}<br>Date: ${t.date}<br>Status: Successful ✅<br>Ref: KB${Date.now().toString().slice(-8)}`; document.getElementById('modal-receipt').style.display='flex';}
 function changeTierForm(){let v=document.getElementById('tierSelect').value; document.getElementById('tier2Form').style.display=v=='2'?'block':'none'; document.getElementById('tier3Form').style.display=v=='3'?'block':'none';}
 function verifyTier(t){document.getElementById('tierSelect').value=t; changeTierForm(); openModal('tier');}
-function submitTier(){let t=+document.getElementById('tierSelect').value; currentUser.tier=Math.max(currentUser.tier||1,t); let idx=users.findIndex(u=>u.username==currentUser.username); if(idx>=0) users[idx].tier=currentUser.tier; saveUsers(); saveAll(); refreshUI(); closeAll(); alert('✅ Tier '+t+' Verification Submitted! Approved instantly for demo - You are now Tier '+currentUser.tier);}
+function submitTier(){let t=+document.getElementById('tierSelect').value; currentUser.tier=Math.max(currentUser.tier||1,t); let idx=users.findIndex(u=>u.username==currentUser.username); if(idx>=0) users[idx].tier=currentUser.tier; saveUsers(); saveAll(); refreshUI(); closeAll(); alert('✅ Tier '+t+' Approved!');}
 if(localStorage.getItem('kb_logged')&&currentUser){document.getElementById('loginScreen').style.display='none'; document.getElementById('appScreen').style.display='block'; refreshUI(); renderHistory();}
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js?v=26.5');}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js?v=26.6');}
 </script>
 </body>
 </html>
