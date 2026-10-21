@@ -31,13 +31,14 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 .screen.active{display:flex;flex-direction:column}
 .screen-inner{max-width:420px;width:100%;margin:0 auto;padding-top:20px;text-align:center}
 .logo-img-big{width:90px;height:90px;border-radius:50%;border:2px solid #ffcc00;object-fit:cover;margin:0 auto 15px auto;display:block;background:#000}
-.title{font-size:24px;font-weight:800;text-align:center;margin-bottom:8px;color:#ffcc00}
+.title{font-size:24px;font-weight:800;text-align:center;margin-bottom:15px;color:#ffcc00}
 .subtitle{font-size:14px;color:#888;text-align:center;margin-bottom:20px}
 .box{background:#1e1e1e;padding:15px;border-radius:15px;margin:15px;display:none;border:1px solid #2a2a2a;text-align:left}
 </style>
 </head>
 <body>
 
+<!-- WELCOME -->
 <div id="welcomeScreen" class="screen active">
   <div class="screen-inner">
     <img src="logo.png" class="logo-img-big" alt="Logo">
@@ -48,11 +49,11 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
   </div>
 </div>
 
+<!-- CREATE ACCOUNT - CLEAN, NO PIN, NO SUBTITLE -->
 <div id="registerScreen" class="screen">
   <div class="screen-inner">
     <img src="logo.png" class="logo-img-big" alt="Logo">
     <div class="title">Create Account</div>
-    <div class="subtitle">Password only - No PIN here</div>
     <input id="regName" placeholder="Full Name">
     <input id="regPhone" type="tel" placeholder="Phone Number">
     <input id="regPassword" type="password" placeholder="Create Password">
@@ -63,11 +64,11 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
   </div>
 </div>
 
+<!-- LOGIN -->
 <div id="loginScreen" class="screen">
   <div class="screen-inner">
     <img src="logo.png" class="logo-img-big" alt="Logo">
     <div class="title">Login</div>
-    <div class="subtitle" id="userDisplay">Enter Password</div>
     <input id="loginPhone" type="tel" placeholder="Phone Number">
     <input id="loginPassword" type="password" placeholder="Password">
     <button class="btn-primary" onclick="doLogin()">Login</button>
@@ -76,6 +77,7 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
   </div>
 </div>
 
+<!-- MAIN APP -->
 <div class="app" id="mainApp">
   <div class="header-top">
     <div class="logo-area">
@@ -109,7 +111,7 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 
   <div id="tierBox" class="box">
     <h4 style="color:#ffcc00">Account Settings</h4>
-    <div class="tier-box"><b>Tier 1 ✓ Active</b><br><small>₦50,000 Limit • No BVN</small></div>
+    <div class="tier-box"><b>Tier 1 ✓ Active</b><br><small>₦50,000 Limit</small></div>
     <div class="tier-box">
       <b>Tier 2 <span id="tier2Status">- Locked</span></b><br><small>₦200,000 • BVN Required</small>
       <div id="bvnUpgradeForm" style="margin-top:10px">
@@ -119,7 +121,7 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
       </div>
     </div>
     <div class="tier-box">
-      <b>Transfer PIN <span id="pinStatus">- Not Set</span></b><br><small>Set PIN for transfers</small>
+      <b>Transfer PIN <span id="pinStatus">- Not Set</span></b><br><small>Set PIN for transfers here</small>
       <div style="margin-top:10px">
         <input id="newTransferPin" type="password" maxlength="4" placeholder="Create 4-digit Transfer PIN">
         <button class="btn-primary" onclick="setTransferPin()">Set Transfer PIN</button>
@@ -154,17 +156,19 @@ input{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e
 </div>
 
 <script>
-let balance = parseFloat(localStorage.getItem("kelly_balance_v269") || "250000");
-let userData = JSON.parse(localStorage.getItem("kelly_user_v269") || "null");
-let tier = localStorage.getItem("kelly_tier_v269") || "1";
-let transferPin = localStorage.getItem("kelly_transfer_pin_v269") || null;
+let balance = parseFloat(localStorage.getItem("kelly_balance") || "250000");
+let userData = JSON.parse(localStorage.getItem("kelly_user") || "null");
+let tier = localStorage.getItem("kelly_tier") || "1";
+let transferPin = localStorage.getItem("kelly_transfer_pin") || null;
 let showBal = false;
+
 window.onload = ()=>{
   updateBalanceUI();
   const p = new URLSearchParams(window.location.search);
   if(p.has('clear')){ localStorage.clear(); location.href=location.pathname; return; }
   showScreen('welcomeScreen');
 };
+
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -172,6 +176,7 @@ function showScreen(id){
 }
 function goToLogin(){ showScreen('loginScreen'); }
 function goToRegister(){ showScreen('registerScreen'); }
+
 function doRegister(){
   let name=document.getElementById('regName').value.trim();
   let phone=document.getElementById('regPhone').value.trim();
@@ -183,16 +188,17 @@ function doRegister(){
   if(pass.length<6){ msg.innerText="Password min 6 chars"; msg.style.color="red"; return; }
   if(pass!==cpass){ msg.innerText="Passwords no match"; msg.style.color="red"; return; }
   userData={name,phone,password:pass};
-  localStorage.setItem("kelly_user_v269", JSON.stringify(userData));
-  localStorage.setItem("kelly_balance_v269","250000");
+  localStorage.setItem("kelly_user", JSON.stringify(userData));
+  localStorage.setItem("kelly_balance","250000");
   msg.innerText="Account Created! Go to Login"; msg.style.color="green";
   setTimeout(()=>showScreen('loginScreen'),1000);
 }
+
 function doLogin(){
   let phone=document.getElementById('loginPhone').value.trim();
   let pass=document.getElementById('loginPassword').value.trim();
   let msg=document.getElementById('loginMsg');
-  let stored = JSON.parse(localStorage.getItem("kelly_user_v269") || "null");
+  let stored = JSON.parse(localStorage.getItem("kelly_user") || "null");
   if(!stored){ msg.innerText="No account found. Create account"; return; }
   if(phone!==stored.phone){ msg.innerText="Phone not found"; return; }
   if(pass!==stored.password){ msg.innerText="Wrong Password"; return; }
@@ -201,6 +207,7 @@ function doLogin(){
   document.getElementById('mainApp').style.display='block';
   updateBalanceUI();
 }
+
 function toggleBalance(){ showBal=!showBal; updateBalanceUI(); }
 function updateBalanceUI(){
   let balEl=document.getElementById('balance');
@@ -214,22 +221,24 @@ function updateBalanceUI(){
     let s=document.getElementById('tier2Status'); if(s){ s.innerText="✓ Verified"; s.style.color="#0f0"; }
     let f=document.getElementById('bvnUpgradeForm'); if(f) f.style.display='none';
   }
-  transferPin=localStorage.getItem("kelly_transfer_pin_v269") || null;
+  transferPin=localStorage.getItem("kelly_transfer_pin") || null;
   let ps=document.getElementById('pinStatus'); if(ps) ps.innerText=transferPin?"✓ Set":"- Not Set";
   if(ps && transferPin) ps.style.color="#0f0";
 }
+
 function setTransferPin(){
   let pin=document.getElementById('newTransferPin').value.trim();
   let msg=document.getElementById('pinMsg');
   if(pin.length!==4){ msg.innerText="PIN must be 4 digits"; msg.style.color="red"; return; }
-  localStorage.setItem("kelly_transfer_pin_v269", pin);
+  localStorage.setItem("kelly_transfer_pin", pin);
   transferPin=pin; msg.innerText="Transfer PIN Set!"; msg.style.color="green"; updateBalanceUI();
 }
+
 function verifyBVN(){
   let bvn=document.getElementById('bvnInput').value.trim(); let msg=document.getElementById('bvnMsg');
   if(bvn.length!==11){ msg.innerText="BVN must be 11 digits"; msg.style.color="red"; return; }
   msg.innerText="Verifying..."; msg.style.color="#ffcc00";
-  setTimeout(()=>{ tier="2"; localStorage.setItem("kelly_tier_v269","2"); msg.innerText="Tier 2 Verified!"; msg.style.color="green"; updateBalanceUI(); },800);
+  setTimeout(()=>{ tier="2"; localStorage.setItem("kelly_tier","2"); msg.innerText="Tier 2 Verified!"; msg.style.color="green"; updateBalanceUI(); },800);
 }
 function lockApp(){ showScreen('welcomeScreen'); }
 function openBox(id){ closeBoxes(); document.getElementById(id).style.display='block'; updateBalanceUI(); }
@@ -240,13 +249,13 @@ function doTransfer(){
   let tpin=document.getElementById('transferPinInput').value.trim();
   let remark=document.getElementById('sendRemark').value.trim()||"No remark";
   let limit=tier==="1"?50000:200000;
-  transferPin=localStorage.getItem("kelly_transfer_pin_v269") || null;
+  transferPin=localStorage.getItem("kelly_transfer_pin") || null;
   if(!to||!amt){ alert("Fill recipient and amount"); return; }
-  if(amt>limit){ alert("Tier limit ₦"+limit+" - Upgrade inside"); openBox('tierBox'); return; }
+  if(amt>limit){ alert("Tier limit ₦"+limit); openBox('tierBox'); return; }
   if(!transferPin){ alert("Set Transfer PIN first in Me/Loan"); openBox('tierBox'); return; }
   if(tpin!==transferPin){ alert("Wrong Transfer PIN"); return; }
   if(amt>balance){ alert("Insufficient"); return; }
-  balance-=amt; localStorage.setItem("kelly_balance_v269", balance); updateBalanceUI();
+  balance-=amt; localStorage.setItem("kelly_balance", balance); updateBalanceUI();
   document.getElementById('rTo').innerText="To: "+to;
   document.getElementById('rAmount').innerText="Amount: ₦"+amt.toLocaleString();
   document.getElementById('rRemark').innerText="Remark: "+remark;
