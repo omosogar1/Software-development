@@ -19,8 +19,8 @@ body{background:#121212;color:#fff;min-height:100vh}
 .q-btn small{color:#ffcc00;display:block;margin-top:5px;font-size:11px}
 .trans-box{background:#1e1e1e;border-radius:15px;margin:15px;padding:15px;border:1px solid #2a2a2a}
 .trans-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:0.5px solid #2a2a2a}
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:#1a1a1a;display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #2a2a2a;z-index:50}
-.nav-item{text-align:center;font-size:10px;color:#666;cursor:pointer;padding:5px 8px;border-radius:10px;flex:1}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:#1a1a1a;display:flex;justify-content:space-around;padding:6px 0;border-top:1px solid #2a2a2a;z-index:50}
+.nav-item{text-align:center;font-size:9px;color:#666;cursor:pointer;padding:4px 6px;border-radius:10px;flex:1}
 .nav-item.active{color:#ffcc00;background:#2a2a2a}
 .tier-box{background:#1e1e1e;border:1px solid #333;border-left:4px solid #ffcc00;padding:12px;border-radius:10px;margin:10px 0}
 input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e;color:#fff;border:1px solid #333;font-size:16px}
@@ -85,7 +85,6 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
     <span onclick="lockApp()" style="color:#ffcc00;font-size:12px;cursor:pointer">Logout</span>
   </div>
 
-  <!-- HOME VIEW -->
   <div id="homeView" class="view active">
     <div class="balance-card">
       <div>
@@ -108,35 +107,43 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
     </div>
   </div>
 
-  <!-- REWARD VIEW -->
   <div id="rewardView" class="view">
     <div class="reward-card">
-      <h3 style="color:#ffcc00">🎁 Reward Center</h3>
-      <p style="font-size:12px;color:#888;margin:10px 0">Earn rewards for using Kelly Bank</p>
-      <div class="tier-box" style="border-left-color:#0f0"><b>Daily Login Bonus</b><br><small>Claim ₦50 daily</small><br><button class="btn-primary" style="padding:10px;margin-top:8px" onclick="claimReward(50)">Claim ₦50</button></div>
-      <div class="tier-box" style="border-left-color:#00aaff"><b>Referral Bonus</b><br><small>Invite friend = ₦200</small><br><button class="btn-primary" style="padding:10px;margin-top:8px" onclick="claimReward(200)">Claim Referral</button></div>
-      <div class="tier-box"><b>Cashback</b><br><small>2% cashback on airtime & bills</small><br><small style="color:#ffcc00">Total Earned: ₦<span id="rewardTotal">0</span></small></div>
+      <h3 style="color:#ffcc00">🎁 Reward</h3>
+      <div class="tier-box" style="border-left-color:#0f0"><b>Daily Bonus ₦50</b><br><button class="btn-primary" style="padding:10px;margin-top:8px" onclick="claimReward(50)">Claim</button></div>
+      <div class="tier-box" style="border-left-color:#00aaff"><b>Referral ₦200</b><br><button class="btn-primary" style="padding:10px;margin-top:8px" onclick="claimReward(200)">Claim Referral</button></div>
+      <p style="color:#ffcc00">Total: ₦<span id="rewardTotal">0</span></p>
     </div>
   </div>
 
-  <!-- LOAN CARD VIEW -->
   <div id="loanView" class="view">
     <div class="trans-box" style="display:block">
-      <h4 style="color:#ffcc00">💳 Loan & Card</h4>
-      <div class="reward-card" style="margin:0 0 15px 0">
-        <h4>Kelly Loan</h4><p style="font-size:12px;color:#888">Borrow up to ₦500,000</p>
-        <small style="color:#0f0">Eligible for ₦50,000 now</small><br>
-        <button class="btn-primary" onclick="applyLoan()">Apply for Loan</button>
+      <h4 style="color:#ffcc00">💰 Loan</h4>
+      <div class="reward-card" style="margin:0">
+        <h4>Kelly Loan</h4><p style="font-size:12px;color:#888">Up to ₦500,000</p>
+        <small style="color:#0f0">Eligible ₦50,000</small><br>
+        <button class="btn-primary" onclick="applyLoan()">Apply Loan</button>
       </div>
-      <div class="tier-box"><b>Virtual Card</b><br><small>₦1,000 card fee • Instant issue</small><br><button class="btn-secondary" onclick="alert('Card creation coming soon - will be live next update')">Create Card</button></div>
-      <div class="tier-box"><b>Loan History</b><br><small>No active loan</small></div>
+      <div class="tier-box" style="margin-top:15px"><b>Loan History</b><br><small>No active loan</small></div>
     </div>
   </div>
 
-  <!-- ME VIEW -->
+  <div id="cardView" class="view">
+    <div class="trans-box" style="display:block">
+      <h4 style="color:#ffcc00">💳 Card</h4>
+      <div class="reward-card" style="margin:0;background:linear-gradient(135deg,#ffcc00,#b38600);color:#000">
+        <h4 style="color:#000">Kelly Virtual Card</h4>
+        <p style="font-size:14px">**** **** **** 4589</p>
+        <small>Expiry: 12/28</small>
+      </div>
+      <div class="tier-box"><b>Create New Card</b><br><small>₦1,000 fee</small><br><button class="btn-secondary" onclick="alert('Card created successfully!')">Create Card</button></div>
+      <div class="tier-box"><b>Card Settings</b><br><small>Freeze, Limits, PIN</small></div>
+    </div>
+  </div>
+
   <div id="meView" class="view">
     <div class="trans-box" style="display:block">
-      <h4 style="color:#ffcc00">👤 Account Settings</h4>
+      <h4 style="color:#ffcc00">👤 Me - Settings</h4>
       <div class="tier-box"><b>Tier 1 ✓ Active</b><br><small>₦50,000 Limit</small></div>
       <div class="tier-box">
         <b>Tier 2 <span id="tier2Status">- Locked</span></b><br><small>₦200,000 • BVN Required</small>
@@ -147,7 +154,7 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
         </div>
       </div>
       <div class="tier-box">
-        <b>Transfer PIN <span id="pinStatus">- Not Set</span></b><br><small>Set PIN for transfers here</small>
+        <b>Transfer PIN <span id="pinStatus">- Not Set</span></b>
         <div style="margin-top:10px">
           <input id="newTransferPin" type="password" maxlength="4" placeholder="Create 4-digit Transfer PIN">
           <button class="btn-primary" onclick="setTransferPin()">Set Transfer PIN</button>
@@ -166,7 +173,7 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
     <select id="bankSelect"><option value="">Select Bank</option><option>Kelly Bank</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Zenith Bank</option><option>OPay</option><option>Palmpay</option><option>Kuda</option><option>Moniepoint</option></select>
     <input id="sendTo" placeholder="Recipient Account Number">
     <input id="sendAmount" type="number" placeholder="Amount ₦">
-    <input id="sendRemark" placeholder="Remark (optional)">
+    <input id="sendRemark" placeholder="Remark">
     <button class="btn-primary" onclick="initiateTransfer()">Send Now</button>
     <button class="btn-secondary" onclick="closeBoxes()">Cancel</button>
   </div>
@@ -194,7 +201,7 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
       <h4 style="color:#ffcc00">Enter Transfer PIN</h4>
       <p id="pinModalInfo" style="font-size:12px;color:#888;margin:10px 0">Confirm transaction</p>
       <input id="modalPinInput" type="password" maxlength="4" placeholder="4-digit PIN" style="text-align:center;font-size:20px;letter-spacing:5px">
-      <button class="btn-primary" onclick="confirmWithPin()">Confirm Payment</button>
+      <button class="btn-primary" onclick="confirmWithPin()">Confirm</button>
       <button class="btn-secondary" onclick="closePinModal()">Cancel</button>
       <p id="modalPinMsg" style="font-size:12px;margin-top:10px;color:red"></p>
     </div>
@@ -207,11 +214,11 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
     <button class="btn-primary" onclick="closeBoxes()">Close</button>
   </div>
 
-  <!-- BOTTOM NAV - HOME | REWARD | LOAN CARD | ME -->
   <div class="bottom-nav">
     <div class="nav-item active" id="navHome" onclick="switchTab('home')"><div>🏠</div>Home</div>
     <div class="nav-item" id="navReward" onclick="switchTab('reward')"><div>🎁</div>Reward</div>
-    <div class="nav-item" id="navLoan" onclick="switchTab('loan')"><div>💳</div>Loan Card</div>
+    <div class="nav-item" id="navLoan" onclick="switchTab('loan')"><div>💰</div>Loan</div>
+    <div class="nav-item" id="navCard" onclick="switchTab('card')"><div>💳</div>Card</div>
     <div class="nav-item" id="navMe" onclick="switchTab('me')"><div>👤</div>Me</div>
   </div>
 </div>
@@ -224,7 +231,6 @@ let transferPin = localStorage.getItem("kelly_transfer_pin") || null;
 let rewardTotal = parseFloat(localStorage.getItem("kelly_reward") || "0");
 let showBal = false;
 let pendingTx = null;
-
 window.onload = ()=>{
   updateBalanceUI();
   const p = new URLSearchParams(window.location.search);
@@ -270,15 +276,9 @@ function doLogin(){
 }
 function switchTab(tab){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  if(tab==='home') document.getElementById('homeView').classList.add('active');
-  if(tab==='reward') document.getElementById('rewardView').classList.add('active');
-  if(tab==='loan') document.getElementById('loanView').classList.add('active');
-  if(tab==='me') document.getElementById('meView').classList.add('active');
+  document.getElementById(tab+'View').classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('navHome').classList.toggle('active', tab==='home');
-  document.getElementById('navReward').classList.toggle('active', tab==='reward');
-  document.getElementById('navLoan').classList.toggle('active', tab==='loan');
-  document.getElementById('navMe').classList.toggle('active', tab==='me');
+  document.getElementById('nav'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
   closeBoxes(); closePinModal(); updateBalanceUI();
 }
 function toggleBalance(){ showBal=!showBal; updateBalanceUI(); }
@@ -318,13 +318,8 @@ function lockApp(){ showScreen('welcomeScreen'); }
 function openBox(id){ closeBoxes(); document.getElementById(id).style.display='block'; }
 function closeBoxes(){ document.querySelectorAll('.box').forEach(b=>b.style.display='none'); }
 function closePinModal(){ document.getElementById('pinModal').style.display='none'; document.getElementById('modalPinInput').value=""; document.getElementById('modalPinMsg').innerText=""; pendingTx=null; }
-function claimReward(amt){
-  rewardTotal+=amt; balance+=amt;
-  localStorage.setItem("kelly_reward", rewardTotal);
-  localStorage.setItem("kelly_balance", balance);
-  updateBalanceUI(); alert("Reward ₦"+amt+" credited!");
-}
-function applyLoan(){ alert("Loan Application: Your request for ₦50,000 is under review. You will be notified in Me tab."); }
+function claimReward(amt){ rewardTotal+=amt; balance+=amt; localStorage.setItem("kelly_reward", rewardTotal); localStorage.setItem("kelly_balance", balance); updateBalanceUI(); alert("Reward ₦"+amt+" credited!"); }
+function applyLoan(){ alert("Loan Application: ₦50,000 under review."); }
 function initiateTransfer(){
   let bank=document.getElementById('bankSelect').value;
   let to=document.getElementById('sendTo').value.trim();
@@ -335,7 +330,7 @@ function initiateTransfer(){
   let limit=tier==="1"?50000:200000;
   if(amt>limit){ alert("Tier limit ₦"+limit); switchTab('me'); return; }
   transferPin=localStorage.getItem("kelly_transfer_pin") || null;
-  if(!transferPin){ alert("Set Transfer PIN first in Me"); switchTab('me'); return; }
+  if(!transferPin){ alert("Set Transfer PIN in Me"); switchTab('me'); return; }
   if(amt>balance){ alert("Insufficient"); return; }
   pendingTx={type:"transfer", bank, to, amt, remark};
   document.getElementById('pinModalInfo').innerText=`Send ₦${amt.toLocaleString()} to ${bank} - ${to}? Enter PIN`;
@@ -347,7 +342,7 @@ function initiateAirtime(){
   let amt=parseFloat(document.getElementById('airtimeAmount').value);
   if(!net||!phone||!amt){ alert("Fill all airtime fields"); return; }
   transferPin=localStorage.getItem("kelly_transfer_pin") || null;
-  if(!transferPin){ alert("Set Transfer PIN in Me"); switchTab('me'); return; }
+  if(!transferPin){ alert("Set PIN in Me"); switchTab('me'); return; }
   if(amt>balance){ alert("Insufficient"); return; }
   pendingTx={type:"airtime", bank:net, to:phone, amt, remark:"Airtime "+net};
   document.getElementById('pinModalInfo').innerText=`Buy ₦${amt} ${net} airtime for ${phone}? Enter PIN`;
@@ -359,7 +354,7 @@ function initiateBills(){
   let amt=parseFloat(document.getElementById('billAmount').value);
   if(!type||!num||!amt){ alert("Fill all bill fields"); return; }
   transferPin=localStorage.getItem("kelly_transfer_pin") || null;
-  if(!transferPin){ alert("Set Transfer PIN in Me"); switchTab('me'); return; }
+  if(!transferPin){ alert("Set PIN in Me"); switchTab('me'); return; }
   if(amt>balance){ alert("Insufficient"); return; }
   pendingTx={type:"bills", bank:type, to:num, amt, remark:type+" Bill"};
   document.getElementById('pinModalInfo').innerText=`Pay ₦${amt.toLocaleString()} for ${type}? Enter PIN`;
