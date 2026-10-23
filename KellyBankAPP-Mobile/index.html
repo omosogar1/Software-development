@@ -52,6 +52,7 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
 .setting-item{display:flex;justify-content:space-between;align-items:center;padding:14px;background:#1e1e1e;border-radius:10px;margin:8px 0;border:1px solid #2a2a2a;cursor:pointer}
 .addmoney-item{display:flex;align-items:center;gap:12px;padding:16px;background:#1e1e1e;border-radius:12px;margin:10px 0;border:1px solid #2a2a2a;cursor:pointer}
 .addmoney-icon{width:40px;height:40px;background:#2a2a2a;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.security-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#121212;z-index:150;display:none;padding:20px;overflow-y:auto}
 </style>
 </head>
 <body>
@@ -128,27 +129,80 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
 
   <div id="cardView" class="view">
     <h4 style="color:#ffcc00;margin:15px">💳 My Card - Tap to Rotate</h4>
-    <div class="card-container" onclick="rotateCard()"><div class="kelly-card-flip" id="kellyFlip"><div class="card-front"><div style="display:flex;justify-content:space-between"><div style="display:flex;align-items:center;gap:8px"><img src="logo.png" style="width:30px;height:30px;border-radius:50%;border:1.5px solid #ffcc00"><span style="font-size:11px;font-weight:800;color:#ffcc00">KELLY BANK</span></div><div class="visa-debit"><span style="color:#ffcc00">VISA</span><small>DEBIT</small></div></div><div style="margin:18px 0;display:flex;gap:15px"><div class="kelly-chip"></div><span style="font-size:9px;color:#aaa">DEBIT</span></div><div style="font-size:17px;letter-spacing:2.5px;font-family:monospace;margin:12px 0" id="cardNumberFront">4539 1234 5678 4589</div><div style="display:flex;justify-content:space-between;margin-top:18px"><div><small style="font-size:8px;color:#aaa">CARD HOLDER</small><br><span id="cardName" style="font-size:11px">YOUR NAME</span></div><div><small style="font-size:8px;color:#aaa">EXPIRES</small><br><span style="font-size:11px">12/28</span></div><div class="visa-debit" style="font-size:16px"><span style="color:#ffcc00">VISA</span><small>DEBIT</small></div></div></div><div class="card-back"><div class="mag-stripe"></div><div style="margin:15px 0"><div style="display:flex;justify-content:space-between"><div style="background:#fff;height:30px;width:70%;display:flex;align-items:center;padding:5px"><span style="color:#000;font-size:10px">Authorized Signature - Debit</span></div><div class="cvv-box"><small>CVV</small><br><b id="cvvNum">789</b></div></div><p style="font-size:8px;color:#888;margin-top:25px">Kelly Bank Visa Debit - Unique design</p></div></div></div></div><p style="text-align:center;color:#888;font-size:11px">👆 Tap card to see back</p>
-    <div class="trans-box"><div class="tier-box"><b>Create New Visa Debit</b><br><small>Kelly Logo • Visa Debit • Unique color</small><br><button class="btn-primary" style="background:linear-gradient(135deg,#1a0f2e,#ffcc00);color:#fff" onclick="createUniqueCard()">Create New Visa Debit</button></div></div>
+    <div class="card-container" onclick="rotateCard()"><div class="kelly-card-flip" id="kellyFlip"><div class="card-front"><div style="display:flex;justify-content:space-between"><div style="display:flex;align-items:center;gap:8px"><img src="logo.png" style="width:30px;height:30px;border-radius:50%;border:1.5px solid #ffcc00"><span style="font-size:11px;font-weight:800;color:#ffcc00">KELLY BANK</span></div><div class="visa-debit"><span style="color:#ffcc00">VISA</span><small>DEBIT</small></div></div><div style="margin:18px 0;display:flex;gap:15px"><div class="kelly-chip"></div><span style="font-size:9px;color:#aaa">DEBIT</span></div><div style="font-size:17px;letter-spacing:2.5px;font-family:monospace;margin:12px 0" id="cardNumberFront">4539 1234 5678 4589</div><div style="display:flex;justify-content:space-between;margin-top:18px"><div><small style="font-size:8px;color:#aaa">CARD HOLDER</small><br><span id="cardName" style="font-size:11px">YOUR NAME</span></div><div><small style="font-size:8px;color:#aaa">EXPIRES</small><br><span style="font-size:11px">12/28</span></div><div class="visa-debit" style="font-size:16px"><span style="color:#ffcc00">VISA</span><small>DEBIT</small></div></div></div><div class="card-back"><div class="mag-stripe"></div><div style="margin:15px 0"><div style="display:flex;justify-content:space-between"><div style="background:#fff;height:30px;width:70%;display:flex;align-items:center;padding:5px"><span style="color:#000;font-size:10px">Authorized Signature - Debit</span></div><div class="cvv-box"><small>CVV</small><br><b id="cvvNum">789</b></div></div></div></div></div></div>
   </div>
 
+  <!-- ME VIEW - PROFILE + SETTINGS BUTTON -->
   <div id="meView" class="view">
     <div class="profile-header"><div class="profile-avatar" id="profileAvatar">K</div><h3 id="profileName" style="color:#ffcc00">Your Name</h3><small id="profilePhone" style="color:#888">Phone</small><br><small id="profileEmail" style="color:#888">Email</small><br><div style="margin-top:10px"><span id="profileTierBadge" style="background:#ffcc00;color:#000;padding:4px 10px;border-radius:10px;font-size:10px;font-weight:800">Tier 1</span></div></div>
-    <div class="trans-box" style="display:block"><h5 style="color:#ffcc00;font-size:12px">MY PROFILE</h5><div class="setting-item"><div><b style="font-size:12px">Full Name</b><br><small id="meName" style="color:#888">-</small></div><small style="color:#ffcc00">Edit</small></div><div class="setting-item"><div><b style="font-size:12px">Phone</b><br><small id="mePhone" style="color:#888">-</small></div><small style="color:#666">Verified ✓</small></div><div class="setting-item"><div><b style="font-size:12px">Email</b><br><small id="meEmail" style="color:#888">-</small></div></div><h5 style="color:#ffcc00;font-size:12px;margin:20px 0 10px 0">TIER - LIMIT</h5><div class="tier-box"><b>Tier 1 ✓ Active</b><br><small>₦50k</small></div><div class="tier-box"><b>Tier 2 <span id="tier2Status">- Locked</span></b><br><small>₦200k • BVN</small><div id="bvnUpgradeForm"><input id="bvnInput" type="number" placeholder="BVN 11 digits"><button class="btn-primary" onclick="verifyBVN()">Verify BVN</button><p id="bvnMsg" style="font-size:12px"></p></div></div><div class="tier-box" style="border-left-color:#0f0"><b>Tier 3 <span id="tier3Status">- Locked</span></b><br><small>Unlimited • NIN</small><div id="ninUpgradeForm"><input id="ninInput" type="number" placeholder="NIN 11 digits"><button class="btn-primary" style="background:#0f0;color:#000" onclick="verifyNIN()">Verify NIN → Unlimited</button><p id="ninMsg" style="font-size:12px"></p></div></div><h5 style="color:#ffcc00;font-size:12px;margin:20px 0 10px 0">SETTINGS - TRANSFER & SECURITY PIN</h5><div class="tier-box" style="border-left-color:#00aaff"><b>💸 Transfer PIN <span id="pinStatus">- Not Set</span></b><br><small>For Transfer, Airtime, Bills - After Send Now</small><div style="margin-top:10px"><input id="newTransferPin" type="password" maxlength="4" placeholder="4-digit PIN"><button class="btn-primary" onclick="setTransferPin()">Set Transfer PIN</button><p id="pinMsg" style="font-size:12px"></p></div></div><div class="tier-box" style="border-left-color:#ff4444"><b>🔒 Security PIN / Password</b><br><small>Change login password</small><div style="margin-top:10px"><input id="oldPassword" type="password" placeholder="Old Password"><input id="newPassword" type="password" placeholder="New Password"><button class="btn-primary" style="background:#ff4444" onclick="changeSecurityPin()">Change Security PIN</button><p id="secPinMsg" style="font-size:12px"></p></div></div></div>
+    <div class="trans-box" style="display:block">
+      <h5 style="color:#ffcc00;font-size:12px">MY PROFILE</h5>
+      <div class="setting-item"><div><b style="font-size:12px">Full Name</b><br><small id="meName" style="color:#888">-</small></div><small style="color:#ffcc00">Edit</small></div>
+      <div class="setting-item"><div><b style="font-size:12px">Phone</b><br><small id="mePhone" style="color:#888">-</small></div><small style="color:#666">Verified ✓</small></div>
+      <div class="setting-item"><div><b style="font-size:12px">Email</b><br><small id="meEmail" style="color:#888">-</small></div></div>
+      <div class="setting-item"><div><b style="font-size:12px">Account No</b><br><small id="meAccNo" style="color:#888">-</small></div><small style="color:#ffcc00">Copy</small></div>
+      
+      <h5 style="color:#ffcc00;font-size:12px;margin:20px 0 10px 0">ACCOUNT TIER</h5>
+      <div class="tier-box"><b>Tier 1 ✓ Active</b><br><small>₦50k limit</small></div>
+      <div class="tier-box"><b>Tier 2 <span id="tier2Status">- Locked</span></b><br><small>₦200k • BVN</small><div id="bvnUpgradeForm"><input id="bvnInput" type="number" placeholder="BVN 11 digits"><button class="btn-primary" onclick="verifyBVN()">Verify BVN</button><p id="bvnMsg" style="font-size:12px"></p></div></div>
+      <div class="tier-box" style="border-left-color:#0f0"><b>Tier 3 <span id="tier3Status">- Locked</span></b><br><small>Unlimited • NIN</small><div id="ninUpgradeForm"><input id="ninInput" type="number" placeholder="NIN 11 digits"><button class="btn-primary" style="background:#0f0;color:#000" onclick="verifyNIN()">Verify NIN → Unlimited</button><p id="ninMsg" style="font-size:12px"></p></div></div>
+
+      <h5 style="color:#ffcc00;font-size:12px;margin:20px 0 10px 0">SETTING</h5>
+      <div class="setting-item" onclick="openSettings()"><div><b style="font-size:13px">⚙️ Settings</b><br><small style="color:#888">Security, PIN, Password, Privacy</small></div><span style="color:#ffcc00;font-size:18px">›</span></div>
+      <div class="setting-item"><div><b style="font-size:12px">🆘 Help & Support</b></div><span>›</span></div>
+    </div>
   </div>
 
-  <!-- ADD MONEY - ONLY THESE 4 -->
-  <div id="addMoneyBox" class="box" style="display:none">
-    <h4 style="color:#ffcc00;text-align:center">Add Money</h4>
-    <p style="font-size:11px;color:#888;text-align:center;margin:10px 0">Choose how to fund your Kelly Bank account</p>
-    <div class="addmoney-item" onclick="showAddMoneyDetail('account')"><div class="addmoney-icon">🏦</div><div><b style="font-size:13px">Account Number</b><br><small style="color:#888">Your Kelly account no • Copy & transfer</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
-    <div class="addmoney-item" onclick="showAddMoneyDetail('cash')"><div class="addmoney-icon">💵</div><div><b style="font-size:13px">Cash Deposit</b><br><small style="color:#888">Deposit cash at agent / branch</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
-    <div class="addmoney-item" onclick="showAddMoneyDetail('card')"><div class="addmoney-icon">💳</div><div><b style="font-size:13px">Top up with Card / Account</b><br><small style="color:#888">Add money from other bank card or account</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
-    <div class="addmoney-item" onclick="showAddMoneyDetail('ussd')"><div class="addmoney-icon">#️⃣</div><div><b style="font-size:13px">Bank USSD</b><br><small style="color:#888">Dial *123*Kelly*Amount# from other banks</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
-    <div id="addMoneyDetail" style="display:none;margin-top:15px;padding:15px;background:#0a0a0a;border-radius:10px;border:1px solid #333">
-      <p id="addMoneyDetailText" style="font-size:13px;color:#fff"></p>
-      <button class="btn-secondary" style="padding:10px;margin-top:10px" onclick="document.getElementById('addMoneyDetail').style.display='none'">Close</button>
+  <!-- SETTINGS SCREEN - INSIDE ME -->
+  <div id="settingsScreen" class="security-screen">
+    <div style="max-width:420px;margin:0 auto">
+      <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px"><span onclick="closeSettings()" style="font-size:20px;cursor:pointer">‹ Back</span><h4 style="color:#ffcc00">Settings</h4></div>
+      <div class="setting-item" onclick="openSecurity()"><div><b style="font-size:13px">🔒 Security</b><br><small style="color:#888">PIN, Password, Security settings</small></div><span style="color:#ffcc00">›</span></div>
+      <div class="setting-item"><div><b style="font-size:13px">🔔 Notifications</b><br><small style="color:#888">Transaction alerts</small></div><span>›</span></div>
+      <div class="setting-item"><div><b style="font-size:13px">🌙 Theme</b><br><small style="color:#888">Dark mode</small></div><span>›</span></div>
+      <div class="setting-item"><div><b style="font-size:13px">📄 Privacy Policy</b></div><span>›</span></div>
     </div>
+  </div>
+
+  <!-- SECURITY SCREEN - INSIDE SETTINGS -->
+  <div id="securityScreen" class="security-screen">
+    <div style="max-width:420px;margin:0 auto">
+      <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px"><span onclick="closeSecurity()" style="font-size:20px;cursor:pointer">‹ Back</span><h4 style="color:#ffcc00">Security</h4></div>
+      <p style="font-size:11px;color:#888;margin-bottom:15px">Inside Security where PIN and Password can be set</p>
+      
+      <div class="tier-box" style="border-left-color:#00aaff">
+        <b>💸 Transfer PIN <span id="pinStatus">- Not Set</span></b><br><small>Used for Transfer, Airtime, Bills - After Send Now</small>
+        <div style="margin-top:12px">
+          <input id="newTransferPin" type="password" maxlength="4" placeholder="Create 4-digit Transfer PIN">
+          <button class="btn-primary" onclick="setTransferPin()">Set Transfer PIN</button>
+          <p id="pinMsg" style="font-size:12px;margin-top:5px"></p>
+        </div>
+      </div>
+
+      <div class="tier-box" style="border-left-color:#ff4444;margin-top:20px">
+        <b>🔑 Security PIN / Login Password</b><br><small>Change password for login security</small>
+        <div style="margin-top:12px">
+          <input id="oldPassword" type="password" placeholder="Old Password">
+          <input id="newPassword" type="password" placeholder="New Password (6+ chars)">
+          <input id="confirmNewPassword" type="password" placeholder="Confirm New Password">
+          <button class="btn-primary" style="background:#ff4444" onclick="changeSecurityPin()">Change Security Password</button>
+          <p id="secPinMsg" style="font-size:12px;margin-top:5px"></p>
+        </div>
+      </div>
+
+      <div class="setting-item" style="margin-top:20px"><div><b style="font-size:12px">🔐 Two-Factor Auth</b><br><small style="color:#888">Extra security</small></div><span>›</span></div>
+      <div class="setting-item"><div><b style="font-size:12px">👁️ Biometric Login</b><br><small style="color:#888">Fingerprint / Face ID</small></div><span>›</span></div>
+    </div>
+  </div>
+
+  <div id="addMoneyBox" class="box">
+    <h4 style="color:#ffcc00;text-align:center">Add Money</h4>
+    <p style="font-size:11px;color:#888;text-align:center;margin:10px 0">Choose method</p>
+    <div class="addmoney-item" onclick="showAddMoneyDetail('account')"><div class="addmoney-icon">🏦</div><div><b style="font-size:13px">Account Number</b><br><small style="color:#888">Your Kelly account</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
+    <div class="addmoney-item" onclick="showAddMoneyDetail('cash')"><div class="addmoney-icon">💵</div><div><b style="font-size:13px">Cash Deposit</b><br><small style="color:#888">At agent / branch</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
+    <div class="addmoney-item" onclick="showAddMoneyDetail('card')"><div class="addmoney-icon">💳</div><div><b style="font-size:13px">Top up with Card / Account</b><br><small style="color:#888">From other bank</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
+    <div class="addmoney-item" onclick="showAddMoneyDetail('ussd')"><div class="addmoney-icon">#️⃣</div><div><b style="font-size:13px">Bank USSD</b><br><small style="color:#888">Dial code</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
+    <div id="addMoneyDetail" style="display:none;margin-top:15px;padding:15px;background:#0a0a0a;border-radius:10px;border:1px solid #333"><p id="addMoneyDetailText" style="font-size:13px"></p><button class="btn-secondary" style="padding:10px" onclick="document.getElementById('addMoneyDetail').style.display='none'">Close</button></div>
     <button class="btn-secondary" onclick="closeBoxes()">Cancel</button>
   </div>
 
@@ -229,6 +283,10 @@ function switchTab(tab){
 }
 function toggleBalance(){ showBal=!showBal; updateBalanceUI(); }
 function rotateCard(){ document.getElementById('kellyFlip').classList.toggle('flipped'); }
+function openSettings(){ document.getElementById('settingsScreen').style.display='block'; }
+function closeSettings(){ document.getElementById('settingsScreen').style.display='none'; }
+function openSecurity(){ document.getElementById('securityScreen').style.display='block'; }
+function closeSecurity(){ document.getElementById('securityScreen').style.display='none'; }
 function updateBalanceUI(){
   let balEl=document.getElementById('balance');
   if(balEl) balEl.innerText=showBal?balance.toLocaleString():"••••••••";
@@ -243,6 +301,7 @@ function updateBalanceUI(){
     let pe=document.getElementById('profileEmail'); if(pe) pe.innerText=userData.email;
     let pa=document.getElementById('profileAvatar'); if(pa) pa.innerText=userData.name.charAt(0).toUpperCase();
     let cn=document.getElementById('cardName'); if(cn) cn.innerText=userData.name.toUpperCase();
+    let acc=document.getElementById('meAccNo'); if(acc) acc.innerText=userData.phone+" - Kelly Bank";
   }
   let cardF=document.getElementById('cardNumberFront'); if(cardF) cardF.innerText=cardNum;
   let tb=document.getElementById('tierBadge'); if(tb) tb.innerText=tier==="1"?"Tier 1":tier==="2"?"Tier 2":"Tier 3 Unlimited";
@@ -265,13 +324,13 @@ function showAddMoneyDetail(type){
   let text=document.getElementById('addMoneyDetailText');
   detail.style.display='block';
   if(type==='account'){
-    text.innerHTML=`<b>Account Number</b><br>Your Kelly Bank Account: <b style="color:#ffcc00">${userData?userData.phone:'0123456789'}</b><br><small>Bank: Kelly Bank • Name: ${userData?userData.name:'Your Name'}</small><br><br><button class="btn-primary" style="padding:8px" onclick="navigator.clipboard.writeText('${userData?userData.phone:'0123456789'}');alert('Account number copied!')">Copy Account No</button>`;
+    text.innerHTML=`<b>Account Number</b><br>Your Kelly: <b style="color:#ffcc00">${userData?userData.phone:'0123456789'}</b><br><small>Bank: Kelly Bank • Name: ${userData?userData.name:'Your Name'}</small><br><br><button class="btn-primary" style="padding:8px" onclick="navigator.clipboard.writeText('${userData?userData.phone:'0123456789'}');alert('Copied!')">Copy Account No</button>`;
   } else if(type==='cash'){
-    text.innerHTML=`<b>Cash Deposit</b><br>Visit any Kelly Bank agent or branch in Warri to deposit cash.<br><br>• Go to agent with cash<br>• Provide your phone: <b>${userData?userData.phone:'-'}</b><br>• Cash will reflect instantly`;
+    text.innerHTML=`<b>Cash Deposit</b><br>Visit Kelly Bank agent in Warri to deposit cash.<br>Provide phone: <b>${userData?userData.phone:'-'}</b>`;
   } else if(type==='card'){
-    text.innerHTML=`<b>Top up with Card / Account</b><br>Add money from other bank card or account.<br><br><input type="number" placeholder="Amount ₦" id="topupAmt"><button class="btn-primary" onclick="let a=document.getElementById('topupAmt').value; if(a){ balance+=parseFloat(a); localStorage.setItem('kelly_balance',balance); updateBalanceUI(); alert('₦'+a+' added via Card!'); closeBoxes(); }">Top up Now</button>`;
+    text.innerHTML=`<b>Top up with Card / Account</b><br><input type="number" placeholder="Amount ₦" id="topupAmt"><button class="btn-primary" onclick="let a=document.getElementById('topupAmt').value; if(a){ balance+=parseFloat(a); localStorage.setItem('kelly_balance',balance); updateBalanceUI(); alert('₦'+a+' added via Card!'); closeBoxes(); }">Top up Now</button>`;
   } else if(type==='ussd'){
-    text.innerHTML=`<b>Bank USSD</b><br>Dial from other bank accounts:<br><br><b style="color:#ffcc00">*123*${userData?userData.phone.slice(-4):'6789'}*Amount#</b><br><small>Example: *123*6789*5000# to send ₦5000 to your Kelly account</small><br><br><small>Supported: GTB *737*, Access *901*, FirstBank *894*</small>`;
+    text.innerHTML=`<b>Bank USSD</b><br>Dial: <b style="color:#ffcc00">*123*${userData?userData.phone.slice(-4):'6789'}*Amount#</b>`;
   }
 }
 function setTransferPin(){
@@ -279,17 +338,20 @@ function setTransferPin(){
   let msg=document.getElementById('pinMsg');
   if(pin.length!==4){ msg.innerText="4 digits"; msg.style.color="red"; return; }
   localStorage.setItem("kelly_transfer_pin", pin);
-  transferPin=pin; msg.innerText="Transfer PIN Set!"; msg.style.color="green"; updateBalanceUI();
+  transferPin=pin; msg.innerText="Transfer PIN Set inside Security!"; msg.style.color="green"; updateBalanceUI();
 }
 function changeSecurityPin(){
   let oldP=document.getElementById('oldPassword').value.trim();
   let newP=document.getElementById('newPassword').value.trim();
+  let cNewP=document.getElementById('confirmNewPassword').value.trim();
   let msg=document.getElementById('secPinMsg');
   if(oldP!==userData.password){ msg.innerText="Old password wrong"; msg.style.color="red"; return; }
-  if(newP.length<6){ msg.innerText="New password min 6 chars"; msg.style.color="red"; return; }
+  if(newP.length<6){ msg.innerText="Min 6 chars"; msg.style.color="red"; return; }
+  if(newP!==cNewP){ msg.innerText="New passwords no match"; msg.style.color="red"; return; }
   userData.password=newP;
   localStorage.setItem("kelly_user", JSON.stringify(userData));
-  msg.innerText="Security PIN Changed!"; msg.style.color="green";
+  msg.innerText="Security PIN / Password Changed inside Security!"; msg.style.color="green";
+  document.getElementById('oldPassword').value=""; document.getElementById('newPassword').value=""; document.getElementById('confirmNewPassword').value="";
 }
 function verifyBVN(){
   let bvn=document.getElementById('bvnInput').value.trim(); let msg=document.getElementById('bvnMsg');
@@ -304,7 +366,7 @@ function verifyNIN(){
 }
 function lockApp(){ showScreen('welcomeScreen'); }
 function openBox(id){ closeBoxes(); document.getElementById(id).style.display='block'; }
-function closeBoxes(){ document.querySelectorAll('.box').forEach(b=>b.style.display='none'); document.getElementById('addMoneyDetail').style.display='none'; }
+function closeBoxes(){ document.querySelectorAll('.box').forEach(b=>b.style.display='none'); let d=document.getElementById('addMoneyDetail'); if(d) d.style.display='none'; }
 function closePinModal(){ document.getElementById('pinModal').style.display='none'; document.getElementById('modalPinInput').value=""; document.getElementById('modalPinMsg').innerText=""; pendingTx=null; }
 function claimReward(amt){ rewardTotal+=amt; balance+=amt; localStorage.setItem("kelly_reward", rewardTotal); localStorage.setItem("kelly_balance", balance); updateBalanceUI(); alert("Reward ₦"+amt+" credited!"); }
 function applyLoan(){ alert("Loan Application ₦50,000 under review"); }
@@ -323,7 +385,7 @@ function initiateTransfer(){
   if(!bank||!to||!amt){ alert("Fill all"); return; }
   let limit=getLimit();
   if(amt>limit && tier!=="3"){ alert("Limit ₦"+limit.toLocaleString()+". Upgrade to Tier 3"); switchTab('me'); return; }
-  if(!localStorage.getItem("kelly_transfer_pin")){ alert("Set Transfer PIN in Me"); switchTab('me'); return; }
+  if(!localStorage.getItem("kelly_transfer_pin")){ alert("Set Transfer PIN in Me → Settings → Security"); openSettings(); setTimeout(openSecurity,300); return; }
   if(amt>balance){ alert("Insufficient"); return; }
   pendingTx={bank, to, amt, remark};
   document.getElementById('pinModalInfo').innerText=`Send ₦${amt.toLocaleString()} to ${bank} - ${to}?`;
@@ -334,7 +396,7 @@ function initiateAirtime(){
   let phone=document.getElementById('airtimePhone').value.trim();
   let amt=parseFloat(document.getElementById('airtimeAmount').value);
   if(!net||!phone||!amt){ alert("Fill all"); return; }
-  if(!localStorage.getItem("kelly_transfer_pin")){ alert("Set PIN in Me"); switchTab('me'); return; }
+  if(!localStorage.getItem("kelly_transfer_pin")){ alert("Set PIN in Settings → Security"); openSettings(); setTimeout(openSecurity,300); return; }
   if(amt>balance){ alert("Insufficient"); return; }
   pendingTx={bank:net, to:phone, amt, remark:"Airtime "+net};
   document.getElementById('pinModalInfo').innerText=`Buy ₦${amt} ${net} airtime?`;
@@ -345,7 +407,7 @@ function initiateBills(){
   let num=document.getElementById('billNumber').value.trim();
   let amt=parseFloat(document.getElementById('billAmount').value);
   if(!type||!num||!amt){ alert("Fill all"); return; }
-  if(!localStorage.getItem("kelly_transfer_pin")){ alert("Set PIN in Me"); switchTab('me'); return; }
+  if(!localStorage.getItem("kelly_transfer_pin")){ alert("Set PIN in Settings → Security"); openSettings(); setTimeout(openSecurity,300); return; }
   if(amt>balance){ alert("Insufficient"); return; }
   pendingTx={bank:type, to:num, amt, remark:type+" Bill"};
   document.getElementById('pinModalInfo').innerText=`Pay ₦${amt} for ${type}?`;
