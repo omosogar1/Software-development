@@ -58,6 +58,8 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
 .toggle.active{background:#0f0}
 .toggle-ball{width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:0.3s}
 .toggle.active .toggle-ball{left:23px}
+.reward-card{background:linear-gradient(135deg,#1e1e1e,#2a2a2a);border:1px solid #ffcc00;border-radius:15px;padding:20px;margin:15px;text-align:center}
+.share-btn{display:flex;align-items:center;gap:10px;padding:12px;background:#1e1e1e;border:1px solid #333;border-radius:10px;margin:8px 0;cursor:pointer}
 </style>
 </head>
 <body>
@@ -138,7 +140,38 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
     </div>
   </div>
 
-  <div id="rewardView" class="view"><div class="trans-box" style="display:block;text-align:center"><h3 style="color:#ffcc00">🎁 Reward</h3><div class="tier-box"><b>Daily ₦50</b><br><button class="btn-primary" style="padding:10px" onclick="claimReward(50)">Claim</button></div><div class="tier-box"><b>Referral ₦200</b><br><button class="btn-primary" style="padding:10px" onclick="claimReward(200)">Claim</button></div><p style="color:#ffcc00">Total: ₦<span id="rewardTotal">0</span></p></div></div>
+  <!-- REWARD VIEW WITH SHARE TO REFER -->
+  <div id="rewardView" class="view">
+    <div class="reward-card">
+      <h3 style="color:#ffcc00">🎁 Reward Center</h3>
+      <p style="font-size:12px;color:#888;margin:10px 0">Earn by inviting friends</p>
+      <div class="tier-box" style="border-left-color:#0f0"><b>Daily Bonus ₦50</b><br><button class="btn-primary" style="padding:10px" onclick="claimReward(50)">Claim Daily</button></div>
+      
+      <div class="tier-box" style="border-left-color:#ffcc00;text-align:left">
+        <b>📤 Share & Refer - Earn ₦200 per friend</b><br>
+        <small style="color:#888">Your Referral Code:</small><br>
+        <div style="background:#0a0a0a;padding:10px;border-radius:8px;margin:8px 0;display:flex;justify-content:space-between;align-items:center">
+          <b id="referralCode" style="color:#ffcc00;font-size:14px">KELLY-1234</b>
+          <button style="background:#ffcc00;color:#000;border:none;padding:5px 10px;border-radius:5px;font-size:11px;font-weight:800;cursor:pointer" onclick="copyReferral()">Copy</button>
+        </div>
+        <small style="color:#888">Referral Link:</small>
+        <div style="background:#0a0a0a;padding:8px;border-radius:8px;margin:5px 0;font-size:10px;word-break:break-all;color:#aaa" id="referralLink">https://omosogar1.github.io/Software-development/KellyBankAPP-Mobile/?ref=KELLY-1234</div>
+        <button class="btn-primary" style="padding:12px;background:linear-gradient(135deg,#0f0,#00aa00)" onclick="shareReferral()">📤 Share to Refer Someone - Download App</button>
+        <div style="margin-top:12px">
+          <div class="share-btn" onclick="shareViaWhatsApp()"><div style="width:30px;height:30px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center">💬</div><div><b style="font-size:12px">Share on WhatsApp</b><br><small style="color:#888;font-size:10px">Send to friends & groups</small></div><span style="margin-left:auto">›</span></div>
+          <div class="share-btn" onclick="shareViaFacebook()"><div style="width:30px;height:30px;background:#1877F2;border-radius:50%;display:flex;align-items:center;justify-content:center">f</div><div><b style="font-size:12px">Share on Facebook</b><br><small style="color:#888;font-size:10px">Post to timeline</small></div><span style="margin-left:auto">›</span></div>
+          <div class="share-btn" onclick="copyLink()"><div style="width:30px;height:30px;background:#333;border-radius:50%;display:flex;align-items:center;justify-content:center">🔗</div><div><b style="font-size:12px">Copy Link</b><br><small style="color:#888;font-size:10px">Copy referral link</small></div><span style="margin-left:auto">›</span></div>
+        </div>
+        <div style="margin-top:15px;padding:10px;background:#0a0a0a;border-radius:8px">
+          <small style="color:#888">Your Referrals:</small><br>
+          <b style="color:#ffcc00"><span id="referralCount">0</span> friends invited</b> • <span style="color:#0f0">₦<span id="referralEarned">0</span> earned</span>
+        </div>
+      </div>
+      
+      <p style="color:#ffcc00;margin-top:15px">Total Rewards: ₦<span id="rewardTotal">0</span></p>
+    </div>
+  </div>
+
   <div id="loanView" class="view"><div class="trans-box" style="display:block"><h4 style="color:#ffcc00">💰 Loan</h4><div class="tier-box"><b>Quick Loan ₦500k</b><br><small>Eligible ₦50k</small><br><button class="btn-primary" onclick="applyLoan()">Apply Loan</button></div></div></div>
 
   <div id="cardView" class="view">
@@ -165,45 +198,17 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
   <div id="settingsScreen" class="security-screen">
     <div style="max-width:420px;margin:0 auto">
       <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px"><span onclick="closeSettings()" style="font-size:20px;cursor:pointer">‹ Back</span><h4 style="color:#ffcc00">Settings</h4></div>
-      <div class="setting-item" onclick="openSecurity()"><div><b style="font-size:13px">🔒 Security</b><br><small style="color:#888">PIN, Password, Biometric Login</small></div><span style="color:#ffcc00">›</span></div>
-      <div class="setting-item"><div><b style="font-size:13px">🔔 Notifications</b><br><small style="color:#888">Transaction alerts</small></div><span>›</span></div>
-      <div class="setting-item"><div><b style="font-size:13px">🌙 Theme</b><br><small style="color:#888">Dark mode</small></div><span>›</span></div>
+      <div class="setting-item" onclick="openSecurity()"><div><b style="font-size:13px">🔒 Security</b><br><small style="color:#888">PIN, Password, Biometric</small></div><span style="color:#ffcc00">›</span></div>
     </div>
   </div>
 
   <div id="securityScreen" class="security-screen">
     <div style="max-width:420px;margin:0 auto">
       <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px"><span onclick="closeSecurity()" style="font-size:20px;cursor:pointer">‹ Back</span><h4 style="color:#ffcc00">Security</h4></div>
-      
-      <div class="setting-item" style="cursor:default">
-        <div><b style="font-size:13px">👆 Biometric Login</b><br><small style="color:#888" id="bioDesc">Fingerprint / Face ID - Enable to login with fingerprint</small></div>
-        <div class="toggle" id="bioToggle" onclick="toggleBiometric()"><div class="toggle-ball"></div></div>
-      </div>
-      <div id="bioEnrollBox" style="display:none;margin:10px 0;padding:12px;background:#1e1e1e;border:1px solid #0f0;border-radius:10px">
-        <p style="font-size:12px;color:#0f0">Biometric is ON. Test now:</p>
-        <div class="biometric-btn" style="width:60px;height:60px;font-size:24px" onclick="testBiometric()">👆</div>
-        <p id="bioTestMsg" style="font-size:11px;color:#888;text-align:center"></p>
-      </div>
-
-      <div class="tier-box" style="border-left-color:#00aaff;margin-top:20px">
-        <b>💸 Transfer PIN <span id="pinStatus">- Not Set</span></b><br><small>For Transfer, Airtime, Bills - After Send Now</small>
-        <div style="margin-top:12px">
-          <input id="newTransferPin" type="password" maxlength="4" placeholder="Create 4-digit Transfer PIN">
-          <button class="btn-primary" onclick="setTransferPin()">Set Transfer PIN</button>
-          <p id="pinMsg" style="font-size:12px;margin-top:5px"></p>
-        </div>
-      </div>
-
-      <div class="tier-box" style="border-left-color:#ff4444;margin-top:20px">
-        <b>🔑 Security PIN / Login Password</b><br><small>Change password</small>
-        <div style="margin-top:12px">
-          <input id="oldPassword" type="password" placeholder="Old Password">
-          <input id="newPassword" type="password" placeholder="New Password">
-          <input id="confirmNewPassword" type="password" placeholder="Confirm New Password">
-          <button class="btn-primary" style="background:#ff4444" onclick="changeSecurityPin()">Change Security Password</button>
-          <p id="secPinMsg" style="font-size:12px;margin-top:5px"></p>
-        </div>
-      </div>
+      <div class="setting-item" style="cursor:default"><div><b style="font-size:13px">👆 Biometric Login</b><br><small style="color:#888" id="bioDesc">Fingerprint / Face ID</small></div><div class="toggle" id="bioToggle" onclick="toggleBiometric()"><div class="toggle-ball"></div></div></div>
+      <div id="bioEnrollBox" style="display:none;margin:10px 0;padding:12px;background:#1e1e1e;border:1px solid #0f0;border-radius:10px"><p style="font-size:12px;color:#0f0">Biometric ON. Test:</p><div class="biometric-btn" style="width:60px;height:60px;font-size:24px" onclick="testBiometric()">👆</div><p id="bioTestMsg" style="font-size:11px;color:#888;text-align:center"></p></div>
+      <div class="tier-box" style="border-left-color:#00aaff;margin-top:20px"><b>💸 Transfer PIN <span id="pinStatus">- Not Set</span></b><br><small>For Transfer, Airtime, Bills</small><div style="margin-top:12px"><input id="newTransferPin" type="password" maxlength="4" placeholder="Create 4-digit PIN"><button class="btn-primary" onclick="setTransferPin()">Set Transfer PIN</button><p id="pinMsg" style="font-size:12px;margin-top:5px"></p></div></div>
+      <div class="tier-box" style="border-left-color:#ff4444;margin-top:20px"><b>🔑 Security PIN / Password</b><br><small>Change password</small><div style="margin-top:12px"><input id="oldPassword" type="password" placeholder="Old Password"><input id="newPassword" type="password" placeholder="New Password"><input id="confirmNewPassword" type="password" placeholder="Confirm New Password"><button class="btn-primary" style="background:#ff4444" onclick="changeSecurityPin()">Change Security Password</button><p id="secPinMsg" style="font-size:12px;margin-top:5px"></p></div></div>
     </div>
   </div>
 
@@ -239,6 +244,8 @@ let userData = JSON.parse(localStorage.getItem("kelly_user") || "null");
 let tier = localStorage.getItem("kelly_tier") || "1";
 let transferPin = localStorage.getItem("kelly_transfer_pin") || null;
 let rewardTotal = parseFloat(localStorage.getItem("kelly_reward") || "0");
+let referralCount = parseInt(localStorage.getItem("kelly_refCount") || "0");
+let referralEarned = parseFloat(localStorage.getItem("kelly_refEarned") || "0");
 let biometricEnabled = localStorage.getItem("kelly_biometric") === "true";
 let showBal = false; let pendingTx = null;
 let cardNum = localStorage.getItem("kelly_card_num") || "4539 "+Math.floor(1000+Math.random()*9000)+" "+Math.floor(1000+Math.random()*9000)+" 4589";
@@ -248,10 +255,10 @@ window.onload = ()=>{
   updateBalanceUI();
   const p = new URLSearchParams(window.location.search);
   if(p.has('clear')){ localStorage.clear(); location.href=location.pathname; return; }
+  if(p.has('ref')){ localStorage.setItem("kelly_refBy", p.get('ref')); }
   showScreen('welcomeScreen');
   checkBioOnWelcome();
 };
-
 function checkBioOnWelcome(){
   let area=document.getElementById('bioLoginArea');
   let btn2=document.getElementById('bioLoginBtn2');
@@ -260,11 +267,8 @@ function checkBioOnWelcome(){
     if(area) area.style.display='block';
     if(btn2) btn2.style.display='flex';
     if(txt2) txt2.style.display='block';
-  } else {
-    if(area) area.style.display='none';
   }
 }
-
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -287,6 +291,12 @@ function doRegister(){
   userData={name,phone,email:email||"not set",password:pass};
   localStorage.setItem("kelly_user", JSON.stringify(userData));
   localStorage.setItem("kelly_balance","250000");
+  // Referral bonus for referrer
+  let refBy=localStorage.getItem("kelly_refBy");
+  if(refBy){ 
+    // Simulate reward for referrer in this device if same - in real app backend would handle
+    alert("Welcome! You were referred by "+refBy+". You both get ₦200 bonus!");
+  }
   msg.innerText="Account Created!"; msg.style.color="green";
   setTimeout(()=>showScreen('loginScreen'),1000);
 }
@@ -305,55 +315,30 @@ function doLogin(){
 }
 async function biometricLogin(){
   let status=document.getElementById('bioStatus');
-  if(!userData){ alert("No account found. Create account first"); return; }
+  if(!userData){ alert("No account found"); return; }
   try{
-    if(window.PublicKeyCredential){
-      status?status.innerText="Scanning fingerprint...":null;
-      // Try WebAuthn if available, else simulate
-      if(navigator.credentials && navigator.credentials.get){
-        // small delay to simulate scan
-        await new Promise(r=>setTimeout(r,800));
-      }
-    }
-    if(status) status.innerText="Fingerprint verified ✓";
+    if(status) status.innerText="Scanning fingerprint...";
+    await new Promise(r=>setTimeout(r,800));
+    if(status) status.innerText="Verified ✓";
     setTimeout(()=>{
       document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
       document.getElementById('mainApp').style.display='block';
       switchTab('home'); updateBalanceUI();
       if(status) status.innerText="";
     },600);
-  }catch(e){
-    // Fallback - still allow login if biometric enabled
-    if(biometricEnabled){
-      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-      document.getElementById('mainApp').style.display='block';
-      switchTab('home'); updateBalanceUI();
-    } else {
-      alert("Biometric failed: "+e.message);
-    }
-  }
+  }catch(e){ alert("Biometric failed"); }
 }
 function toggleBiometric(){
   let toggle=document.getElementById('bioToggle');
   let enroll=document.getElementById('bioEnrollBox');
   biometricEnabled=!biometricEnabled;
   localStorage.setItem("kelly_biometric", biometricEnabled);
-  if(biometricEnabled){
-    toggle.classList.add('active');
-    enroll.style.display='block';
-    if(userData){
-      document.getElementById('bioDesc').innerText="Biometric ON - You can now login with fingerprint";
-    }
-  } else {
-    toggle.classList.remove('active');
-    enroll.style.display='none';
-    document.getElementById('bioDesc').innerText="Biometric OFF - Enable to login with fingerprint";
-  }
+  if(biometricEnabled){ toggle.classList.add('active'); enroll.style.display='block'; } else { toggle.classList.remove('active'); enroll.style.display='none'; }
   checkBioOnWelcome();
 }
 function testBiometric(){
   let msg=document.getElementById('bioTestMsg');
-  msg.innerText="Scanning... 👆 Place finger";
+  msg.innerText="Scanning... 👆";
   setTimeout(()=>{ msg.innerText="✓ Fingerprint verified! Biometric working!"; msg.style.color="#0f0"; },1000);
 }
 function switchTab(tab){
@@ -389,6 +374,8 @@ function updateBalanceUI(){
     let pa=document.getElementById('profileAvatar'); if(pa) pa.innerText=userData.name.charAt(0).toUpperCase();
     let cn=document.getElementById('cardName'); if(cn) cn.innerText=userData.name.toUpperCase();
     let acc=document.getElementById('meAccNo'); if(acc) acc.innerText=userData.phone+" - Kelly Bank";
+    let code=document.getElementById('referralCode'); if(code) code.innerText="KELLY-"+userData.phone.slice(-4);
+    let link=document.getElementById('referralLink'); if(link) link.innerText="https://omosogar1.github.io/Software-development/KellyBankAPP-Mobile/?ref=KELLY-"+userData.phone.slice(-4);
   }
   let cardF=document.getElementById('cardNumberFront'); if(cardF) cardF.innerText=cardNum;
   let tb=document.getElementById('tierBadge'); if(tb) tb.innerText=tier==="1"?"Tier 1":tier==="2"?"Tier 2":"Tier 3 Unlimited";
@@ -405,6 +392,8 @@ function updateBalanceUI(){
   let ps=document.getElementById('pinStatus'); if(ps) ps.innerText=transferPin?"✓ Set":"- Not Set";
   if(ps && transferPin) ps.style.color="#0f0";
   let rt=document.getElementById('rewardTotal'); if(rt) rt.innerText=rewardTotal;
+  let rc=document.getElementById('referralCount'); if(rc) rc.innerText=referralCount;
+  let re=document.getElementById('referralEarned'); if(re) re.innerText=referralEarned;
 }
 function showAddMoneyDetail(type){
   let detail=document.getElementById('addMoneyDetail');
@@ -425,7 +414,7 @@ function setTransferPin(){
   let msg=document.getElementById('pinMsg');
   if(pin.length!==4){ msg.innerText="4 digits"; msg.style.color="red"; return; }
   localStorage.setItem("kelly_transfer_pin", pin);
-  transferPin=pin; msg.innerText="Transfer PIN Set inside Security!"; msg.style.color="green"; updateBalanceUI();
+  transferPin=pin; msg.innerText="Transfer PIN Set!"; msg.style.color="green"; updateBalanceUI();
 }
 function changeSecurityPin(){
   let oldP=document.getElementById('oldPassword').value.trim();
@@ -438,7 +427,6 @@ function changeSecurityPin(){
   userData.password=newP;
   localStorage.setItem("kelly_user", JSON.stringify(userData));
   msg.innerText="Security PIN Changed!"; msg.style.color="green";
-  document.getElementById('oldPassword').value=""; document.getElementById('newPassword').value=""; document.getElementById('confirmNewPassword').value="";
 }
 function verifyBVN(){
   let bvn=document.getElementById('bvnInput').value.trim(); let msg=document.getElementById('bvnMsg');
@@ -456,6 +444,58 @@ function openBox(id){ closeBoxes(); document.getElementById(id).style.display='b
 function closeBoxes(){ document.querySelectorAll('.box').forEach(b=>b.style.display='none'); let d=document.getElementById('addMoneyDetail'); if(d) d.style.display='none'; }
 function closePinModal(){ document.getElementById('pinModal').style.display='none'; document.getElementById('modalPinInput').value=""; document.getElementById('modalPinMsg').innerText=""; pendingTx=null; }
 function claimReward(amt){ rewardTotal+=amt; balance+=amt; localStorage.setItem("kelly_reward", rewardTotal); localStorage.setItem("kelly_balance", balance); updateBalanceUI(); alert("Reward ₦"+amt+" credited!"); }
+// SHARE FUNCTIONS
+function getShareText(){
+  let code="KELLY-"+(userData?userData.phone.slice(-4):"1234");
+  let link="https://omosogar1.github.io/Software-development/KellyBankAPP-Mobile/?ref="+code;
+  return {code, link, text:`🚀 Join Kelly Bank - Best Bank App in Nigeria!\n\nI use Kelly Bank for transfer, airtime, bills, Visa Debit card, loans & rewards. Use my referral code ${code} and get ₦200 bonus!\n\nDownload here: ${link}\n\nUse code: ${code}`};
+}
+function shareReferral(){
+  let {text, link} = getShareText();
+  if(navigator.share){
+    navigator.share({title:"Kelly Bank - Join & Get ₦200", text:text, url:link}).then(()=>{
+      referralCount++; referralEarned+=200; rewardTotal+=200; balance+=200;
+      localStorage.setItem("kelly_refCount", referralCount);
+      localStorage.setItem("kelly_refEarned", referralEarned);
+      localStorage.setItem("kelly_reward", rewardTotal);
+      localStorage.setItem("kelly_balance", balance);
+      updateBalanceUI();
+    }).catch(()=>{});
+  } else {
+    copyLink();
+  }
+}
+function shareViaWhatsApp(){
+  let {text} = getShareText();
+  let url=`https://wa.me/?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
+  referralCount++; referralEarned+=200; rewardTotal+=200; balance+=200;
+  localStorage.setItem("kelly_refCount", referralCount);
+  localStorage.setItem("kelly_refEarned", referralEarned);
+  localStorage.setItem("kelly_reward", rewardTotal);
+  localStorage.setItem("kelly_balance", balance);
+  updateBalanceUI();
+  alert("Shared on WhatsApp! ₦200 referral bonus credited when friend downloads!");
+}
+function shareViaFacebook(){
+  let {link} = getShareText();
+  let url=`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
+  window.open(url, '_blank');
+  referralCount++; referralEarned+=200; rewardTotal+=200; balance+=200;
+  localStorage.setItem("kelly_refCount", referralCount);
+  localStorage.setItem("kelly_refEarned", referralEarned);
+  localStorage.setItem("kelly_reward", rewardTotal);
+  localStorage.setItem("kelly_balance", balance);
+  updateBalanceUI();
+}
+function copyLink(){
+  let {link} = getShareText();
+  navigator.clipboard.writeText(link).then(()=>{ alert("Referral link copied! Share to friends to earn ₦200 each:\n"+link); });
+}
+function copyReferral(){
+  let {code} = getShareText();
+  navigator.clipboard.writeText(code).then(()=>{ alert("Referral code copied: "+code); });
+}
 function applyLoan(){ alert("Loan Application ₦50,000 under review"); }
 function createUniqueCard(){
   cardNum="4539 "+Math.floor(1000+Math.random()*9000)+" "+Math.floor(1000+Math.random()*9000)+" 4589";
