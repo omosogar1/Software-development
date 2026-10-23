@@ -58,8 +58,6 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
 .toggle.active{background:#0f0}
 .toggle-ball{width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:0.3s}
 .toggle.active .toggle-ball{left:23px}
-.reward-card{background:linear-gradient(135deg,#1e1e1e,#2a2a2a);border:1px solid #ffcc00;border-radius:15px;padding:20px;margin:15px;text-align:center}
-.share-btn{display:flex;align-items:center;gap:10px;padding:12px;background:#1e1e1e;border:1px solid #333;border-radius:10px;margin:8px 0;cursor:pointer}
 </style>
 </head>
 <body>
@@ -124,7 +122,8 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
         <small style="color:#888;font-size:10px">AVAILABLE BALANCE <span onclick="toggleBalance()" style="cursor:pointer">🙈</span></small>
         <h2 style="margin:5px 0"><span style="color:#ffcc00">₦</span> <span id="balance">••••••••</span></h2>
         <small id="welcomeName" style="color:#888">Welcome</small><br>
-        <small id="tierBadge" style="background:#333;padding:2px 6px;border-radius:8px;font-size:9px">Tier 1</small>
+        <small id="tierBadge" style="background:#333;padding:2px 6px;border-radius:8px;font-size:9px">Tier 1</small><br>
+        <small id="homeAccNo" style="color:#ffcc00;font-size:10px">Acc: 90********</small>
       </div>
       <button class="add-money" onclick="openBox('addMoneyBox')">+ ADD MONEY</button>
     </div>
@@ -140,35 +139,12 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
     </div>
   </div>
 
-  <!-- REWARD VIEW WITH SHARE TO REFER -->
   <div id="rewardView" class="view">
-    <div class="reward-card">
+    <div class="trans-box" style="display:block;text-align:center">
       <h3 style="color:#ffcc00">🎁 Reward Center</h3>
-      <p style="font-size:12px;color:#888;margin:10px 0">Earn by inviting friends</p>
-      <div class="tier-box" style="border-left-color:#0f0"><b>Daily Bonus ₦50</b><br><button class="btn-primary" style="padding:10px" onclick="claimReward(50)">Claim Daily</button></div>
-      
-      <div class="tier-box" style="border-left-color:#ffcc00;text-align:left">
-        <b>📤 Share & Refer - Earn ₦200 per friend</b><br>
-        <small style="color:#888">Your Referral Code:</small><br>
-        <div style="background:#0a0a0a;padding:10px;border-radius:8px;margin:8px 0;display:flex;justify-content:space-between;align-items:center">
-          <b id="referralCode" style="color:#ffcc00;font-size:14px">KELLY-1234</b>
-          <button style="background:#ffcc00;color:#000;border:none;padding:5px 10px;border-radius:5px;font-size:11px;font-weight:800;cursor:pointer" onclick="copyReferral()">Copy</button>
-        </div>
-        <small style="color:#888">Referral Link:</small>
-        <div style="background:#0a0a0a;padding:8px;border-radius:8px;margin:5px 0;font-size:10px;word-break:break-all;color:#aaa" id="referralLink">https://omosogar1.github.io/Software-development/KellyBankAPP-Mobile/?ref=KELLY-1234</div>
-        <button class="btn-primary" style="padding:12px;background:linear-gradient(135deg,#0f0,#00aa00)" onclick="shareReferral()">📤 Share to Refer Someone - Download App</button>
-        <div style="margin-top:12px">
-          <div class="share-btn" onclick="shareViaWhatsApp()"><div style="width:30px;height:30px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center">💬</div><div><b style="font-size:12px">Share on WhatsApp</b><br><small style="color:#888;font-size:10px">Send to friends & groups</small></div><span style="margin-left:auto">›</span></div>
-          <div class="share-btn" onclick="shareViaFacebook()"><div style="width:30px;height:30px;background:#1877F2;border-radius:50%;display:flex;align-items:center;justify-content:center">f</div><div><b style="font-size:12px">Share on Facebook</b><br><small style="color:#888;font-size:10px">Post to timeline</small></div><span style="margin-left:auto">›</span></div>
-          <div class="share-btn" onclick="copyLink()"><div style="width:30px;height:30px;background:#333;border-radius:50%;display:flex;align-items:center;justify-content:center">🔗</div><div><b style="font-size:12px">Copy Link</b><br><small style="color:#888;font-size:10px">Copy referral link</small></div><span style="margin-left:auto">›</span></div>
-        </div>
-        <div style="margin-top:15px;padding:10px;background:#0a0a0a;border-radius:8px">
-          <small style="color:#888">Your Referrals:</small><br>
-          <b style="color:#ffcc00"><span id="referralCount">0</span> friends invited</b> • <span style="color:#0f0">₦<span id="referralEarned">0</span> earned</span>
-        </div>
-      </div>
-      
-      <p style="color:#ffcc00;margin-top:15px">Total Rewards: ₦<span id="rewardTotal">0</span></p>
+      <div class="tier-box"><b>Daily ₦50</b><br><button class="btn-primary" style="padding:10px" onclick="claimReward(50)">Claim Daily</button></div>
+      <div class="tier-box" style="text-align:left"><b>📤 Share & Refer - Earn ₦200</b><br><small>Code: <b id="referralCode" style="color:#ffcc00">KELLY-1234</b></small><br><div style="background:#0a0a0a;padding:8px;border-radius:8px;margin:5px 0;font-size:10px;word-break:break-all;color:#aaa" id="referralLink">link</div><button class="btn-primary" style="padding:12px;background:linear-gradient(135deg,#0f0,#00aa00)" onclick="shareReferral()">📤 Share to Refer - Download App</button><div style="margin-top:10px"><div class="setting-item" onclick="shareViaWhatsApp()"><div><b style="font-size:12px">💬 WhatsApp</b></div><span>›</span></div><div class="setting-item" onclick="shareViaFacebook()"><div><b style="font-size:12px">📘 Facebook</b></div><span>›</span></div><div class="setting-item" onclick="copyLink()"><div><b style="font-size:12px">🔗 Copy Link</b></div><span>›</span></div></div><div style="margin-top:10px"><b style="color:#ffcc00"><span id="referralCount">0</span> invited</b> • <span style="color:#0f0">₦<span id="referralEarned">0</span> earned</span></div></div>
+      <p style="color:#ffcc00">Total: ₦<span id="rewardTotal">0</span></p>
     </div>
   </div>
 
@@ -180,12 +156,13 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
   </div>
 
   <div id="meView" class="view">
-    <div class="profile-header"><div class="profile-avatar" id="profileAvatar">K</div><h3 id="profileName" style="color:#ffcc00">Your Name</h3><small id="profilePhone" style="color:#888">Phone</small><br><small id="profileEmail" style="color:#888">Email</small><br><div style="margin-top:10px"><span id="profileTierBadge" style="background:#ffcc00;color:#000;padding:4px 10px;border-radius:10px;font-size:10px;font-weight:800">Tier 1</span></div></div>
+    <div class="profile-header"><div class="profile-avatar" id="profileAvatar">K</div><h3 id="profileName" style="color:#ffcc00">Your Name</h3><small id="profilePhone" style="color:#888">Phone</small><br><small id="profileEmail" style="color:#888">Email</small><br><div style="margin-top:10px"><span id="profileTierBadge" style="background:#ffcc00;color:#000;padding:4px 10px;border-radius:10px;font-size:10px;font-weight:800">Tier 1</span></div><div style="margin-top:10px;background:#0a0a0a;padding:8px;border-radius:8px"><small style="color:#888">Kelly Bank Account Number</small><br><b id="profileAccNo" style="color:#ffcc00;font-size:16px;letter-spacing:1px">90********</b></div></div>
     <div class="trans-box" style="display:block">
       <h5 style="color:#ffcc00;font-size:12px">MY PROFILE</h5>
       <div class="setting-item"><div><b style="font-size:12px">Full Name</b><br><small id="meName" style="color:#888">-</small></div><small style="color:#ffcc00">Edit</small></div>
+      <div class="setting-item"><div><b style="font-size:12px">Account Number</b><br><small id="meAccNo" style="color:#ffcc00;font-weight:700;font-size:13px">90********</small><br><small style="color:#888">Kelly Bank • 10-digit</small></div><small style="color:#ffcc00" onclick="copyAccountNo()">Copy</small></div>
       <div class="setting-item"><div><b style="font-size:12px">Phone</b><br><small id="mePhone" style="color:#888">-</small></div><small style="color:#666">Verified ✓</small></div>
-      <div class="setting-item"><div><b style="font-size:12px">Account No</b><br><small id="meAccNo" style="color:#888">-</small></div><small style="color:#ffcc00">Copy</small></div>
+      <div class="setting-item"><div><b style="font-size:12px">Email</b><br><small id="meEmail" style="color:#888">-</small></div></div>
       <h5 style="color:#ffcc00;font-size:12px;margin:20px 0 10px 0">TIER</h5>
       <div class="tier-box"><b>Tier 1 ✓ Active</b><br><small>₦50k</small></div>
       <div class="tier-box"><b>Tier 2 <span id="tier2Status">- Locked</span></b><br><small>₦200k • BVN</small><div id="bvnUpgradeForm"><input id="bvnInput" type="number" placeholder="BVN 11 digits"><button class="btn-primary" onclick="verifyBVN()">Verify BVN</button><p id="bvnMsg" style="font-size:12px"></p></div></div>
@@ -195,29 +172,18 @@ input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:
     </div>
   </div>
 
-  <div id="settingsScreen" class="security-screen">
-    <div style="max-width:420px;margin:0 auto">
-      <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px"><span onclick="closeSettings()" style="font-size:20px;cursor:pointer">‹ Back</span><h4 style="color:#ffcc00">Settings</h4></div>
-      <div class="setting-item" onclick="openSecurity()"><div><b style="font-size:13px">🔒 Security</b><br><small style="color:#888">PIN, Password, Biometric</small></div><span style="color:#ffcc00">›</span></div>
-    </div>
-  </div>
+  <div id="settingsScreen" class="security-screen"><div style="max-width:420px;margin:0 auto"><div style="display:flex;align-items:center;gap:15px;margin-bottom:20px"><span onclick="closeSettings()" style="font-size:20px;cursor:pointer">‹ Back</span><h4 style="color:#ffcc00">Settings</h4></div><div class="setting-item" onclick="openSecurity()"><div><b style="font-size:13px">🔒 Security</b><br><small style="color:#888">PIN, Password, Biometric</small></div><span style="color:#ffcc00">›</span></div></div></div>
 
-  <div id="securityScreen" class="security-screen">
-    <div style="max-width:420px;margin:0 auto">
-      <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px"><span onclick="closeSecurity()" style="font-size:20px;cursor:pointer">‹ Back</span><h4 style="color:#ffcc00">Security</h4></div>
-      <div class="setting-item" style="cursor:default"><div><b style="font-size:13px">👆 Biometric Login</b><br><small style="color:#888" id="bioDesc">Fingerprint / Face ID</small></div><div class="toggle" id="bioToggle" onclick="toggleBiometric()"><div class="toggle-ball"></div></div></div>
-      <div id="bioEnrollBox" style="display:none;margin:10px 0;padding:12px;background:#1e1e1e;border:1px solid #0f0;border-radius:10px"><p style="font-size:12px;color:#0f0">Biometric ON. Test:</p><div class="biometric-btn" style="width:60px;height:60px;font-size:24px" onclick="testBiometric()">👆</div><p id="bioTestMsg" style="font-size:11px;color:#888;text-align:center"></p></div>
-      <div class="tier-box" style="border-left-color:#00aaff;margin-top:20px"><b>💸 Transfer PIN <span id="pinStatus">- Not Set</span></b><br><small>For Transfer, Airtime, Bills</small><div style="margin-top:12px"><input id="newTransferPin" type="password" maxlength="4" placeholder="Create 4-digit PIN"><button class="btn-primary" onclick="setTransferPin()">Set Transfer PIN</button><p id="pinMsg" style="font-size:12px;margin-top:5px"></p></div></div>
-      <div class="tier-box" style="border-left-color:#ff4444;margin-top:20px"><b>🔑 Security PIN / Password</b><br><small>Change password</small><div style="margin-top:12px"><input id="oldPassword" type="password" placeholder="Old Password"><input id="newPassword" type="password" placeholder="New Password"><input id="confirmNewPassword" type="password" placeholder="Confirm New Password"><button class="btn-primary" style="background:#ff4444" onclick="changeSecurityPin()">Change Security Password</button><p id="secPinMsg" style="font-size:12px;margin-top:5px"></p></div></div>
-    </div>
-  </div>
+  <div id="securityScreen" class="security-screen"><div style="max-width:420px;margin:0 auto"><div style="display:flex;align-items:center;gap:15px;margin-bottom:20px"><span onclick="closeSecurity()" style="font-size:20px;cursor:pointer">‹ Back</span><h4 style="color:#ffcc00">Security</h4></div><div class="setting-item" style="cursor:default"><div><b style="font-size:13px">👆 Biometric Login</b><br><small style="color:#888" id="bioDesc">Fingerprint / Face ID</small></div><div class="toggle" id="bioToggle" onclick="toggleBiometric()"><div class="toggle-ball"></div></div></div><div id="bioEnrollBox" style="display:none;margin:10px 0;padding:12px;background:#1e1e1e;border:1px solid #0f0;border-radius:10px"><p style="font-size:12px;color:#0f0">Biometric ON</p><div class="biometric-btn" style="width:60px;height:60px;font-size:24px" onclick="testBiometric()">👆</div><p id="bioTestMsg" style="font-size:11px;color:#888;text-align:center"></p></div><div class="tier-box" style="border-left-color:#00aaff;margin-top:20px"><b>💸 Transfer PIN <span id="pinStatus">- Not Set</span></b><br><small>For Transfer, Airtime, Bills</small><div style="margin-top:12px"><input id="newTransferPin" type="password" maxlength="4" placeholder="4-digit PIN"><button class="btn-primary" onclick="setTransferPin()">Set Transfer PIN</button><p id="pinMsg" style="font-size:12px;margin-top:5px"></p></div></div><div class="tier-box" style="border-left-color:#ff4444;margin-top:20px"><b>🔑 Security PIN / Password</b><br><small>Change password</small><div style="margin-top:12px"><input id="oldPassword" type="password" placeholder="Old Password"><input id="newPassword" type="password" placeholder="New Password"><input id="confirmNewPassword" type="password" placeholder="Confirm New Password"><button class="btn-primary" style="background:#ff4444" onclick="changeSecurityPin()">Change Security Password</button><p id="secPinMsg" style="font-size:12px;margin-top:5px"></p></div></div></div></div>
 
+  <!-- ADD MONEY - ACCOUNT NUMBER AS NUMBER -->
   <div id="addMoneyBox" class="box">
     <h4 style="color:#ffcc00;text-align:center">Add Money</h4>
-    <div class="addmoney-item" onclick="showAddMoneyDetail('account')"><div class="addmoney-icon">🏦</div><div><b style="font-size:13px">Account Number</b><br><small style="color:#888">Your Kelly account</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
+    <p style="font-size:11px;color:#888;text-align:center;margin:10px 0">Choose how to fund your Kelly Bank account</p>
+    <div class="addmoney-item" onclick="showAddMoneyDetail('account')"><div class="addmoney-icon">🏦</div><div><b style="font-size:13px">Account Number</b><br><small style="color:#888">Your 10-digit Kelly account</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
     <div class="addmoney-item" onclick="showAddMoneyDetail('cash')"><div class="addmoney-icon">💵</div><div><b style="font-size:13px">Cash Deposit</b><br><small style="color:#888">At agent / branch</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
     <div class="addmoney-item" onclick="showAddMoneyDetail('card')"><div class="addmoney-icon">💳</div><div><b style="font-size:13px">Top up with Card / Account</b><br><small style="color:#888">From other bank</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
-    <div class="addmoney-item" onclick="showAddMoneyDetail('ussd')"><div class="addmoney-icon">#️⃣</div><div><b style="font-size:13px">Bank USSD</b><br><small style="color:#888">Dial code</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
+    <div class="addmoney-item" onclick="showAddMoneyDetail('ussd')"><div class="addmoney-icon">#️⃣</div><div><b style="font-size:13px">Bank USSD</b><br><small style="color:#888">Dial code from other banks</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
     <div id="addMoneyDetail" style="display:none;margin-top:15px;padding:15px;background:#0a0a0a;border-radius:10px;border:1px solid #333"><p id="addMoneyDetailText" style="font-size:13px"></p><button class="btn-secondary" style="padding:10px" onclick="document.getElementById('addMoneyDetail').style.display='none'">Close</button></div>
     <button class="btn-secondary" onclick="closeBoxes()">Cancel</button>
   </div>
@@ -251,7 +217,26 @@ let showBal = false; let pendingTx = null;
 let cardNum = localStorage.getItem("kelly_card_num") || "4539 "+Math.floor(1000+Math.random()*9000)+" "+Math.floor(1000+Math.random()*9000)+" 4589";
 localStorage.setItem("kelly_card_num", cardNum);
 
+function generateAccountNumber(){
+  // 10-digit Kelly Bank account - starts with 90
+  let num = "90" + Math.floor(10000000 + Math.random()*90000000).toString();
+  // Ensure 10 digits
+  if(num.length>10) num=num.slice(0,10);
+  return num;
+}
+function ensureAccountNumber(){
+  if(userData && !userData.accountNo){
+    userData.accountNo = generateAccountNumber();
+    localStorage.setItem("kelly_user", JSON.stringify(userData));
+  } else if(userData && userData.accountNo && userData.accountNo.length!=10){
+    // Fix if old format
+    userData.accountNo = generateAccountNumber();
+    localStorage.setItem("kelly_user", JSON.stringify(userData));
+  }
+}
+
 window.onload = ()=>{
+  ensureAccountNumber();
   updateBalanceUI();
   const p = new URLSearchParams(window.location.search);
   if(p.has('clear')){ localStorage.clear(); location.href=location.pathname; return; }
@@ -288,17 +273,12 @@ function doRegister(){
   if(phone.length<10){ msg.innerText="Enter valid phone"; msg.style.color="red"; return; }
   if(pass.length<6){ msg.innerText="Password min 6 chars"; msg.style.color="red"; return; }
   if(pass!==cpass){ msg.innerText="Passwords no match"; msg.style.color="red"; return; }
-  userData={name,phone,email:email||"not set",password:pass};
+  let accNo = generateAccountNumber();
+  userData={name,phone,email:email||"not set",password:pass,accountNo:accNo};
   localStorage.setItem("kelly_user", JSON.stringify(userData));
   localStorage.setItem("kelly_balance","250000");
-  // Referral bonus for referrer
-  let refBy=localStorage.getItem("kelly_refBy");
-  if(refBy){ 
-    // Simulate reward for referrer in this device if same - in real app backend would handle
-    alert("Welcome! You were referred by "+refBy+". You both get ₦200 bonus!");
-  }
-  msg.innerText="Account Created!"; msg.style.color="green";
-  setTimeout(()=>showScreen('loginScreen'),1000);
+  msg.innerText="Account Created! Acc No: "+accNo; msg.style.color="green";
+  setTimeout(()=>showScreen('loginScreen'),1500);
 }
 function doLogin(){
   let phone=document.getElementById('loginPhone').value.trim();
@@ -309,6 +289,7 @@ function doLogin(){
   if(phone!==stored.phone){ msg.innerText="Phone not found"; return; }
   if(pass!==stored.password){ msg.innerText="Wrong Password"; return; }
   userData=stored;
+  ensureAccountNumber();
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('mainApp').style.display='block';
   switchTab('home'); updateBalanceUI();
@@ -316,17 +297,15 @@ function doLogin(){
 async function biometricLogin(){
   let status=document.getElementById('bioStatus');
   if(!userData){ alert("No account found"); return; }
-  try{
-    if(status) status.innerText="Scanning fingerprint...";
-    await new Promise(r=>setTimeout(r,800));
-    if(status) status.innerText="Verified ✓";
-    setTimeout(()=>{
-      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-      document.getElementById('mainApp').style.display='block';
-      switchTab('home'); updateBalanceUI();
-      if(status) status.innerText="";
-    },600);
-  }catch(e){ alert("Biometric failed"); }
+  if(status) status.innerText="Scanning fingerprint...";
+  await new Promise(r=>setTimeout(r,800));
+  if(status) status.innerText="Verified ✓";
+  setTimeout(()=>{
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById('mainApp').style.display='block';
+    switchTab('home'); updateBalanceUI();
+    if(status) status.innerText="";
+  },600);
 }
 function toggleBiometric(){
   let toggle=document.getElementById('bioToggle');
@@ -339,7 +318,7 @@ function toggleBiometric(){
 function testBiometric(){
   let msg=document.getElementById('bioTestMsg');
   msg.innerText="Scanning... 👆";
-  setTimeout(()=>{ msg.innerText="✓ Fingerprint verified! Biometric working!"; msg.style.color="#0f0"; },1000);
+  setTimeout(()=>{ msg.innerText="✓ Fingerprint verified!"; msg.style.color="#0f0"; },1000);
 }
 function switchTab(tab){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
@@ -360,11 +339,13 @@ function openSecurity(){
 }
 function closeSecurity(){ document.getElementById('securityScreen').style.display='none'; }
 function updateBalanceUI(){
+  ensureAccountNumber();
   let balEl=document.getElementById('balance');
   if(balEl) balEl.innerText=showBal?balance.toLocaleString():"••••••••";
   if(userData){
+    let accNo = userData.accountNo || "90********";
     let wn=document.getElementById('welcomeName'); if(wn) wn.innerText="Welcome "+userData.name;
-    let rf=document.getElementById('rFrom'); if(rf) rf.innerText="From: "+userData.name;
+    let rf=document.getElementById('rFrom'); if(rf) rf.innerText="From: "+userData.name+" - "+accNo;
     let mn=document.getElementById('meName'); if(mn) mn.innerText=userData.name;
     let mp=document.getElementById('mePhone'); if(mp) mp.innerText=userData.phone;
     let me=document.getElementById('meEmail'); if(me) me.innerText=userData.email;
@@ -373,9 +354,11 @@ function updateBalanceUI(){
     let pe=document.getElementById('profileEmail'); if(pe) pe.innerText=userData.email;
     let pa=document.getElementById('profileAvatar'); if(pa) pa.innerText=userData.name.charAt(0).toUpperCase();
     let cn=document.getElementById('cardName'); if(cn) cn.innerText=userData.name.toUpperCase();
-    let acc=document.getElementById('meAccNo'); if(acc) acc.innerText=userData.phone+" - Kelly Bank";
-    let code=document.getElementById('referralCode'); if(code) code.innerText="KELLY-"+userData.phone.slice(-4);
-    let link=document.getElementById('referralLink'); if(link) link.innerText="https://omosogar1.github.io/Software-development/KellyBankAPP-Mobile/?ref=KELLY-"+userData.phone.slice(-4);
+    let acc=document.getElementById('meAccNo'); if(acc) acc.innerText=accNo;
+    let pAcc=document.getElementById('profileAccNo'); if(pAcc) pAcc.innerText=accNo;
+    let hAcc=document.getElementById('homeAccNo'); if(hAcc) hAcc.innerText="Acc: "+accNo;
+    let code=document.getElementById('referralCode'); if(code) code.innerText="KELLY-"+accNo.slice(-4);
+    let link=document.getElementById('referralLink'); if(link) link.innerText="https://omosogar1.github.io/Software-development/KellyBankAPP-Mobile/?ref=KELLY-"+accNo.slice(-4);
   }
   let cardF=document.getElementById('cardNumberFront'); if(cardF) cardF.innerText=cardNum;
   let tb=document.getElementById('tierBadge'); if(tb) tb.innerText=tier==="1"?"Tier 1":tier==="2"?"Tier 2":"Tier 3 Unlimited";
@@ -398,16 +381,21 @@ function updateBalanceUI(){
 function showAddMoneyDetail(type){
   let detail=document.getElementById('addMoneyDetail');
   let text=document.getElementById('addMoneyDetailText');
+  let accNo = userData?userData.accountNo:"9012345678";
   detail.style.display='block';
   if(type==='account'){
-    text.innerHTML=`<b>Account Number</b><br>Your Kelly: <b style="color:#ffcc00">${userData?userData.phone:'0123456789'}</b><br><small>Bank: Kelly Bank • Name: ${userData?userData.name:'Your Name'}</small><br><br><button class="btn-primary" style="padding:8px" onclick="navigator.clipboard.writeText('${userData?userData.phone:'0123456789'}');alert('Copied!')">Copy Account No</button>`;
+    text.innerHTML=`<b>Account Number - 10-digit</b><br><br><div style="background:#000;padding:15px;border-radius:10px;text-align:center;border:1px solid #ffcc00"><small style="color:#888">Your Kelly Bank Account Number</small><br><b style="color:#ffcc00;font-size:22px;letter-spacing:2px">${accNo}</b><br><small style="color:#888">Bank: Kelly Bank • Name: ${userData?userData.name:'Your Name'}</small></div><br><button class="btn-primary" style="padding:10px" onclick="navigator.clipboard.writeText('${accNo}');alert('Account number ${accNo} copied!')">📋 Copy Account Number</button><br><small style="color:#888">Share this 10-digit number to receive money from any bank in Nigeria</small>`;
   } else if(type==='cash'){
-    text.innerHTML=`<b>Cash Deposit</b><br>Visit Kelly Bank agent in Warri.<br>Phone: <b>${userData?userData.phone:'-'}</b>`;
+    text.innerHTML=`<b>Cash Deposit</b><br>Visit any Kelly Bank agent in Warri with your account number:<br><br><b style="color:#ffcc00;font-size:18px">${accNo}</b><br><small>Agent will deposit cash instantly</small>`;
   } else if(type==='card'){
-    text.innerHTML=`<b>Top up with Card / Account</b><br><input type="number" placeholder="Amount ₦" id="topupAmt"><button class="btn-primary" onclick="let a=document.getElementById('topupAmt').value; if(a){ balance+=parseFloat(a); localStorage.setItem('kelly_balance',balance); updateBalanceUI(); alert('₦'+a+' added via Card!'); closeBoxes(); }">Top up Now</button>`;
+    text.innerHTML=`<b>Top up with Card / Account</b><br>Add money to ${accNo} from other bank<br><br><input type="number" placeholder="Amount ₦" id="topupAmt"><button class="btn-primary" onclick="let a=document.getElementById('topupAmt').value; if(a){ balance+=parseFloat(a); localStorage.setItem('kelly_balance',balance); updateBalanceUI(); alert('₦'+a+' added to ${accNo} via Card!'); closeBoxes(); }">Top up Now to ${accNo}</button>`;
   } else if(type==='ussd'){
-    text.innerHTML=`<b>Bank USSD</b><br>Dial: <b style="color:#ffcc00">*123*${userData?userData.phone.slice(-4):'6789'}*Amount#</b>`;
+    text.innerHTML=`<b>Bank USSD</b><br>To fund your Kelly account <b>${accNo}</b> from other banks:<br><br><b style="color:#ffcc00">*123*${accNo.slice(-4)}*Amount#</b><br><small>Example: *901*Amount*${accNo}# for Access</small><br><br><small>Your 10-digit account: ${accNo}</small>`;
   }
+}
+function copyAccountNo(){
+  let accNo = userData?userData.accountNo:"9012345678";
+  navigator.clipboard.writeText(accNo).then(()=>alert("Account Number copied: "+accNo));
 }
 function setTransferPin(){
   let pin=document.getElementById('newTransferPin').value.trim();
@@ -444,16 +432,16 @@ function openBox(id){ closeBoxes(); document.getElementById(id).style.display='b
 function closeBoxes(){ document.querySelectorAll('.box').forEach(b=>b.style.display='none'); let d=document.getElementById('addMoneyDetail'); if(d) d.style.display='none'; }
 function closePinModal(){ document.getElementById('pinModal').style.display='none'; document.getElementById('modalPinInput').value=""; document.getElementById('modalPinMsg').innerText=""; pendingTx=null; }
 function claimReward(amt){ rewardTotal+=amt; balance+=amt; localStorage.setItem("kelly_reward", rewardTotal); localStorage.setItem("kelly_balance", balance); updateBalanceUI(); alert("Reward ₦"+amt+" credited!"); }
-// SHARE FUNCTIONS
 function getShareText(){
-  let code="KELLY-"+(userData?userData.phone.slice(-4):"1234");
+  let accNo=userData?userData.accountNo:"9012345678";
+  let code="KELLY-"+accNo.slice(-4);
   let link="https://omosogar1.github.io/Software-development/KellyBankAPP-Mobile/?ref="+code;
-  return {code, link, text:`🚀 Join Kelly Bank - Best Bank App in Nigeria!\n\nI use Kelly Bank for transfer, airtime, bills, Visa Debit card, loans & rewards. Use my referral code ${code} and get ₦200 bonus!\n\nDownload here: ${link}\n\nUse code: ${code}`};
+  return {code, link, text:`🚀 Join Kelly Bank!\nMy Account No: ${accNo}\nUse code ${code} and get ₦200!\nDownload: ${link}`};
 }
 function shareReferral(){
   let {text, link} = getShareText();
   if(navigator.share){
-    navigator.share({title:"Kelly Bank - Join & Get ₦200", text:text, url:link}).then(()=>{
+    navigator.share({title:"Kelly Bank", text:text, url:link}).then(()=>{
       referralCount++; referralEarned+=200; rewardTotal+=200; balance+=200;
       localStorage.setItem("kelly_refCount", referralCount);
       localStorage.setItem("kelly_refEarned", referralEarned);
@@ -461,26 +449,21 @@ function shareReferral(){
       localStorage.setItem("kelly_balance", balance);
       updateBalanceUI();
     }).catch(()=>{});
-  } else {
-    copyLink();
-  }
+  } else { copyLink(); }
 }
 function shareViaWhatsApp(){
   let {text} = getShareText();
-  let url=`https://wa.me/?text=${encodeURIComponent(text)}`;
-  window.open(url, '_blank');
+  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   referralCount++; referralEarned+=200; rewardTotal+=200; balance+=200;
   localStorage.setItem("kelly_refCount", referralCount);
   localStorage.setItem("kelly_refEarned", referralEarned);
   localStorage.setItem("kelly_reward", rewardTotal);
   localStorage.setItem("kelly_balance", balance);
   updateBalanceUI();
-  alert("Shared on WhatsApp! ₦200 referral bonus credited when friend downloads!");
 }
 function shareViaFacebook(){
   let {link} = getShareText();
-  let url=`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
-  window.open(url, '_blank');
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`, '_blank');
   referralCount++; referralEarned+=200; rewardTotal+=200; balance+=200;
   localStorage.setItem("kelly_refCount", referralCount);
   localStorage.setItem("kelly_refEarned", referralEarned);
@@ -490,11 +473,7 @@ function shareViaFacebook(){
 }
 function copyLink(){
   let {link} = getShareText();
-  navigator.clipboard.writeText(link).then(()=>{ alert("Referral link copied! Share to friends to earn ₦200 each:\n"+link); });
-}
-function copyReferral(){
-  let {code} = getShareText();
-  navigator.clipboard.writeText(code).then(()=>{ alert("Referral code copied: "+code); });
+  navigator.clipboard.writeText(link).then(()=>{ alert("Link copied: "+link); });
 }
 function applyLoan(){ alert("Loan Application ₦50,000 under review"); }
 function createUniqueCard(){
