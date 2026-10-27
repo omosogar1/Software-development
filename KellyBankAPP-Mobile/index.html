@@ -1,42 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kelly Bank - Real Bank</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>body{font-family:Inter,sans-serif}</style>
 </head>
-<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
-<div class="max-w-md w-full bg-slate-800 rounded-2xl p-6 shadow-2xl">
-<h1 class="text-3xl font-bold text-center mb-2">🏦 KELLY BANK</h1>
-<p class="text-center text-slate-400 mb-6">Real Firebase - kelly-bank-36766</p>
-<div id="authBox">
-<input id="email" type="email" placeholder="Email" class="w-full p-3 mb-3 rounded bg-slate-700">
-<input id="password" type="password" placeholder="Password" class="w-full p-3 mb-3 rounded bg-slate-700">
-<input id="fullname" type="text" placeholder="Full Name" class="w-full p-3 mb-4 rounded bg-slate-700">
-<div class="flex gap-3">
-<button onclick="register()" class="flex-1 bg-green-600 py-3 rounded font-bold">Register</button>
-<button onclick="login()" class="flex-1 bg-blue-600 py-3 rounded font-bold">Login</button>
+<body class="bg-[#0f0f0f] text-white min-h-screen flex items-center justify-center p-4">
+
+<div class="w-full max-w-[400px]">
+  <div class="flex flex-col items-center mb-8">
+    <div class="w-20 h-20 rounded-full bg-gradient-to-b from-[#FFD700] to-[#B8860B] p-[2px] mb-4">
+      <div class="w-full h-full rounded-full bg-black flex items-center justify-center border-2 border-[#FFD700]">
+        <div class="text-center">
+          <div class="text-[#FFD700] text-2xl">🛡️</div>
+          <div class="text-[7px] text-[#FFD700] font-bold tracking-widest">KELLY BANK</div>
+        </div>
+      </div>
+    </div>
+    <h1 class="text-3xl font-extrabold text-[#FFD700] tracking-wide" style="text-shadow:0 0 15px rgba(255,215,0,0.5)">Create Account</h1>
+    <p class="text-gray-400 text-sm mt-1">Set Password (not PIN)</p>
+  </div>
+
+  <div class="space-y-4">
+    <input id="fullName" type="text" placeholder="Full Name e.g Kelly Osaro" class="w-full px-5 py-4 rounded-2xl bg-[#1e1e1e] border border-[#2a2a2a] text-white placeholder-gray-500 outline-none focus:border-[#FFD700] transition">
+    <input id="phone" type="tel" placeholder="Phone Number" class="w-full px-5 py-4 rounded-2xl bg-[#1e1e1e] border border-[#2a2a2a] text-white placeholder-gray-500 outline-none focus:border-[#FFD700] transition">
+    <input id="password" type="password" placeholder="Create Password (min 6 chars)" class="w-full px-5 py-4 rounded-2xl bg-[#1e1e1e] border border-[#2a2a2a] text-white placeholder-gray-500 outline-none focus:border-[#FFD700] transition">
+    <input id="confirmPassword" type="password" placeholder="Confirm Password" class="w-full px-5 py-4 rounded-2xl bg-[#1e1e1e] border border-[#2a2a2a] text-white placeholder-gray-500 outline-none focus:border-[#FFD700] transition">
+    <input id="pin" type="password" maxlength="4" placeholder="Create 4-digit Transfer PIN" class="w-full px-5 py-4 rounded-2xl bg-[#1e1e1e] border border-[#2a2a2a] text-white placeholder-gray-500 outline-none focus:border-[#FFD700] transition">
+    
+    <button id="createBtn" class="w-full py-4 rounded-2xl bg-[#FFD700] text-black font-extrabold text-[15px] tracking-wide hover:bg-[#ffdf33] transition shadow-[0_0_20px_rgba(255,215,0,0.3)] mt-2">
+      Create Account
+    </button>
+    
+    <p id="msg" class="text-center text-sm mt-4 text-gray-400"></p>
+  </div>
+
+  <div id="successBox" class="hidden mt-6 p-5 rounded-2xl bg-[#1a2e1a] border border-green-800 text-center">
+    <div class="text-3xl mb-2">🎉</div>
+    <h3 class="font-bold text-green-400">Account Created!</h3>
+    <p class="text-sm mt-2 text-gray-300">Account No: <b id="acctNo" class="text-white"></b></p>
+    <p class="text-xs mt-1 text-gray-500">Check Firebase Firestore → users</p>
+  </div>
 </div>
-<p id="msg" class="mt-4 text-center text-sm"></p>
-</div>
-<div id="dash" class="hidden">
-<h2 class="text-xl font-bold mb-4">Welcome <span id="uName"></span></h2>
-<p class="mb-2">Balance: <b>₦<span id="bal">0</span></b></p>
-<p class="mb-4 text-sm text-slate-400">Acct: <span id="acct"></span></p>
-<div class="flex gap-2 mb-4">
-<input id="amount" type="number" placeholder="Amount" class="flex-1 p-2 rounded bg-slate-700">
-<button onclick="deposit()" class="bg-green-600 px-4 rounded">Deposit</button>
-<button onclick="withdraw()" class="bg-red-600 px-4 rounded">Withdraw</button>
-</div>
-<button onclick="logout()" class="w-full bg-slate-600 py-2 rounded">Logout</button>
-<h3 class="mt-6 font-bold">Transactions</h3>
-<div id="txs" class="mt-2 text-sm max-h-40 overflow-auto"></div>
-</div>
-</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyA0YAeuE40IUmISRdARoZxaTSqm3wCzOCA",
   authDomain: "kelly-bank-36766.firebaseapp.com",
@@ -46,65 +60,54 @@ const firebaseConfig = {
   appId: "1:1061320354015:web:14cd22d40103f11f80e16a",
   measurementId: "G-33G78WM19N"
 };
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-window.register = async () => {
- const email = document.getElementById('email').value;
- const pass = document.getElementById('password').value;
- const name = document.getElementById('fullname').value;
- if(!email||!pass||!name){document.getElementById('msg').innerText='Fill all fields';return;}
- try{
-  const cred = await createUserWithEmailAndPassword(auth,email,pass);
-  const acctNo = '30'+Math.floor(10000000+Math.random()*90000000);
-  await setDoc(doc(db,"users",cred.user.uid),{fullName:name,email:email,accountNumber:acctNo,balance:0,createdAt:new Date()});
-  document.getElementById('msg').innerText='Registered!';
- }catch(e){document.getElementById('msg').innerText=e.message}
-}
-window.login = async () => {
- try{await signInWithEmailAndPassword(auth,document.getElementById('email').value,document.getElementById('password').value);}catch(e){document.getElementById('msg').innerText=e.message}
-}
-window.logout = async () => { await signOut(auth); }
-window.deposit = async () => {
- const amt=parseFloat(document.getElementById('amount').value);
- if(!amt)return;
- const ref=doc(db,"users",auth.currentUser.uid);
- const snap=await getDoc(ref);
- const newBal=(snap.data().balance||0)+amt;
- await updateDoc(ref,{balance:newBal});
- await addDoc(collection(db,"users",auth.currentUser.uid,"transactions"),{type:'deposit',amount:amt,balance:newBal,date:new Date()});
-}
-window.withdraw = async () => {
- const amt=parseFloat(document.getElementById('amount').value);
- if(!amt)return;
- const ref=doc(db,"users",auth.currentUser.uid);
- const snap=await getDoc(ref);
- if(snap.data().balance<amt){alert('Insufficient');return;}
- const newBal=snap.data().balance-amt;
- await updateDoc(ref,{balance:newBal});
- await addDoc(collection(db,"users",auth.currentUser.uid,"transactions"),{type:'withdraw',amount:amt,balance:newBal,date:new Date()});
-}
-onAuthStateChanged(auth, async (user)=>{
- if(user){
-  document.getElementById('authBox').classList.add('hidden');
-  document.getElementById('dash').classList.remove('hidden');
-  const snap=await getDoc(doc(db,"users",user.uid));
-  if(snap.exists()){
-   const d=snap.data();
-   document.getElementById('uName').innerText=d.fullName;
-   document.getElementById('bal').innerText=d.balance;
-   document.getElementById('acct').innerText=d.accountNumber;
+
+document.getElementById('createBtn').addEventListener('click', async () => {
+  const fullName = document.getElementById('fullName').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const password = document.getElementById('password').value;
+  const confirm = document.getElementById('confirmPassword').value;
+  const pin = document.getElementById('pin').value.trim();
+  const msg = document.getElementById('msg');
+  const btn = document.getElementById('createBtn');
+
+  if(!fullName || !phone || !password || !confirm || !pin){
+    msg.innerText = "⚠️ Fill all fields"; msg.className="text-center text-sm mt-4 text-red-400"; return;
   }
-  const q=query(collection(db,"users",user.uid,"transactions"),orderBy("date","desc"));
-  onSnapshot(q,(qs)=>{
-   let html='';
-   qs.forEach(doc=>{const t=doc.data(); html+=`<div>${t.type} ₦${t.amount} - Bal ₦${t.balance}</div>`});
-   document.getElementById('txs').innerHTML=html;
-  });
- }else{
-  document.getElementById('authBox').classList.remove('hidden');
-  document.getElementById('dash').classList.add('hidden');
- }
+  if(password.length < 6){ msg.innerText="⚠️ Password min 6 chars"; msg.className="text-center text-sm mt-4 text-red-400"; return; }
+  if(password !== confirm){ msg.innerText="⚠️ Passwords no match"; msg.className="text-center text-sm mt-4 text-red-400"; return; }
+  if(pin.length !== 4){ msg.innerText="⚠️ PIN must be 4 digits"; msg.className="text-center text-sm mt-4 text-red-400"; return; }
+
+  btn.innerText = "Creating Account..."; btn.disabled=true;
+  msg.innerText = "⏳ Connecting to real bank server..."; msg.className="text-center text-sm mt-4 text-[#FFD700]";
+
+  try{
+    const fakeEmail = phone.replace(/[^0-9]/g,'') + "@kellybank.com";
+    const cred = await createUserWithEmailAndPassword(auth, fakeEmail, password);
+    const accountNumber = '30' + Math.floor(10000000 + Math.random()*90000000);
+    await setDoc(doc(db, "users", cred.user.uid), {
+      fullName: fullName,
+      phone: phone,
+      email: fakeEmail,
+      accountNumber: accountNumber,
+      transferPin: pin,
+      balance: 0,
+      createdAt: new Date(),
+      uid: cred.user.uid
+    });
+    msg.innerText = ""; 
+    document.getElementById('acctNo').innerText = accountNumber;
+    document.getElementById('successBox').classList.remove('hidden');
+    btn.innerText = "Account Created! ✅";
+    document.getElementById('fullName').value=''; document.getElementById('phone').value=''; document.getElementById('password').value=''; document.getElementById('confirmPassword').value=''; document.getElementById('pin').value='';
+  }catch(error){
+    msg.innerText = "❌ " + error.message;
+    msg.className="text-center text-sm mt-4 text-red-400";
+    btn.innerText = "Create Account"; btn.disabled=false;
+  }
 });
 </script>
 </body>
