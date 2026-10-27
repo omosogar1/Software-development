@@ -29,7 +29,6 @@
     <input id="phone" type="tel" placeholder="Phone Number" class="w-full px-5 py-4 rounded-2xl bg-[#1e1e1e] border border-[#2a2a2a] text-white placeholder-gray-500 outline-none focus:border-[#FFD700] transition">
     <input id="password" type="password" placeholder="Create Password (min 6 chars)" class="w-full px-5 py-4 rounded-2xl bg-[#1e1e1e] border border-[#2a2a2a] text-white placeholder-gray-500 outline-none focus:border-[#FFD700] transition">
     <input id="confirmPassword" type="password" placeholder="Confirm Password" class="w-full px-5 py-4 rounded-2xl bg-[#1e1e1e] border border-[#2a2a2a] text-white placeholder-gray-500 outline-none focus:border-[#FFD700] transition">
-    <input id="pin" type="password" maxlength="4" placeholder="Create 4-digit Transfer PIN" class="w-full px-5 py-4 rounded-2xl bg-[#1e1e1e] border border-[#2a2a2a] text-white placeholder-gray-500 outline-none focus:border-[#FFD700] transition">
     
     <button id="createBtn" class="w-full py-4 rounded-2xl bg-[#FFD700] text-black font-extrabold text-[15px] tracking-wide hover:bg-[#ffdf33] transition shadow-[0_0_20px_rgba(255,215,0,0.3)] mt-2">
       Create Account
@@ -70,39 +69,39 @@ document.getElementById('createBtn').addEventListener('click', async () => {
   const phone = document.getElementById('phone').value.trim();
   const password = document.getElementById('password').value;
   const confirm = document.getElementById('confirmPassword').value;
-  const pin = document.getElementById('pin').value.trim();
   const msg = document.getElementById('msg');
   const btn = document.getElementById('createBtn');
 
-  if(!fullName || !phone || !password || !confirm || !pin){
+  if(!fullName || !phone || !password || !confirm){
     msg.innerText = "⚠️ Fill all fields"; msg.className="text-center text-sm mt-4 text-red-400"; return;
   }
   if(password.length < 6){ msg.innerText="⚠️ Password min 6 chars"; msg.className="text-center text-sm mt-4 text-red-400"; return; }
   if(password !== confirm){ msg.innerText="⚠️ Passwords no match"; msg.className="text-center text-sm mt-4 text-red-400"; return; }
-  if(pin.length !== 4){ msg.innerText="⚠️ PIN must be 4 digits"; msg.className="text-center text-sm mt-4 text-red-400"; return; }
 
   btn.innerText = "Creating Account..."; btn.disabled=true;
-  msg.innerText = "⏳ Connecting to real bank server..."; msg.className="text-center text-sm mt-4 text-[#FFD700]";
+  msg.innerText = "⏳ Creating real bank account..."; msg.className="text-center text-sm mt-4 text-[#FFD700]";
 
   try{
     const fakeEmail = phone.replace(/[^0-9]/g,'') + "@kellybank.com";
     const cred = await createUserWithEmailAndPassword(auth, fakeEmail, password);
     const accountNumber = '30' + Math.floor(10000000 + Math.random()*90000000);
+    
     await setDoc(doc(db, "users", cred.user.uid), {
       fullName: fullName,
       phone: phone,
       email: fakeEmail,
       accountNumber: accountNumber,
-      transferPin: pin,
       balance: 0,
+      transferPin: null,
       createdAt: new Date(),
       uid: cred.user.uid
     });
+
     msg.innerText = ""; 
     document.getElementById('acctNo').innerText = accountNumber;
     document.getElementById('successBox').classList.remove('hidden');
     btn.innerText = "Account Created! ✅";
-    document.getElementById('fullName').value=''; document.getElementById('phone').value=''; document.getElementById('password').value=''; document.getElementById('confirmPassword').value=''; document.getElementById('pin').value='';
+    document.getElementById('fullName').value=''; document.getElementById('phone').value=''; document.getElementById('password').value=''; document.getElementById('confirmPassword').value='';
   }catch(error){
     msg.innerText = "❌ " + error.message;
     msg.className="text-center text-sm mt-4 text-red-400";
