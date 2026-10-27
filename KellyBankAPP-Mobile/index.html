@@ -1,536 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly Bank</title>
-<meta name="theme-color" content="#121212">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Roboto,Arial,sans-serif}
-body{background:#121212;color:#fff;min-height:100vh}
-.app{max-width:420px;margin:0 auto;background:#121212;min-height:100vh;padding-bottom:90px;display:none}
-.header-top{display:flex;justify-content:space-between;align-items:center;padding:15px 20px}
-.logo-area{display:flex;align-items:center;gap:10px}
-.logo-img-header{width:38px;height:38px;border-radius:50%;border:1.5px solid #ffcc00;object-fit:cover;background:#000}
-.balance-card{background:#1e1e1e;border-radius:15px;padding:18px;margin:10px 15px;display:flex;justify-content:space-between;align-items:center;border:1px solid #2a2a2a}
-.add-money{background:#ffcc00;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:800;font-size:11px;cursor:pointer}
-.quick-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:15px}
-.q-btn{background:#1e1e1e;border:1px solid #2a2a2a;border-radius:15px;padding:16px 5px;text-align:center;cursor:pointer}
-.q-btn small{color:#ffcc00;display:block;margin-top:5px;font-size:11px}
-.trans-box{background:#1e1e1e;border-radius:15px;margin:15px;padding:15px;border:1px solid #2a2a2a}
-.trans-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:0.5px solid #2a2a2a}
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:#1a1a1a;display:flex;justify-content:space-around;padding:6px 0;border-top:1px solid #2a2a2a;z-index:50}
-.nav-item{text-align:center;font-size:9px;color:#666;cursor:pointer;padding:4px 6px;border-radius:10px;flex:1}
-.nav-item.active{color:#ffcc00;background:#2a2a2a}
-.tier-box{background:#1e1e1e;border:1px solid #333;border-left:4px solid #ffcc00;padding:12px;border-radius:10px;margin:10px 0}
-input,select{width:100%;padding:14px;border-radius:12px;margin:8px 0;background:#1e1e1e;color:#fff;border:1px solid #333;font-size:16px}
-.btn-primary{background:#ffcc00;color:#000;border:none;padding:15px;border-radius:12px;width:100%;cursor:pointer;font-weight:800;margin-top:10px;display:block}
-.btn-secondary{background:#1e1e1e;color:#fff;border:1px solid #333;padding:15px;border-radius:12px;width:100%;cursor:pointer;margin-top:10px;display:block}
-.screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#121212;z-index:100;padding:20px;overflow-y:auto;display:none}
-.screen.active{display:flex;flex-direction:column}
-.screen-inner{max-width:420px;width:100%;margin:0 auto;padding-top:20px;text-align:center}
-.logo-img-big{width:90px;height:90px;border-radius:50%;border:2px solid #ffcc00;object-fit:cover;margin:0 auto 15px auto;display:block;background:#000}
-.title{font-size:24px;font-weight:800;text-align:center;margin-bottom:20px;color:#ffcc00}
-.box{background:#1e1e1e;padding:15px;border-radius:15px;margin:15px;display:none;border:1px solid #2a2a2a;text-align:left}
-.view{display:none}
-.view.active{display:block}
-.pin-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:200;display:none;justify-content:center;align-items:center;padding:20px}
-.pin-box{background:#1e1e1e;border-radius:15px;padding:20px;width:100%;max-width:350px;border:1px solid #ffcc00;text-align:center}
-.card-container{perspective:1000px;margin:15px;cursor:pointer}
-.kelly-card-flip{position:relative;width:100%;height:210px;transform-style:preserve-3d;transition:transform 0.8s}
-.kelly-card-flip.flipped{transform:rotateY(180deg)}
-.card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:20px;padding:20px;overflow:hidden}
-.card-front{background:linear-gradient(135deg,#0a0a0a 0%,#1a0f2e 40%,#2d1b4e 70%,#ffcc00 100%);border:1px solid #ffcc00;box-shadow:0 10px 30px rgba(255,204,0,0.3)}
-.card-back{background:linear-gradient(135deg,#1a0f2e,#0a0a0a);border:1px solid #333;transform:rotateY(180deg)}
-.kelly-chip{width:40px;height:30px;background:linear-gradient(135deg,#ffcc00,#ffaa00);border-radius:5px}
-.visa-debit{font-weight:900;font-size:20px;color:#fff;font-style:italic;line-height:1}
-.visa-debit small{font-size:10px;letter-spacing:2px;display:block;color:#fff;font-style:normal;font-weight:700}
-.mag-stripe{width:100%;height:40px;background:#000;margin:10px -20px}
-.cvv-box{background:#fff;color:#000;padding:5px 10px;border-radius:4px;font-size:12px;text-align:right;width:80px;float:right;margin-top:10px}
-.profile-header{background:linear-gradient(135deg,#1e1e1e,#2a2a2a);border:1px solid #ffcc00;border-radius:15px;padding:20px;margin:15px;text-align:center}
-.profile-avatar{width:70px;height:70px;border-radius:50%;border:2px solid #ffcc00;margin:0 auto 10px auto;background:#000;display:flex;align-items:center;justify-content:center;font-size:24px}
-.setting-item{display:flex;justify-content:space-between;align-items:center;padding:14px;background:#1e1e1e;border-radius:10px;margin:8px 0;border:1px solid #2a2a2a;cursor:pointer}
-.addmoney-item{display:flex;align-items:center;gap:12px;padding:16px;background:#1e1e1e;border-radius:12px;margin:10px 0;border:1px solid #2a2a2a;cursor:pointer}
-.addmoney-icon{width:40px;height:40px;background:#2a2a2a;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
-.security-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#121212;z-index:150;display:none;padding:20px;overflow-y:auto}
-.biometric-btn{width:70px;height:70px;border-radius:50%;background:#1e1e1e;border:2px solid #ffcc00;display:flex;align-items:center;justify-content:center;font-size:30px;margin:15px auto;cursor:pointer}
-.toggle{width:45px;height:24px;background:#333;border-radius:20px;position:relative;cursor:pointer;transition:0.3s}
-.toggle.active{background:#0f0}
-.toggle-ball{width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:0.3s}
-.toggle.active .toggle-ball{left:23px}
-</style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kelly Bank - Real Bank</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-
-<div id="welcomeScreen" class="screen active">
-  <div class="screen-inner">
-    <img src="logo.png" class="logo-img-big" alt="Logo">
-    <div class="title">Kelly Bank</div>
-    <button class="btn-primary" onclick="goToLogin()">Login with Password</button>
-    <button class="btn-secondary" onclick="goToRegister()">Create New Account</button>
-    <div id="bioLoginArea" style="display:none;margin-top:25px">
-      <div style="height:1px;background:#333;margin:15px 0"></div>
-      <p style="font-size:12px;color:#888">Biometric Login Enabled</p>
-      <div class="biometric-btn" onclick="biometricLogin()">👆</div>
-      <p style="font-size:11px;color:#ffcc00">Tap fingerprint to login</p>
-      <p id="bioStatus" style="font-size:11px;color:#0f0;margin-top:5px"></p>
-    </div>
-  </div>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
+<div class="max-w-md w-full bg-slate-800 rounded-2xl p-6 shadow-2xl">
+<h1 class="text-3xl font-bold text-center mb-2">🏦 KELLY BANK</h1>
+<p class="text-center text-slate-400 mb-6">Real Firebase - kelly-bank-36766</p>
+<div id="authBox">
+<input id="email" type="email" placeholder="Email" class="w-full p-3 mb-3 rounded bg-slate-700">
+<input id="password" type="password" placeholder="Password" class="w-full p-3 mb-3 rounded bg-slate-700">
+<input id="fullname" type="text" placeholder="Full Name" class="w-full p-3 mb-4 rounded bg-slate-700">
+<div class="flex gap-3">
+<button onclick="register()" class="flex-1 bg-green-600 py-3 rounded font-bold">Register</button>
+<button onclick="login()" class="flex-1 bg-blue-600 py-3 rounded font-bold">Login</button>
 </div>
-
-<div id="registerScreen" class="screen">
-  <div class="screen-inner">
-    <img src="logo.png" class="logo-img-big" alt="Logo">
-    <div class="title">Create Account</div>
-    <input id="regName" placeholder="Full Name">
-    <input id="regPhone" type="tel" placeholder="Phone Number">
-    <input id="regEmail" type="email" placeholder="Email (optional)">
-    <input id="regPassword" type="password" placeholder="Create Password">
-    <input id="regConfirmPassword" type="password" placeholder="Confirm Password">
-    <button class="btn-primary" onclick="doRegister()">Create Account</button>
-    <button class="btn-secondary" onclick="showScreen('welcomeScreen')">Back</button>
-    <p id="regMsg" style="font-size:12px;margin-top:10px;color:#ffcc00"></p>
-  </div>
+<p id="msg" class="mt-4 text-center text-sm"></p>
 </div>
-
-<div id="loginScreen" class="screen">
-  <div class="screen-inner">
-    <img src="logo.png" class="logo-img-big" alt="Logo">
-    <div class="title">Login</div>
-    <input id="loginPhone" type="tel" placeholder="Phone Number">
-    <input id="loginPassword" type="password" placeholder="Password">
-    <button class="btn-primary" onclick="doLogin()">Login</button>
-    <button class="btn-secondary" onclick="showScreen('welcomeScreen')">Back</button>
-    <p id="loginMsg" style="font-size:12px;margin-top:10px;color:red"></p>
-    <div class="biometric-btn" id="bioLoginBtn2" style="display:none" onclick="biometricLogin()">👆</div>
-    <p style="font-size:11px;color:#888;display:none" id="bioText2">Or login with fingerprint</p>
-  </div>
+<div id="dash" class="hidden">
+<h2 class="text-xl font-bold mb-4">Welcome <span id="uName"></span></h2>
+<p class="mb-2">Balance: <b>₦<span id="bal">0</span></b></p>
+<p class="mb-4 text-sm text-slate-400">Acct: <span id="acct"></span></p>
+<div class="flex gap-2 mb-4">
+<input id="amount" type="number" placeholder="Amount" class="flex-1 p-2 rounded bg-slate-700">
+<button onclick="deposit()" class="bg-green-600 px-4 rounded">Deposit</button>
+<button onclick="withdraw()" class="bg-red-600 px-4 rounded">Withdraw</button>
 </div>
-
-<div class="app" id="mainApp">
-  <div class="header-top">
-    <div class="logo-area">
-      <img src="logo.png" class="logo-img-header" alt="Logo">
-      <span style="color:#ffcc00;font-weight:700">Kelly Bank</span>
-    </div>
-    <span onclick="lockApp()" style="color:#ffcc00;font-size:12px;cursor:pointer">Logout</span>
-  </div>
-
-  <div id="homeView" class="view active">
-    <div class="balance-card">
-      <div>
-        <small style="color:#888;font-size:10px">AVAILABLE BALANCE <span onclick="toggleBalance()" style="cursor:pointer">🙈</span></small>
-        <h2 style="margin:5px 0"><span style="color:#ffcc00">₦</span> <span id="balance">••••••••</span></h2>
-        <small id="welcomeName" style="color:#888">Welcome</small><br>
-        <small id="tierBadge" style="background:#333;padding:2px 6px;border-radius:8px;font-size:9px">Tier 1</small><br>
-        <small id="homeAccNo" style="color:#ffcc00;font-size:10px">Acc: 90********</small>
-      </div>
-      <button class="add-money" onclick="openBox('addMoneyBox')">+ ADD MONEY</button>
-    </div>
-    <div class="quick-actions">
-      <div class="q-btn" onclick="openBox('transferBox')"><div>💸</div><small>Transfer</small></div>
-      <div class="q-btn" onclick="openBox('airtimeBox')"><div>📱</div><small>Airtime</small></div>
-      <div class="q-btn" onclick="openBox('billsBox')"><div>💡</div><small>Bills</small></div>
-    </div>
-    <div class="trans-box">
-      <h4 style="color:#ffcc00;font-size:13px;margin-bottom:10px">Transaction History</h4>
-      <div id="dynamicTrans"></div>
-      <div class="trans-item"><div><b style="font-size:12px">Salary</b><br><small style="color:#0f0">Credit</small></div><b style="color:#0f0">+₦75000</b></div>
-    </div>
-  </div>
-
-  <div id="rewardView" class="view">
-    <div class="trans-box" style="display:block;text-align:center">
-      <h3 style="color:#ffcc00">🎁 Reward Center</h3>
-      <div class="tier-box"><b>Daily ₦50</b><br><button class="btn-primary" style="padding:10px" onclick="claimReward(50)">Claim Daily</button></div>
-      <div class="tier-box" style="text-align:left"><b>📤 Share & Refer - Earn ₦200</b><br><small>Code: <b id="referralCode" style="color:#ffcc00">KELLY-1234</b></small><br><div style="background:#0a0a0a;padding:8px;border-radius:8px;margin:5px 0;font-size:10px;word-break:break-all;color:#aaa" id="referralLink">link</div><button class="btn-primary" style="padding:12px;background:linear-gradient(135deg,#0f0,#00aa00)" onclick="shareReferral()">📤 Share to Refer - Download App</button><div style="margin-top:10px"><div class="setting-item" onclick="shareViaWhatsApp()"><div><b style="font-size:12px">💬 WhatsApp</b></div><span>›</span></div><div class="setting-item" onclick="shareViaFacebook()"><div><b style="font-size:12px">📘 Facebook</b></div><span>›</span></div><div class="setting-item" onclick="copyLink()"><div><b style="font-size:12px">🔗 Copy Link</b></div><span>›</span></div></div><div style="margin-top:10px"><b style="color:#ffcc00"><span id="referralCount">0</span> invited</b> • <span style="color:#0f0">₦<span id="referralEarned">0</span> earned</span></div></div>
-      <p style="color:#ffcc00">Total: ₦<span id="rewardTotal">0</span></p>
-    </div>
-  </div>
-
-  <div id="loanView" class="view"><div class="trans-box" style="display:block"><h4 style="color:#ffcc00">💰 Loan</h4><div class="tier-box"><b>Quick Loan ₦500k</b><br><small>Eligible ₦50k</small><br><button class="btn-primary" onclick="applyLoan()">Apply Loan</button></div></div></div>
-
-  <div id="cardView" class="view">
-    <h4 style="color:#ffcc00;margin:15px">💳 My Visa Debit - Tap to Rotate</h4>
-    <div class="card-container" onclick="rotateCard()"><div class="kelly-card-flip" id="kellyFlip"><div class="card-front"><div style="display:flex;justify-content:space-between"><div style="display:flex;align-items:center;gap:8px"><img src="logo.png" style="width:30px;height:30px;border-radius:50%;border:1.5px solid #ffcc00"><span style="font-size:11px;font-weight:800;color:#ffcc00">KELLY BANK</span></div><div class="visa-debit"><span style="color:#ffcc00">VISA</span><small>DEBIT</small></div></div><div style="margin:18px 0;display:flex;gap:15px"><div class="kelly-chip"></div><span style="font-size:9px;color:#aaa">DEBIT</span></div><div style="font-size:17px;letter-spacing:2.5px;font-family:monospace;margin:12px 0" id="cardNumberFront">4539 1234 5678 4589</div><div style="display:flex;justify-content:space-between;margin-top:18px"><div><small style="font-size:8px;color:#aaa">CARD HOLDER</small><br><span id="cardName" style="font-size:11px">YOUR NAME</span></div><div><small style="font-size:8px;color:#aaa">EXPIRES</small><br><span style="font-size:11px">12/28</span></div><div class="visa-debit" style="font-size:16px"><span style="color:#ffcc00">VISA</span><small>DEBIT</small></div></div></div><div class="card-back"><div class="mag-stripe"></div><div style="margin:15px 0"><div style="display:flex;justify-content:space-between"><div style="background:#fff;height:30px;width:70%;display:flex;align-items:center;padding:5px"><span style="color:#000;font-size:10px">Authorized Signature - Debit</span></div><div class="cvv-box"><small>CVV</small><br><b id="cvvNum">789</b></div></div></div></div></div></div>
-  </div>
-
-  <div id="meView" class="view">
-    <div class="profile-header"><div class="profile-avatar" id="profileAvatar">K</div><h3 id="profileName" style="color:#ffcc00">Your Name</h3><small id="profilePhone" style="color:#888">Phone</small><br><small id="profileEmail" style="color:#888">Email</small><br><div style="margin-top:10px"><span id="profileTierBadge" style="background:#ffcc00;color:#000;padding:4px 10px;border-radius:10px;font-size:10px;font-weight:800">Tier 1</span></div><div style="margin-top:10px;background:#0a0a0a;padding:8px;border-radius:8px"><small style="color:#888">Kelly Bank Account Number</small><br><b id="profileAccNo" style="color:#ffcc00;font-size:16px;letter-spacing:1px">90********</b></div></div>
-    <div class="trans-box" style="display:block">
-      <h5 style="color:#ffcc00;font-size:12px">MY PROFILE</h5>
-      <div class="setting-item"><div><b style="font-size:12px">Full Name</b><br><small id="meName" style="color:#888">-</small></div><small style="color:#ffcc00">Edit</small></div>
-      <div class="setting-item"><div><b style="font-size:12px">Account Number</b><br><small id="meAccNo" style="color:#ffcc00;font-weight:700;font-size:13px">90********</small><br><small style="color:#888">Kelly Bank • 10-digit</small></div><small style="color:#ffcc00" onclick="copyAccountNo()">Copy</small></div>
-      <div class="setting-item"><div><b style="font-size:12px">Phone</b><br><small id="mePhone" style="color:#888">-</small></div><small style="color:#666">Verified ✓</small></div>
-      <div class="setting-item"><div><b style="font-size:12px">Email</b><br><small id="meEmail" style="color:#888">-</small></div></div>
-      <h5 style="color:#ffcc00;font-size:12px;margin:20px 0 10px 0">TIER</h5>
-      <div class="tier-box"><b>Tier 1 ✓ Active</b><br><small>₦50k</small></div>
-      <div class="tier-box"><b>Tier 2 <span id="tier2Status">- Locked</span></b><br><small>₦200k • BVN</small><div id="bvnUpgradeForm"><input id="bvnInput" type="number" placeholder="BVN 11 digits"><button class="btn-primary" onclick="verifyBVN()">Verify BVN</button><p id="bvnMsg" style="font-size:12px"></p></div></div>
-      <div class="tier-box" style="border-left-color:#0f0"><b>Tier 3 <span id="tier3Status">- Locked</span></b><br><small>Unlimited • NIN</small><div id="ninUpgradeForm"><input id="ninInput" type="number" placeholder="NIN 11 digits"><button class="btn-primary" style="background:#0f0;color:#000" onclick="verifyNIN()">Verify NIN → Unlimited</button><p id="ninMsg" style="font-size:12px"></p></div></div>
-      <h5 style="color:#ffcc00;font-size:12px;margin:20px 0 10px 0">SETTING</h5>
-      <div class="setting-item" onclick="openSettings()"><div><b style="font-size:13px">⚙️ Settings</b><br><small style="color:#888">Security, PIN, Password, Biometric</small></div><span style="color:#ffcc00;font-size:18px">›</span></div>
-    </div>
-  </div>
-
-  <div id="settingsScreen" class="security-screen"><div style="max-width:420px;margin:0 auto"><div style="display:flex;align-items:center;gap:15px;margin-bottom:20px"><span onclick="closeSettings()" style="font-size:20px;cursor:pointer">‹ Back</span><h4 style="color:#ffcc00">Settings</h4></div><div class="setting-item" onclick="openSecurity()"><div><b style="font-size:13px">🔒 Security</b><br><small style="color:#888">PIN, Password, Biometric</small></div><span style="color:#ffcc00">›</span></div></div></div>
-
-  <div id="securityScreen" class="security-screen"><div style="max-width:420px;margin:0 auto"><div style="display:flex;align-items:center;gap:15px;margin-bottom:20px"><span onclick="closeSecurity()" style="font-size:20px;cursor:pointer">‹ Back</span><h4 style="color:#ffcc00">Security</h4></div><div class="setting-item" style="cursor:default"><div><b style="font-size:13px">👆 Biometric Login</b><br><small style="color:#888" id="bioDesc">Fingerprint / Face ID</small></div><div class="toggle" id="bioToggle" onclick="toggleBiometric()"><div class="toggle-ball"></div></div></div><div id="bioEnrollBox" style="display:none;margin:10px 0;padding:12px;background:#1e1e1e;border:1px solid #0f0;border-radius:10px"><p style="font-size:12px;color:#0f0">Biometric ON</p><div class="biometric-btn" style="width:60px;height:60px;font-size:24px" onclick="testBiometric()">👆</div><p id="bioTestMsg" style="font-size:11px;color:#888;text-align:center"></p></div><div class="tier-box" style="border-left-color:#00aaff;margin-top:20px"><b>💸 Transfer PIN <span id="pinStatus">- Not Set</span></b><br><small>For Transfer, Airtime, Bills</small><div style="margin-top:12px"><input id="newTransferPin" type="password" maxlength="4" placeholder="4-digit PIN"><button class="btn-primary" onclick="setTransferPin()">Set Transfer PIN</button><p id="pinMsg" style="font-size:12px;margin-top:5px"></p></div></div><div class="tier-box" style="border-left-color:#ff4444;margin-top:20px"><b>🔑 Security PIN / Password</b><br><small>Change password</small><div style="margin-top:12px"><input id="oldPassword" type="password" placeholder="Old Password"><input id="newPassword" type="password" placeholder="New Password"><input id="confirmNewPassword" type="password" placeholder="Confirm New Password"><button class="btn-primary" style="background:#ff4444" onclick="changeSecurityPin()">Change Security Password</button><p id="secPinMsg" style="font-size:12px;margin-top:5px"></p></div></div></div></div>
-
-  <!-- ADD MONEY - ACCOUNT NUMBER AS NUMBER -->
-  <div id="addMoneyBox" class="box">
-    <h4 style="color:#ffcc00;text-align:center">Add Money</h4>
-    <p style="font-size:11px;color:#888;text-align:center;margin:10px 0">Choose how to fund your Kelly Bank account</p>
-    <div class="addmoney-item" onclick="showAddMoneyDetail('account')"><div class="addmoney-icon">🏦</div><div><b style="font-size:13px">Account Number</b><br><small style="color:#888">Your 10-digit Kelly account</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
-    <div class="addmoney-item" onclick="showAddMoneyDetail('cash')"><div class="addmoney-icon">💵</div><div><b style="font-size:13px">Cash Deposit</b><br><small style="color:#888">At agent / branch</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
-    <div class="addmoney-item" onclick="showAddMoneyDetail('card')"><div class="addmoney-icon">💳</div><div><b style="font-size:13px">Top up with Card / Account</b><br><small style="color:#888">From other bank</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
-    <div class="addmoney-item" onclick="showAddMoneyDetail('ussd')"><div class="addmoney-icon">#️⃣</div><div><b style="font-size:13px">Bank USSD</b><br><small style="color:#888">Dial code from other banks</small></div><span style="margin-left:auto;color:#ffcc00">›</span></div>
-    <div id="addMoneyDetail" style="display:none;margin-top:15px;padding:15px;background:#0a0a0a;border-radius:10px;border:1px solid #333"><p id="addMoneyDetailText" style="font-size:13px"></p><button class="btn-secondary" style="padding:10px" onclick="document.getElementById('addMoneyDetail').style.display='none'">Close</button></div>
-    <button class="btn-secondary" onclick="closeBoxes()">Cancel</button>
-  </div>
-
-  <div id="transferBox" class="box"><h4 style="color:#ffcc00">Transfer</h4><select id="bankSelect"><option value="">Select Bank</option><option>Kelly Bank</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>OPay</option><option>Palmpay</option></select><input id="sendTo" placeholder="Account No"><input id="sendAmount" type="number" placeholder="Amount"><input id="sendRemark" placeholder="Remark"><button class="btn-primary" onclick="initiateTransfer()">Send Now</button><button class="btn-secondary" onclick="closeBoxes()">Cancel</button></div>
-  <div id="airtimeBox" class="box"><h4 style="color:#ffcc00">Airtime</h4><select id="airtimeNetwork"><option value="">Network</option><option>MTN</option><option>Airtel</option><option>Glo</option><option>9mobile</option></select><input id="airtimePhone" type="tel" placeholder="Phone"><input id="airtimeAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="initiateAirtime()">Buy</button><button class="btn-secondary" onclick="closeBoxes()">Cancel</button></div>
-  <div id="billsBox" class="box"><h4 style="color:#ffcc00">Bills</h4><select id="billType"><option value="">Bill</option><option>Electricity</option><option>DSTV</option><option>Data</option></select><input id="billNumber" placeholder="Meter No"><input id="billAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="initiateBills()">Pay</button><button class="btn-secondary" onclick="closeBoxes()">Cancel</button></div>
-
-  <div id="pinModal" class="pin-modal"><div class="pin-box"><h4 style="color:#ffcc00">Enter Transfer PIN</h4><p id="pinModalInfo" style="font-size:12px;color:#888;margin:10px 0"></p><input id="modalPinInput" type="password" maxlength="4" placeholder="PIN" style="text-align:center;font-size:20px;letter-spacing:5px"><button class="btn-primary" onclick="confirmWithPin()">Confirm</button><button class="btn-secondary" onclick="closePinModal()">Cancel</button><p id="modalPinMsg" style="font-size:12px;color:red"></p></div></div>
-  <div id="receipt" class="box" style="background:#fff;color:#000"><h3 style="text-align:center">Kelly Bank Receipt</h3><hr><p id="rFrom">From: -</p><p id="rTo">To: -</p><p id="rAmount">Amount: -</p><p id="rRemark">Remark: -</p><p id="rDate">Date: -</p><p style="color:green;font-weight:bold">SUCCESS ✓</p><button class="btn-primary" onclick="closeBoxes()">Close</button></div>
-
-  <div class="bottom-nav">
-    <div class="nav-item active" id="navHome" onclick="switchTab('home')"><div>🏠</div>Home</div>
-    <div class="nav-item" id="navReward" onclick="switchTab('reward')"><div>🎁</div>Reward</div>
-    <div class="nav-item" id="navLoan" onclick="switchTab('loan')"><div>💰</div>Loan</div>
-    <div class="nav-item" id="navCard" onclick="switchTab('card')"><div>💳</div>Card</div>
-    <div class="nav-item" id="navMe" onclick="switchTab('me')"><div>👤</div>Me</div>
-  </div>
+<button onclick="logout()" class="w-full bg-slate-600 py-2 rounded">Logout</button>
+<h3 class="mt-6 font-bold">Transactions</h3>
+<div id="txs" class="mt-2 text-sm max-h-40 overflow-auto"></div>
 </div>
-
-<script>
-let balance = parseFloat(localStorage.getItem("kelly_balance") || "250000");
-let userData = JSON.parse(localStorage.getItem("kelly_user") || "null");
-let tier = localStorage.getItem("kelly_tier") || "1";
-let transferPin = localStorage.getItem("kelly_transfer_pin") || null;
-let rewardTotal = parseFloat(localStorage.getItem("kelly_reward") || "0");
-let referralCount = parseInt(localStorage.getItem("kelly_refCount") || "0");
-let referralEarned = parseFloat(localStorage.getItem("kelly_refEarned") || "0");
-let biometricEnabled = localStorage.getItem("kelly_biometric") === "true";
-let showBal = false; let pendingTx = null;
-let cardNum = localStorage.getItem("kelly_card_num") || "4539 "+Math.floor(1000+Math.random()*9000)+" "+Math.floor(1000+Math.random()*9000)+" 4589";
-localStorage.setItem("kelly_card_num", cardNum);
-
-function generateAccountNumber(){
-  // 10-digit Kelly Bank account - starts with 90
-  let num = "90" + Math.floor(10000000 + Math.random()*90000000).toString();
-  // Ensure 10 digits
-  if(num.length>10) num=num.slice(0,10);
-  return num;
-}
-function ensureAccountNumber(){
-  if(userData && !userData.accountNo){
-    userData.accountNo = generateAccountNumber();
-    localStorage.setItem("kelly_user", JSON.stringify(userData));
-  } else if(userData && userData.accountNo && userData.accountNo.length!=10){
-    // Fix if old format
-    userData.accountNo = generateAccountNumber();
-    localStorage.setItem("kelly_user", JSON.stringify(userData));
-  }
-}
-
-window.onload = ()=>{
-  ensureAccountNumber();
-  updateBalanceUI();
-  const p = new URLSearchParams(window.location.search);
-  if(p.has('clear')){ localStorage.clear(); location.href=location.pathname; return; }
-  if(p.has('ref')){ localStorage.setItem("kelly_refBy", p.get('ref')); }
-  showScreen('welcomeScreen');
-  checkBioOnWelcome();
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyA0YAeuE40IUmISRdARoZxaTSqm3wCzOCA",
+  authDomain: "kelly-bank-36766.firebaseapp.com",
+  projectId: "kelly-bank-36766",
+  storageBucket: "kelly-bank-36766.firebasestorage.app",
+  messagingSenderId: "1061320354015",
+  appId: "1:1061320354015:web:14cd22d40103f11f80e16a",
+  measurementId: "G-33G78WM19N"
 };
-function checkBioOnWelcome(){
-  let area=document.getElementById('bioLoginArea');
-  let btn2=document.getElementById('bioLoginBtn2');
-  let txt2=document.getElementById('bioText2');
-  if(biometricEnabled && userData){
-    if(area) area.style.display='block';
-    if(btn2) btn2.style.display='flex';
-    if(txt2) txt2.style.display='block';
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+window.register = async () => {
+ const email = document.getElementById('email').value;
+ const pass = document.getElementById('password').value;
+ const name = document.getElementById('fullname').value;
+ if(!email||!pass||!name){document.getElementById('msg').innerText='Fill all fields';return;}
+ try{
+  const cred = await createUserWithEmailAndPassword(auth,email,pass);
+  const acctNo = '30'+Math.floor(10000000+Math.random()*90000000);
+  await setDoc(doc(db,"users",cred.user.uid),{fullName:name,email:email,accountNumber:acctNo,balance:0,createdAt:new Date()});
+  document.getElementById('msg').innerText='Registered!';
+ }catch(e){document.getElementById('msg').innerText=e.message}
+}
+window.login = async () => {
+ try{await signInWithEmailAndPassword(auth,document.getElementById('email').value,document.getElementById('password').value);}catch(e){document.getElementById('msg').innerText=e.message}
+}
+window.logout = async () => { await signOut(auth); }
+window.deposit = async () => {
+ const amt=parseFloat(document.getElementById('amount').value);
+ if(!amt)return;
+ const ref=doc(db,"users",auth.currentUser.uid);
+ const snap=await getDoc(ref);
+ const newBal=(snap.data().balance||0)+amt;
+ await updateDoc(ref,{balance:newBal});
+ await addDoc(collection(db,"users",auth.currentUser.uid,"transactions"),{type:'deposit',amount:amt,balance:newBal,date:new Date()});
+}
+window.withdraw = async () => {
+ const amt=parseFloat(document.getElementById('amount').value);
+ if(!amt)return;
+ const ref=doc(db,"users",auth.currentUser.uid);
+ const snap=await getDoc(ref);
+ if(snap.data().balance<amt){alert('Insufficient');return;}
+ const newBal=snap.data().balance-amt;
+ await updateDoc(ref,{balance:newBal});
+ await addDoc(collection(db,"users",auth.currentUser.uid,"transactions"),{type:'withdraw',amount:amt,balance:newBal,date:new Date()});
+}
+onAuthStateChanged(auth, async (user)=>{
+ if(user){
+  document.getElementById('authBox').classList.add('hidden');
+  document.getElementById('dash').classList.remove('hidden');
+  const snap=await getDoc(doc(db,"users",user.uid));
+  if(snap.exists()){
+   const d=snap.data();
+   document.getElementById('uName').innerText=d.fullName;
+   document.getElementById('bal').innerText=d.balance;
+   document.getElementById('acct').innerText=d.accountNumber;
   }
-}
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.getElementById('mainApp').style.display='none';
-  checkBioOnWelcome();
-}
-function goToLogin(){ showScreen('loginScreen'); checkBioOnWelcome(); }
-function goToRegister(){ showScreen('registerScreen'); }
-function doRegister(){
-  let name=document.getElementById('regName').value.trim();
-  let phone=document.getElementById('regPhone').value.trim();
-  let email=document.getElementById('regEmail').value.trim();
-  let pass=document.getElementById('regPassword').value.trim();
-  let cpass=document.getElementById('regConfirmPassword').value.trim();
-  let msg=document.getElementById('regMsg');
-  if(name.length<3){ msg.innerText="Enter full name"; msg.style.color="red"; return; }
-  if(phone.length<10){ msg.innerText="Enter valid phone"; msg.style.color="red"; return; }
-  if(pass.length<6){ msg.innerText="Password min 6 chars"; msg.style.color="red"; return; }
-  if(pass!==cpass){ msg.innerText="Passwords no match"; msg.style.color="red"; return; }
-  let accNo = generateAccountNumber();
-  userData={name,phone,email:email||"not set",password:pass,accountNo:accNo};
-  localStorage.setItem("kelly_user", JSON.stringify(userData));
-  localStorage.setItem("kelly_balance","250000");
-  msg.innerText="Account Created! Acc No: "+accNo; msg.style.color="green";
-  setTimeout(()=>showScreen('loginScreen'),1500);
-}
-function doLogin(){
-  let phone=document.getElementById('loginPhone').value.trim();
-  let pass=document.getElementById('loginPassword').value.trim();
-  let msg=document.getElementById('loginMsg');
-  let stored = JSON.parse(localStorage.getItem("kelly_user") || "null");
-  if(!stored){ msg.innerText="No account found"; return; }
-  if(phone!==stored.phone){ msg.innerText="Phone not found"; return; }
-  if(pass!==stored.password){ msg.innerText="Wrong Password"; return; }
-  userData=stored;
-  ensureAccountNumber();
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('mainApp').style.display='block';
-  switchTab('home'); updateBalanceUI();
-}
-async function biometricLogin(){
-  let status=document.getElementById('bioStatus');
-  if(!userData){ alert("No account found"); return; }
-  if(status) status.innerText="Scanning fingerprint...";
-  await new Promise(r=>setTimeout(r,800));
-  if(status) status.innerText="Verified ✓";
-  setTimeout(()=>{
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-    document.getElementById('mainApp').style.display='block';
-    switchTab('home'); updateBalanceUI();
-    if(status) status.innerText="";
-  },600);
-}
-function toggleBiometric(){
-  let toggle=document.getElementById('bioToggle');
-  let enroll=document.getElementById('bioEnrollBox');
-  biometricEnabled=!biometricEnabled;
-  localStorage.setItem("kelly_biometric", biometricEnabled);
-  if(biometricEnabled){ toggle.classList.add('active'); enroll.style.display='block'; } else { toggle.classList.remove('active'); enroll.style.display='none'; }
-  checkBioOnWelcome();
-}
-function testBiometric(){
-  let msg=document.getElementById('bioTestMsg');
-  msg.innerText="Scanning... 👆";
-  setTimeout(()=>{ msg.innerText="✓ Fingerprint verified!"; msg.style.color="#0f0"; },1000);
-}
-function switchTab(tab){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById(tab+'View').classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('nav'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
-  closeBoxes(); closePinModal(); updateBalanceUI();
-}
-function toggleBalance(){ showBal=!showBal; updateBalanceUI(); }
-function rotateCard(){ document.getElementById('kellyFlip').classList.toggle('flipped'); }
-function openSettings(){ document.getElementById('settingsScreen').style.display='block'; }
-function closeSettings(){ document.getElementById('settingsScreen').style.display='none'; }
-function openSecurity(){ 
-  document.getElementById('securityScreen').style.display='block';
-  let toggle=document.getElementById('bioToggle');
-  let enroll=document.getElementById('bioEnrollBox');
-  if(biometricEnabled){ toggle.classList.add('active'); enroll.style.display='block'; } else { toggle.classList.remove('active'); enroll.style.display='none'; }
-}
-function closeSecurity(){ document.getElementById('securityScreen').style.display='none'; }
-function updateBalanceUI(){
-  ensureAccountNumber();
-  let balEl=document.getElementById('balance');
-  if(balEl) balEl.innerText=showBal?balance.toLocaleString():"••••••••";
-  if(userData){
-    let accNo = userData.accountNo || "90********";
-    let wn=document.getElementById('welcomeName'); if(wn) wn.innerText="Welcome "+userData.name;
-    let rf=document.getElementById('rFrom'); if(rf) rf.innerText="From: "+userData.name+" - "+accNo;
-    let mn=document.getElementById('meName'); if(mn) mn.innerText=userData.name;
-    let mp=document.getElementById('mePhone'); if(mp) mp.innerText=userData.phone;
-    let me=document.getElementById('meEmail'); if(me) me.innerText=userData.email;
-    let pn=document.getElementById('profileName'); if(pn) pn.innerText=userData.name;
-    let pp=document.getElementById('profilePhone'); if(pp) pp.innerText=userData.phone;
-    let pe=document.getElementById('profileEmail'); if(pe) pe.innerText=userData.email;
-    let pa=document.getElementById('profileAvatar'); if(pa) pa.innerText=userData.name.charAt(0).toUpperCase();
-    let cn=document.getElementById('cardName'); if(cn) cn.innerText=userData.name.toUpperCase();
-    let acc=document.getElementById('meAccNo'); if(acc) acc.innerText=accNo;
-    let pAcc=document.getElementById('profileAccNo'); if(pAcc) pAcc.innerText=accNo;
-    let hAcc=document.getElementById('homeAccNo'); if(hAcc) hAcc.innerText="Acc: "+accNo;
-    let code=document.getElementById('referralCode'); if(code) code.innerText="KELLY-"+accNo.slice(-4);
-    let link=document.getElementById('referralLink'); if(link) link.innerText="https://omosogar1.github.io/Software-development/KellyBankAPP-Mobile/?ref=KELLY-"+accNo.slice(-4);
-  }
-  let cardF=document.getElementById('cardNumberFront'); if(cardF) cardF.innerText=cardNum;
-  let tb=document.getElementById('tierBadge'); if(tb) tb.innerText=tier==="1"?"Tier 1":tier==="2"?"Tier 2":"Tier 3 Unlimited";
-  let ptb=document.getElementById('profileTierBadge'); if(ptb) ptb.innerText=tier==="1"?"Tier 1 - ₦50k":tier==="2"?"Tier 2 - ₦200k":"Tier 3 - Unlimited";
-  if(tier==="2"||tier==="3"){
-    let s=document.getElementById('tier2Status'); if(s){ s.innerText="✓ Verified"; s.style.color="#0f0"; }
-    let f=document.getElementById('bvnUpgradeForm'); if(f) f.style.display='none';
-  }
-  if(tier==="3"){
-    let s=document.getElementById('tier3Status'); if(s){ s.innerText="✓ Unlimited"; s.style.color="#0f0"; }
-    let f=document.getElementById('ninUpgradeForm'); if(f) f.style.display='none';
-  }
-  transferPin=localStorage.getItem("kelly_transfer_pin") || null;
-  let ps=document.getElementById('pinStatus'); if(ps) ps.innerText=transferPin?"✓ Set":"- Not Set";
-  if(ps && transferPin) ps.style.color="#0f0";
-  let rt=document.getElementById('rewardTotal'); if(rt) rt.innerText=rewardTotal;
-  let rc=document.getElementById('referralCount'); if(rc) rc.innerText=referralCount;
-  let re=document.getElementById('referralEarned'); if(re) re.innerText=referralEarned;
-}
-function showAddMoneyDetail(type){
-  let detail=document.getElementById('addMoneyDetail');
-  let text=document.getElementById('addMoneyDetailText');
-  let accNo = userData?userData.accountNo:"9012345678";
-  detail.style.display='block';
-  if(type==='account'){
-    text.innerHTML=`<b>Account Number - 10-digit</b><br><br><div style="background:#000;padding:15px;border-radius:10px;text-align:center;border:1px solid #ffcc00"><small style="color:#888">Your Kelly Bank Account Number</small><br><b style="color:#ffcc00;font-size:22px;letter-spacing:2px">${accNo}</b><br><small style="color:#888">Bank: Kelly Bank • Name: ${userData?userData.name:'Your Name'}</small></div><br><button class="btn-primary" style="padding:10px" onclick="navigator.clipboard.writeText('${accNo}');alert('Account number ${accNo} copied!')">📋 Copy Account Number</button><br><small style="color:#888">Share this 10-digit number to receive money from any bank in Nigeria</small>`;
-  } else if(type==='cash'){
-    text.innerHTML=`<b>Cash Deposit</b><br>Visit any Kelly Bank agent in Warri with your account number:<br><br><b style="color:#ffcc00;font-size:18px">${accNo}</b><br><small>Agent will deposit cash instantly</small>`;
-  } else if(type==='card'){
-    text.innerHTML=`<b>Top up with Card / Account</b><br>Add money to ${accNo} from other bank<br><br><input type="number" placeholder="Amount ₦" id="topupAmt"><button class="btn-primary" onclick="let a=document.getElementById('topupAmt').value; if(a){ balance+=parseFloat(a); localStorage.setItem('kelly_balance',balance); updateBalanceUI(); alert('₦'+a+' added to ${accNo} via Card!'); closeBoxes(); }">Top up Now to ${accNo}</button>`;
-  } else if(type==='ussd'){
-    text.innerHTML=`<b>Bank USSD</b><br>To fund your Kelly account <b>${accNo}</b> from other banks:<br><br><b style="color:#ffcc00">*123*${accNo.slice(-4)}*Amount#</b><br><small>Example: *901*Amount*${accNo}# for Access</small><br><br><small>Your 10-digit account: ${accNo}</small>`;
-  }
-}
-function copyAccountNo(){
-  let accNo = userData?userData.accountNo:"9012345678";
-  navigator.clipboard.writeText(accNo).then(()=>alert("Account Number copied: "+accNo));
-}
-function setTransferPin(){
-  let pin=document.getElementById('newTransferPin').value.trim();
-  let msg=document.getElementById('pinMsg');
-  if(pin.length!==4){ msg.innerText="4 digits"; msg.style.color="red"; return; }
-  localStorage.setItem("kelly_transfer_pin", pin);
-  transferPin=pin; msg.innerText="Transfer PIN Set!"; msg.style.color="green"; updateBalanceUI();
-}
-function changeSecurityPin(){
-  let oldP=document.getElementById('oldPassword').value.trim();
-  let newP=document.getElementById('newPassword').value.trim();
-  let cNewP=document.getElementById('confirmNewPassword').value.trim();
-  let msg=document.getElementById('secPinMsg');
-  if(oldP!==userData.password){ msg.innerText="Old password wrong"; msg.style.color="red"; return; }
-  if(newP.length<6){ msg.innerText="Min 6 chars"; msg.style.color="red"; return; }
-  if(newP!==cNewP){ msg.innerText="No match"; msg.style.color="red"; return; }
-  userData.password=newP;
-  localStorage.setItem("kelly_user", JSON.stringify(userData));
-  msg.innerText="Security PIN Changed!"; msg.style.color="green";
-}
-function verifyBVN(){
-  let bvn=document.getElementById('bvnInput').value.trim(); let msg=document.getElementById('bvnMsg');
-  if(bvn.length!==11){ msg.innerText="BVN 11 digits"; msg.style.color="red"; return; }
-  msg.innerText="Verifying..."; setTimeout(()=>{ tier="2"; localStorage.setItem("kelly_tier","2"); msg.innerText="Tier 2 Verified!"; msg.style.color="green"; updateBalanceUI(); },800);
-}
-function verifyNIN(){
-  let nin=document.getElementById('ninInput').value.trim(); let msg=document.getElementById('ninMsg');
-  if(nin.length!==11){ msg.innerText="NIN 11 digits"; msg.style.color="red"; return; }
-  if(tier!=="2"){ msg.innerText="Verify BVN first"; msg.style.color="red"; return; }
-  msg.innerText="Verifying..."; setTimeout(()=>{ tier="3"; localStorage.setItem("kelly_tier","3"); msg.innerText="Tier 3 Unlimited!"; msg.style.color="green"; updateBalanceUI(); },1000);
-}
-function lockApp(){ showScreen('welcomeScreen'); checkBioOnWelcome(); }
-function openBox(id){ closeBoxes(); document.getElementById(id).style.display='block'; }
-function closeBoxes(){ document.querySelectorAll('.box').forEach(b=>b.style.display='none'); let d=document.getElementById('addMoneyDetail'); if(d) d.style.display='none'; }
-function closePinModal(){ document.getElementById('pinModal').style.display='none'; document.getElementById('modalPinInput').value=""; document.getElementById('modalPinMsg').innerText=""; pendingTx=null; }
-function claimReward(amt){ rewardTotal+=amt; balance+=amt; localStorage.setItem("kelly_reward", rewardTotal); localStorage.setItem("kelly_balance", balance); updateBalanceUI(); alert("Reward ₦"+amt+" credited!"); }
-function getShareText(){
-  let accNo=userData?userData.accountNo:"9012345678";
-  let code="KELLY-"+accNo.slice(-4);
-  let link="https://omosogar1.github.io/Software-development/KellyBankAPP-Mobile/?ref="+code;
-  return {code, link, text:`🚀 Join Kelly Bank!\nMy Account No: ${accNo}\nUse code ${code} and get ₦200!\nDownload: ${link}`};
-}
-function shareReferral(){
-  let {text, link} = getShareText();
-  if(navigator.share){
-    navigator.share({title:"Kelly Bank", text:text, url:link}).then(()=>{
-      referralCount++; referralEarned+=200; rewardTotal+=200; balance+=200;
-      localStorage.setItem("kelly_refCount", referralCount);
-      localStorage.setItem("kelly_refEarned", referralEarned);
-      localStorage.setItem("kelly_reward", rewardTotal);
-      localStorage.setItem("kelly_balance", balance);
-      updateBalanceUI();
-    }).catch(()=>{});
-  } else { copyLink(); }
-}
-function shareViaWhatsApp(){
-  let {text} = getShareText();
-  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-  referralCount++; referralEarned+=200; rewardTotal+=200; balance+=200;
-  localStorage.setItem("kelly_refCount", referralCount);
-  localStorage.setItem("kelly_refEarned", referralEarned);
-  localStorage.setItem("kelly_reward", rewardTotal);
-  localStorage.setItem("kelly_balance", balance);
-  updateBalanceUI();
-}
-function shareViaFacebook(){
-  let {link} = getShareText();
-  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`, '_blank');
-  referralCount++; referralEarned+=200; rewardTotal+=200; balance+=200;
-  localStorage.setItem("kelly_refCount", referralCount);
-  localStorage.setItem("kelly_refEarned", referralEarned);
-  localStorage.setItem("kelly_reward", rewardTotal);
-  localStorage.setItem("kelly_balance", balance);
-  updateBalanceUI();
-}
-function copyLink(){
-  let {link} = getShareText();
-  navigator.clipboard.writeText(link).then(()=>{ alert("Link copied: "+link); });
-}
-function applyLoan(){ alert("Loan Application ₦50,000 under review"); }
-function createUniqueCard(){
-  cardNum="4539 "+Math.floor(1000+Math.random()*9000)+" "+Math.floor(1000+Math.random()*9000)+" 4589";
-  localStorage.setItem("kelly_card_num", cardNum);
-  document.getElementById('cardNumberFront').innerText=cardNum;
-  alert("New Visa Debit Created!");
-}
-function getLimit(){ if(tier==="1") return 50000; if(tier==="2") return 200000; return 999999999; }
-function initiateTransfer(){
-  let bank=document.getElementById('bankSelect').value;
-  let to=document.getElementById('sendTo').value.trim();
-  let amt=parseFloat(document.getElementById('sendAmount').value);
-  let remark=document.getElementById('sendRemark').value.trim()||"Transfer";
-  if(!bank||!to||!amt){ alert("Fill all"); return; }
-  let limit=getLimit();
-  if(amt>limit && tier!=="3"){ alert("Limit ₦"+limit.toLocaleString()+". Upgrade to Tier 3"); switchTab('me'); return; }
-  if(!localStorage.getItem("kelly_transfer_pin")){ alert("Set Transfer PIN in Me → Settings → Security"); openSettings(); setTimeout(openSecurity,300); return; }
-  if(amt>balance){ alert("Insufficient"); return; }
-  pendingTx={bank, to, amt, remark};
-  document.getElementById('pinModalInfo').innerText=`Send ₦${amt.toLocaleString()} to ${bank} - ${to}?`;
-  document.getElementById('pinModal').style.display='flex';
-}
-function initiateAirtime(){
-  let net=document.getElementById('airtimeNetwork').value;
-  let phone=document.getElementById('airtimePhone').value.trim();
-  let amt=parseFloat(document.getElementById('airtimeAmount').value);
-  if(!net||!phone||!amt){ alert("Fill all"); return; }
-  if(!localStorage.getItem("kelly_transfer_pin")){ alert("Set PIN in Settings → Security"); openSettings(); setTimeout(openSecurity,300); return; }
-  if(amt>balance){ alert("Insufficient"); return; }
-  pendingTx={bank:net, to:phone, amt, remark:"Airtime "+net};
-  document.getElementById('pinModalInfo').innerText=`Buy ₦${amt} ${net} airtime?`;
-  document.getElementById('pinModal').style.display='flex';
-}
-function initiateBills(){
-  let type=document.getElementById('billType').value;
-  let num=document.getElementById('billNumber').value.trim();
-  let amt=parseFloat(document.getElementById('billAmount').value);
-  if(!type||!num||!amt){ alert("Fill all"); return; }
-  if(!localStorage.getItem("kelly_transfer_pin")){ alert("Set PIN in Settings → Security"); openSettings(); setTimeout(openSecurity,300); return; }
-  if(amt>balance){ alert("Insufficient"); return; }
-  pendingTx={bank:type, to:num, amt, remark:type+" Bill"};
-  document.getElementById('pinModalInfo').innerText=`Pay ₦${amt} for ${type}?`;
-  document.getElementById('pinModal').style.display='flex';
-}
-function confirmWithPin(){
-  let tpin=document.getElementById('modalPinInput').value.trim();
-  let msg=document.getElementById('modalPinMsg');
-  if(tpin!==localStorage.getItem("kelly_transfer_pin")){ msg.innerText="Wrong PIN"; return; }
-  balance-=pendingTx.amt; localStorage.setItem("kelly_balance", balance); updateBalanceUI();
-  document.getElementById('rTo').innerText="To: "+pendingTx.bank+" - "+pendingTx.to;
-  document.getElementById('rAmount').innerText="Amount: ₦"+pendingTx.amt.toLocaleString();
-  document.getElementById('rRemark').innerText="Remark: "+pendingTx.remark;
-  document.getElementById('rDate').innerText="Date: "+new Date().toLocaleString();
-  document.getElementById('dynamicTrans').innerHTML=`<div class="trans-item"><div><b>${pendingTx.bank} - ${pendingTx.to}</b><br><small>${pendingTx.remark}</small></div><b>₦${pendingTx.amt.toLocaleString()}</b></div>`+document.getElementById('dynamicTrans').innerHTML;
-  closePinModal(); closeBoxes(); document.getElementById('receipt').style.display='block';
-}
+  const q=query(collection(db,"users",user.uid,"transactions"),orderBy("date","desc"));
+  onSnapshot(q,(qs)=>{
+   let html='';
+   qs.forEach(doc=>{const t=doc.data(); html+=`<div>${t.type} ₦${t.amount} - Bal ₦${t.balance}</div>`});
+   document.getElementById('txs').innerHTML=html;
+  });
+ }else{
+  document.getElementById('authBox').classList.remove('hidden');
+  document.getElementById('dash').classList.add('hidden');
+ }
+});
 </script>
 </body>
 </html>
